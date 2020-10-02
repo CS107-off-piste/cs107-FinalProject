@@ -23,5 +23,13 @@ make clean
 ```
 
 ## CI
+
 [![Build Status](https://travis-ci.com/CS107-off-piste/cs107-FinalProject.svg?token=EpqTjCxd7qmi2ut6nRKz&branch=master)](https://travis-ci.com/CS107-off-piste/cs107-FinalProject)
+
 This repository is configured to work with Travis CI. With every commit, the CI will ensure that the code can be compiled successfully, using the `gcc` compiler.
+
+## Code Coverage
+
+[![codecov](https://codecov.io/gh/CS107-off-piste/cs107-FinalProject/branch/master/graph/badge.svg?token=ROWLO2X8Z5)](undefined)
+
+This repository is configured to work with CodeCov. With every commit, `gcov` is used to analyse what portion of code is covered and the results are provided on CodeCov.
