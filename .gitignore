@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+
+# Code coverage files
+*.gcda
+*.gcno
+*.gcov
