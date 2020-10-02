@@ -1,4 +1,14 @@
 language: cpp
 compiler:
   - gcc
-script: make hello
+script:
+  # build the project
+  - make hello
+  # test hello_world.o since this is required before running code coverage
+  # in future, this will be replaced by running a proper test suite
+  - ./hello_world.o 
+  # generate code coverage reports
+  - ./get_code_cov.sh 
+after_success:
+  # upload results to codecov
+  - bash <(curl -s https://codecov.io/bash) -t 036e96ae-9cba-429d-9a52-78e9d28e2f35
