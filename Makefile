@@ -4,7 +4,7 @@ RM=rm -f
 SRCS=hello_world.cpp
 OBJS=$(subst .cpp,.o,$(SRCS))
 OUTFILE=hello_world.o
-GCOV_CXX_FLAGS += -fprofile-arcs -ftest-coverage # flags necssary for gcov
+GCOV_CXX_FLAGS += -fprofile-arcs -ftest-coverage # flags necessary for gcov
 TESTOUTFILES += *.gcda *.gcno
 
 hello:
