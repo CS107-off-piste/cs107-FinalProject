@@ -1,12 +1,20 @@
 CXX=g++
 RM=rm -f
 
-SRCS=hello.cc
-OBJS=$(subst .cc,.o,$(SRCS))
+SRCS=hello_world.cpp
+OBJS=$(subst .cpp,.o,$(SRCS))
 OUTFILE=hello_world.o
+GCOV_CXX_FLAGS += -fprofile-arcs -ftest-coverage # flags necessary for gcov
+TESTOUTFILES += *.gcda *.gcno
 
 hello:
-	$(CXX) -o $(OUTFILE) hello_world.cpp
+	$(CXX) $(GCOV_CXX_FLAGS) -o $(OUTFILE) $(SRCS)
+
+test:
+	# run test file
+	./$(OUTFILE)
+	# generate code coverage information
+	./get_code_cov.sh
 
 clean:
-	$(RM) $(OUTFILE)
+	$(RM) $(OUTFILE) $(TESTOUTFILES)

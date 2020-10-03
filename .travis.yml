@@ -1,4 +1,11 @@
 language: cpp
 compiler:
   - gcc
-script: make hello
+script:
+  # build the project
+  - make hello
+  # run test suite on the project and generate code coverage reports
+  - make test
+after_success:
+  # upload results to codecov
+  - bash <(curl -s https://codecov.io/bash) -t 036e96ae-9cba-429d-9a52-78e9d28e2f35

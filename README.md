@@ -1,5 +1,9 @@
 # cs107-FinalProject
 
+[![Build Status](https://travis-ci.com/CS107-off-piste/cs107-FinalProject.svg?token=EpqTjCxd7qmi2ut6nRKz&branch=master)](https://travis-ci.com/CS107-off-piste/cs107-FinalProject)
+
+[![codecov](https://codecov.io/gh/CS107-off-piste/cs107-FinalProject/branch/master/graph/badge.svg?token=ROWLO2X8Z5)](undefined)
+
 Final Project for [CS107/AC207/CSCI E-207](https://harvard-iacs.github.io/2020-CS107/), built by group 1 ([*Off-piste*](https://en.wikipedia.org/wiki/Backcountry_skiing)), whose members are:
 
 * Aleksander Aleksiev
@@ -23,5 +27,9 @@ make clean
 ```
 
 ## CI
-[![Build Status](https://travis-ci.com/CS107-off-piste/cs107-FinalProject.svg?token=EpqTjCxd7qmi2ut6nRKz&branch=master)](https://travis-ci.com/CS107-off-piste/cs107-FinalProject)
+
 This repository is configured to work with Travis CI. With every commit, the CI will ensure that the code can be compiled successfully, using the `gcc` compiler.
+
+## Code Coverage
+
+This repository is configured to work with CodeCov. With every commit, `gcov` is used to analyse what portion of code is covered and the results are provided on CodeCov.
