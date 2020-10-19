@@ -19,7 +19,10 @@
     - `Graph`: A DAG that containing Nodes, with multiple inputs and multiple outputs.
         - `Graph(EXPRESSIONS)`: use `EXPRESSIONS` to initialize a DAG.
         - `.evaluate(Node &output_node)`: compute the output wrt `Node &output_node`.
+        - `.evaluate()`: (Not implemented) compute the output wrt all output nodes, and return `std::vector<float>`.
+        - `.set_seed()`: (Not implemented) set the seed *p* when taking directional derivative.
         - `.forward_derivative(Node &output_node, Node &wrt)`: compute the derivative of `Node &output_node` wrt `Node &wrt`.
+        - `.jacobian()`: (Not implemented) compute the jacobian of vector function of vector input represented by this graph, and return `std::vector<std::vector<float>>`.
         - `.bfs()`: a private method that add every node in the graph and its in degree into `std::map<Node*, size_t> book_keeper`.
         - `.generate_aov_sequence`: a private method that generate an feasible AOV sequence of this DAG and store it in `std::vector<Node*> aov_sequence`
         - `.output_node_ptrs`: a `std::vector<Node*>` that stores the pointers to output nodes (top level nodes).
