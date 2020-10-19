@@ -21,9 +21,8 @@ namespace OP {
         float forward_derivative(Node &output_node, Node &wrt);
 
     private:
-        void transcribe_expression() ;
         void bfs(Node &output_node);
-        void build_AOV();
+        void generate_aov_sequence();
 
         std::vector<Node*> output_node_ptrs;
         std::map<Node*, size_t> book_keeper;

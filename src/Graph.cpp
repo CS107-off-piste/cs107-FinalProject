@@ -13,7 +13,11 @@ namespace OP {
             output_node_ptrs.push_back(&it.get());
         }
 
-        transcribe_expression();
+        // bfs
+        for (Node* ptr : output_node_ptrs) {bfs(*ptr);}
+
+        // building AOV network of DAG graph
+        generate_aov_sequence();
     }
 
     void Graph::bfs(Node &output_node) {
@@ -33,7 +37,7 @@ namespace OP {
         }
     }
 
-    void Graph::build_AOV() {
+    void Graph::generate_aov_sequence() {
 
         std::map<Node*, size_t> tmp_book_keeper = book_keeper;  // keep track of the current in degree of each node
         std::vector<Node*> stack;
@@ -62,17 +66,6 @@ namespace OP {
         if (count != book_keeper.size()) {
             std::cerr<<"Building AOV network failed due to cycle in the graph."<<std::endl;
         }
-    }
-
-    void Graph::transcribe_expression() {
-
-        // bfs
-        for (Node* ptr : output_node_ptrs) {
-            bfs(*ptr);
-        }
-
-        // building AOV network of DAG graph
-        build_AOV();
     }
 
     float Graph::evaluate(Node &output_node) {
