@@ -13,8 +13,7 @@ using namespace AutoD;
 int main(){
     
     Variable x = 2.0;
-    Expression u = exp(cos(x + 3) + pow(x, 4)) + 1;
-    Function f = func(u);
+    Function f = func(exp(cos(x + 3) + pow(x, 4)) + 1);
     std::cout<<"f = "<<f.evaluate()<<std::endl;
     std::cout<<"df/dx = "<<f.forward_derivative(x)<<std::endl;
     
@@ -29,8 +28,7 @@ using namespace AutoD;
 int main(){
     
     Variable x = 2.0, y = 3.0, z = 4.0;
-    Expression u = exp(cos(x + 3) + pow(y, 4)) + z;
-    Function f = func(u);
+    Function u = func(exp(cos(x + 3) + pow(y, 4)) + z);
     std::cout<<"f = "<<f.evaluate()<<std::endl;
     std::cout<<"df/dx = "<<f.forward_derivative(x)<<std::endl;
     std::cout<<"df/dy = "<<f.forward_derivative(y)<<std::endl;
