@@ -11,9 +11,9 @@ hello:
 	$(CXX) $(GCOV_CXX_FLAGS) -o $(OUTFILE) $(SRCS)
 
 test:
-	# run test file
+	@echo "Running Tests..."
 	./$(OUTFILE)
-	# generate code coverage information
+	@echo "\nGenerating Code Coverage information..."
 	./get_code_cov.sh
 
 clean:

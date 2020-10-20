@@ -11,25 +11,42 @@ Final Project for [CS107/AC207/CSCI E-207](https://harvard-iacs.github.io/2020-C
 * Yuxin Ye
 * Zeren Long
 
-## Source Code
+## Local Development
+
+### Compilation
 
 A simple C++ program `hello_world.cpp` has been added to the repo, for starters. This program can be compiled with:
 ```
-make hello
+$ make hello
 ```
 and executed with:
 ```
-./hello_world.o
+$ ./hello_world.o
 ```
 Finally, the compiled binary can be removed using:
 ```
-make clean
+$ make clean
 ```
+
+### Running Tests
+
+Tests can be run locally using the following commands. At the end of the test run, a code coverage summary is displayed.
+
+```
+$ make hello
+$ make test
+```
+
+## Documentation
+
+The `docs/` folder contains information on the implementation and the mathematical concepts used.
+* [Background](./docs/BACKGROUND.md)
+* Example Usage
+* Software Organization
+* Implementation
 
 ## CI
 
-This repository is configured to work with Travis CI. With every commit, the CI will ensure that the code can be compiled successfully, using the `gcc` compiler.
-
-## Code Coverage
-
-This repository is configured to work with CodeCov. With every commit, `gcov` is used to analyse what portion of code is covered and the results are provided on CodeCov.
+This repository is configured to work with Travis CI. With every commit, the following actions are performed in the CI.
+* The code is compiled using the `gcc` compiler.
+* If the compilation is successful, the binary is executed and `gcov` is used to analyse what portion of code is covered. The code coverage results are provided on CodeCov.
