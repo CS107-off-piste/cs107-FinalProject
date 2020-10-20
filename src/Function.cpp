@@ -4,11 +4,11 @@
 
 #include <deque>
 #include <iostream>
-#include "Graph.hpp"
+#include "Function.hpp"
 
 namespace OP {
 
-    Graph::Graph(EXPRESSIONS &output_nodes) {
+    Function::Function(EXPRESSIONS &output_nodes) {
         for (auto it: output_nodes) {
             output_node_ptrs.push_back(&it.get());
         }
@@ -20,7 +20,7 @@ namespace OP {
         generate_aov_sequence();
     }
 
-    void Graph::bfs(Node &output_node) {
+    void Function::bfs(Node &output_node) {
         std::deque<Node*> queue;
         queue.push_back(&output_node);
 
@@ -37,7 +37,7 @@ namespace OP {
         }
     }
 
-    void Graph::generate_aov_sequence() {
+    void Function::generate_aov_sequence() {
 
         std::map<Node*, size_t> tmp_book_keeper = book_keeper;  // keep track of the current in degree of each node
         std::vector<Node*> stack;
@@ -68,14 +68,14 @@ namespace OP {
         }
     }
 
-    float Graph::evaluate(Node &output_node) {
+    float Function::evaluate(Node &output_node) {
         for (auto & it : aov_sequence) {
             it->forward(*it);
         }
         return output_node.value;
     }
 
-    float Graph::forward_derivative(Node &output_node, Node &wrt) {
+    float Function::forward_derivative(Node &output_node, Node &wrt) {
         wrt.derivative = 1.f;
         for (auto & it : aov_sequence) {
             it->forward(*it);

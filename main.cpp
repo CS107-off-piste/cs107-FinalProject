@@ -1,6 +1,6 @@
 #include <iostream>
 #include "src/Variable.hpp"
-#include "src/Graph.hpp"
+#include "src/Function.hpp"
 #include "src/BinaryOperator.hpp"
 #include "src/UnaryOperator.hpp"
 
@@ -14,14 +14,14 @@ int main() {
     b.value = 2;
     c.value = 3;
 
-    EXPRESSION f = a + c;
-    EXPRESSION g = a + exp(b);
+    EXPRESSION u = a + b;
+    EXPRESSION v = a + exp(c);
 
-    EXPRESSIONS outputs = {f, g};
+    EXPRESSIONS outputs = {u, v};
 
-    Graph graph(outputs);
-    std::cout<<"f = "<<graph.evaluate(f)<<std::endl;
-    std::cout<<"dg/db = "<<graph.forward_derivative(g, b)<<std::endl;
+    Function f(outputs);
+    std::cout<<"f = "<<f.evaluate(u)<<std::endl;
+    std::cout<<"dg/db = "<<f.forward_derivative(v, c)<<std::endl;
 
     return 0;
 }
