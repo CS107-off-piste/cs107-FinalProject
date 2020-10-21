@@ -5,7 +5,7 @@
     e.g. f(x, y, z) = (x + y^2, x - z)
   
 - **What classes will you implement? What method and name attributes will your classes have?**  
-    There are three basic classes needed to be implement:
+    There are three basic classes needed to be implement: `Node`, `Variable`, `Function`:
     - `Node`: A node of the DAG. It has the following attributes and methods:
         - `.forward()`: represent the operation of this node, including binary and unary operation, e.g. +, -, exp, sin.
         - `.backward()`: used in reverse mode when computing the derivative of each node.
@@ -15,13 +15,9 @@
         - `.children`: `a std::vector<Node*>` containing the pointers to all children of this node.
     
     - `Variable`: A derived class of `Node` that represents each input.
-
-    - `EXPRESSION`: A macro for `Node&`.
-
-    _ `EXPRESSIONS`: A macro for `std::vector<std::reference_wrapper<OP::Node>>`.
     
-    - `Graph`: A DAG that containing Nodes, with multiple inputs and multiple outputs.
-        - `Graph(EXPRESSIONS)`: use `EXPRESSIONS` to initialize a DAG.
+    - `Function`: A DAG that containing Nodes, with multiple inputs and multiple outputs.
+        - `Function(EXPRESSIONS)`: use `EXPRESSIONS` to initialize a DAG.
         - `.evaluate(Node &output_node)`: compute the output wrt `Node &output_node`.
         - `.evaluate()`:  compute the output wrt all output nodes, and return `std::vector<float>`.
         - `.set_seed()`:  set the seed *p* when taking directional derivative.
@@ -32,6 +28,11 @@
         - `.output_node_ptrs`: a `std::vector<Node*>` that stores the pointers to output nodes (top level nodes).
         - `.book_keeper`: a `std::map<Node*, size_t>` that stores pointers to each node and its the number of its children.
         - `.aov_sequence`: a `std::vector<Node*>` that stores a feasible AOV sequence of this DAG. It is obtained by invoking `.generate_aov_sequence()`.
+  
+    Other than classes, there are also some definitions of macro that are helpful.
+    - `EXPRESSION`: A macro for `Node&`.
+
+    - `EXPRESSIONS`: A macro for `std::vector<std::reference_wrapper<Node>>`.
 
 - **What external dependencies will you rely on?**
     - cmath
