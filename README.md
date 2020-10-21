@@ -45,7 +45,7 @@ The `docs/` folder contains information on the implementation and the mathematic
 * [Background](./docs/BACKGROUND.md)
 * Example Usage
 * Software Organization
-* Implementation
+* [Implementation](./docs/IMPLEMENTATION.md)
 
 ## Continuous Integration
 
