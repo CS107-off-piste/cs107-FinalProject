@@ -32,13 +32,6 @@ $ make hello
 $ make test
 ```
 
-## CI
-
-This repository is configured to work with Travis CI. With every commit, the CI will ensure that the code can be compiled successfully, using the `gcc` compiler.
-
-## Code Coverage
-
-This repository is configured to work with CodeCov. With every commit, `gcov` is used to analyse what portion of code is covered and the results are provided on CodeCov.
 ### Clean Up
 
 The compiled binary and test coverage output can be removed using:
