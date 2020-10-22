@@ -10,10 +10,7 @@ The project's main directories will be:
 
 ### What external modules do you plan on including? What is their basic functionality?
 
-The external modules we currently plan to use are:
-
-* [`Eigen`](http://eigen.tuxfamily.org/index.php?title=Main_Page), which is a library for basic linear algebra and related computations.
-* Standard C++ headers, such as `<cmath>` and the various STL classes for `strings` and I/O.
+At this stage, we do not intend to rely on any external modules. However, we will use standard C++ headers, such as `<cmath>` and the various STL classes for `strings` and I/O.
 
 ### Where will your test suite live? Will you use TravisCI? CodeCov?
 
