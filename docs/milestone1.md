@@ -25,6 +25,8 @@ We have already set up TravisCI and CodeCov as part of the previous Milestone. W
 
 Unfortunately, C++ does not have a well-established and widely-used package index like PyPI. However, we intend to investigate, and consider distributing the package through [Conan](https://conan.io/), a C++ package manager.
 
+We will also make a pre-built dynamically linked library version of project available in the repository. 
+
 ### How will you package your software?
 
 In the root directory of this repository, we have set up a `Makefile` for compiling and testing our source code. We will continue to augment this file as the project progresses.
