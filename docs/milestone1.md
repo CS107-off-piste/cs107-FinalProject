@@ -39,6 +39,8 @@ This mode, on the other hand, is better for functions with `n >> m`. Reverse mod
 * A `reverse pass` which takes advantage of the Chain rule for multiple variables, to calculate the derivative of each node of the computation graph, with respect to its parents.
 ![chain rule](./assets/chain_rule.png)
 
+<hr/>
+
 ## Software Organisation
 
 ### What will the directory structure look like?
@@ -73,16 +75,18 @@ In the root directory of this repository, we have set up a `Makefile` for compil
 
 We plan to use Doxygen to generate documentation from inline comments in our source code.
 
+<hr/>
+
 ## Implementation
 
-- **What are the core data structure?**  
+- **What are the core data structures?**
     The core data structure for each component of vector functions is a Directed Acyclic Graph (DAG) with multiple inputs and multiple outputs.
     e.g. f(x, y, z) = (x + y^2, x - z)
   
 - **What classes will you implement? What method and name attributes will your classes have?**  
-    There are three basic classes needed to be implement: `Node`, `Variable`, `Function`:
+    There are three basic classes needed to be implemented: `Node`, `Variable`, `Function`:
     - `Node`: A node of the DAG. It has the following attributes and methods:
-        - `.forward()`: represent the operation of this node, including binary and unary operation, e.g. +, -, exp, sin.
+        - `.forward()`: represents the operation of this node, including binary and unary operation, e.g. +, -, exp, sin.
         - `.backward()`: used in reverse mode when computing the derivative of each node.
         - `.value`: the value of this node.
         - `.derivative`: the derivative of this node.
@@ -94,10 +98,10 @@ We plan to use Doxygen to generate documentation from inline comments in our sou
     - `Function`: A DAG that containing Nodes, with multiple inputs and multiple outputs.
         - `Function(EXPRESSIONS)`: use `EXPRESSIONS` to initialize a DAG.
         - `.evaluate(Node &output_node)`: compute the output wrt `Node &output_node`.
-        - `.evaluate()`:  compute the output wrt all output nodes, and return `std::vector<float>`.
-        - `.set_seed()`:  set the seed *p* when taking directional derivative.
+        - `.evaluate()`: compute the output wrt all output nodes, and return `std::vector<float>`.
+        - `.set_seed()`: set the seed *p* when taking directional derivative.
         - `.forward_derivative(Node &output_node, Node &wrt)`: compute the derivative of `Node &output_node` wrt `Node &wrt`.
-        - `.jacobian()`:  compute the jacobian of vector function of vector input represented by this graph, and return `std::vector<std::vector<float>>`.
+        - `.jacobian()`: compute the jacobian of vector function of vector input represented by this graph, and return `std::vector<std::vector<float>>`.
         - `.bfs()`: a private method that add every node in the graph and its in degree into `std::map<Node*, size_t> book_keeper`.
         - `.generate_aov_sequence`: a private method that generate an feasible AOV sequence of this DAG and store it in `std::vector<Node*> aov_sequence`
         - `.output_node_ptrs`: a `std::vector<Node*>` that stores the pointers to output nodes (top level nodes).
@@ -114,4 +118,4 @@ We plan to use Doxygen to generate documentation from inline comments in our sou
     - STL
     
 - **How will you deal with elementary functions like sin, sqrt, log, and exp (and all the others)?**  
-    Overwrite those functions in `cmath` so that they can take `Node` as input and build graph correspondingly.
+    Overwrite those functions in `cmath` so that they can take `Node` as input and build the graph accordingly.
