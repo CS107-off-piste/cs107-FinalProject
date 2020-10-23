@@ -8,7 +8,7 @@ Differentiation has its applications everywhere from finding zeros of functions 
 
 The other prominent choices for implementing differentiation are __Symbolic Differentiation__ and __Finite Difference__. However, both methods have their drawbacks.
 * __Symbolic Differentiation__ - This involves breaking down a given expression into subsequently simpler expressions and we are able to achieve machine precision. However, in doing so, this method tends to be slow and expensive to evaluate.
-* __Finite Difference__ - Relies on the Taylor Series expansion and is very fast to evaluate. However, it suffers from poor accuracy, owing to a difficulty in selecting an appropriate value for h:
+* __Finite Difference__ - Relies on the Taylor Series expansion and is very fast to evaluate. However, it suffers from poor accuracy, owing to a difficulty in selecting an appropriate value for h, since very small h values run up against floating-point imprecision:
 ![finite difference](./assets/finite_difference.png)
 
 Automatic Differentiation overcomes both these limitations.
@@ -159,29 +159,29 @@ We plan to use Doxygen to generate documentation from inline comments in our sou
         - `.parents`: a `std::vector<Node*>` containing the pointers to all parents of this node.
         - `.children`: `a std::vector<Node*>` containing the pointers to all children of this node.
     
-    - `Variable`: A derived class of `Node` that represents each input.
+    - `Variable`: A derived class of `Node` that represents an input node.
     
-    - `Function`: A DAG that containing Nodes, with multiple inputs and multiple outputs.
-        - `Function(EXPRESSIONS)`: use `EXPRESSIONS` to initialize a DAG.
-        - `.evaluate(Node &output_node)`: compute the output wrt `Node &output_node`.
-        - `.evaluate()`: compute the output wrt all output nodes, and return `std::vector<float>`.
-        - `.set_seed()`: set the seed *p* when taking directional derivative.
-        - `.forward_derivative(Node &output_node, Node &wrt)`: compute the derivative of `Node &output_node` wrt `Node &wrt`.
+    - `Function`: A DAG that contains Nodes, with multiple inputs and multiple outputs.
+        - `Function(EXPRESSIONS)`: use `EXPRESSIONS` to initialize a DAG. 
+        - `.evaluate(Node &output_node)`: compute the output of `Node &output_node`.
+        - `.evaluate()`: compute the output with respect to all output nodes, and return `std::vector<float>`.
+        - `.set_seed(std::vector<float> p)`: set the seed *p* when taking directional derivative.
+        - `.forward_derivative(Node &output_node, Node &wrt)`: compute the derivative of `Node &output_node` with respect to `Node &wrt`.
         - `.jacobian()`: compute the jacobian of vector function of vector input represented by this graph, and return `std::vector<std::vector<float>>`.
-        - `.bfs()`: a private method that add every node in the graph and its in degree into `std::map<Node*, size_t> book_keeper`.
-        - `.generate_aov_sequence`: a private method that generate an feasible AOV sequence of this DAG and store it in `std::vector<Node*> aov_sequence`
+        - `.bfs()`: a private method that adds every node in the graph and its in degree into a `std::map<Node*, size_t> book_keeper`.
+        - `.generate_aov_sequence()`: a private method that generates a feasible AOV sequence of this DAG and store it in `std::vector<Node*> aov_sequence`
         - `.output_node_ptrs`: a `std::vector<Node*>` that stores the pointers to output nodes (top level nodes).
-        - `.book_keeper`: a `std::map<Node*, size_t>` that stores pointers to each node and its the number of its children.
+        - `.book_keeper`: a `std::map<Node*, size_t>` that stores pointers to each node and its number of children.
         - `.aov_sequence`: a `std::vector<Node*>` that stores a feasible AOV sequence of this DAG. It is obtained by invoking `.generate_aov_sequence()`.
   
-    Other than classes, there are also some definitions of macro that are helpful.
+    Other than classes, there are also some definitions of macros that are helpful.
     - `EXPRESSION`: A macro for `Node&`.
 
     - `EXPRESSIONS`: A macro for `std::vector<std::reference_wrapper<Node>>`.
 
 - **What external dependencies will you rely on?**
-    - cmath
-    - STL
+    - `cmath`
+    - `STL`
     
 - **How will you deal with elementary functions like sin, sqrt, log, and exp (and all the others)?**  
-    Overwrite those functions in `cmath` so that they can take `Node` as input and build the graph accordingly.
+    Overload the relevant functions in `cmath` so that they can take `Nodes` as input and return new `Nodes`, so that we can build the graph accordingly.
