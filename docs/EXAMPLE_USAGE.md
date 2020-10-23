@@ -1,8 +1,11 @@
 ## How to use *AutoD*
+
 ### **How do you envision that a user will interact with your package?**  
 *AutoD* will be used as an API.   
+
 ### **What should they import?**  
 They should download *AutoD.lib* , set the search directory and include the header file `#include<AutoD.h>`.  
+
 ### **How can they instantiate AD objects?**  
 #### For single-variable function
 ```
