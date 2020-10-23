@@ -44,7 +44,7 @@ $ make clean
 The `docs/` folder contains information on the implementation and the mathematical concepts used.
 * [Background](./docs/BACKGROUND.md)
 * Example Usage
-* Software Organization
+* [Software Organization](./docs/SOFTWARE_ORGANIZATION.md)
 * [Implementation](./docs/IMPLEMENTATION.md)
 
 ## Continuous Integration
