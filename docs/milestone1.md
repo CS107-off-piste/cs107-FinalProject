@@ -1,3 +1,44 @@
+# Milestone 1
+
+## Background
+
+Differentiation has its applications everywhere from finding zeros of functions to the back propagation algorithm in Deep Neural Networks. In this repository, we implement a library that uses Automatic Differentiation to find the derivatives of real and vector valued functions.
+
+### Why Automatic Differentiation
+
+The other prominent choices for implementing differentiation are __Symbolic Differentiation__ and __Finite Difference__. However, both methods have their drawbacks.
+* __Symbolic Differentiation__ - This involves breaking down a given expression into subsequently simpler expressions and we are able to achieve machine precision. However, in doing so, this method tends to be slow and expensive to evaluate.
+* __Finite Difference__ - Relies on the Taylor Series expansion and is very fast to evaluate. However, it suffers from poor accuracy, owing to a difficulty in selecting an appropriate value for h:
+![finite difference](./assets/finite_difference.png)
+
+Automatic Differentiation overcomes both these limitations.
+
+### How it Works
+
+Automatic Differentiation is a set of techniques that allow us to efficiently compute derivatives of functions that are implemented as programs. It is able to provide derivatives with machine precision, with almost the same time as it takes to evaluate the function itself. It does so by taking advantage of an important trait of __Dual Numbers__.
+
+#### Dual Numbers
+
+These are numbers of the form <i>a + bε</i>, where ε<sup>2</sup> = 0. Because of this property, applying the Taylor Series expansion to a function about a dual number will result in: f(a + ε) = f(a) + εf'(a).
+
+#### AD Modes
+
+Automatic Differentiation is implemented in 2 flavors.
+
+##### Forward Mode
+
+In this mode, the function and the derivative are evaluated with respect to each input variable. The derivative is computed along with the value of the function about the given input and there is no memory overhead. For the vector valued function <i>f : R<sup>n</sup> → R<sup>m</sup></i>, the derivative of each output with respect to each input is represented using a Jacobian Matrix.
+![jacobian matrix](./assets/jacobian_matrix.png)
+
+The forward mode is more suitable for functions where `m >> n`.
+
+##### Reverse Mode
+
+This mode, on the other hand, is better for functions with `n >> m`. Reverse mode AD involves 2 passes:
+* A `forward pass` in which the function is decomposed into a set of primitive expressions
+* A `reverse pass` which takes advantage of the Chain rule for multiple variables, to calculate the derivative of each node of the computation graph, with respect to its parents.
+![chain rule](./assets/chain_rule.png)
+
 ## Software Organisation
 
 ### What will the directory structure look like?
@@ -31,3 +72,46 @@ In the root directory of this repository, we have set up a `Makefile` for compil
 ### Other considerations?
 
 We plan to use Doxygen to generate documentation from inline comments in our source code.
+
+## Implementation
+
+- **What are the core data structure?**  
+    The core data structure for each component of vector functions is a Directed Acyclic Graph (DAG) with multiple inputs and multiple outputs.
+    e.g. f(x, y, z) = (x + y^2, x - z)
+  
+- **What classes will you implement? What method and name attributes will your classes have?**  
+    There are three basic classes needed to be implement: `Node`, `Variable`, `Function`:
+    - `Node`: A node of the DAG. It has the following attributes and methods:
+        - `.forward()`: represent the operation of this node, including binary and unary operation, e.g. +, -, exp, sin.
+        - `.backward()`: used in reverse mode when computing the derivative of each node.
+        - `.value`: the value of this node.
+        - `.derivative`: the derivative of this node.
+        - `.parents`: a `std::vector<Node*>` containing the pointers to all parents of this node.
+        - `.children`: `a std::vector<Node*>` containing the pointers to all children of this node.
+    
+    - `Variable`: A derived class of `Node` that represents each input.
+    
+    - `Function`: A DAG that containing Nodes, with multiple inputs and multiple outputs.
+        - `Function(EXPRESSIONS)`: use `EXPRESSIONS` to initialize a DAG.
+        - `.evaluate(Node &output_node)`: compute the output wrt `Node &output_node`.
+        - `.evaluate()`:  compute the output wrt all output nodes, and return `std::vector<float>`.
+        - `.set_seed()`:  set the seed *p* when taking directional derivative.
+        - `.forward_derivative(Node &output_node, Node &wrt)`: compute the derivative of `Node &output_node` wrt `Node &wrt`.
+        - `.jacobian()`:  compute the jacobian of vector function of vector input represented by this graph, and return `std::vector<std::vector<float>>`.
+        - `.bfs()`: a private method that add every node in the graph and its in degree into `std::map<Node*, size_t> book_keeper`.
+        - `.generate_aov_sequence`: a private method that generate an feasible AOV sequence of this DAG and store it in `std::vector<Node*> aov_sequence`
+        - `.output_node_ptrs`: a `std::vector<Node*>` that stores the pointers to output nodes (top level nodes).
+        - `.book_keeper`: a `std::map<Node*, size_t>` that stores pointers to each node and its the number of its children.
+        - `.aov_sequence`: a `std::vector<Node*>` that stores a feasible AOV sequence of this DAG. It is obtained by invoking `.generate_aov_sequence()`.
+  
+    Other than classes, there are also some definitions of macro that are helpful.
+    - `EXPRESSION`: A macro for `Node&`.
+
+    - `EXPRESSIONS`: A macro for `std::vector<std::reference_wrapper<Node>>`.
+
+- **What external dependencies will you rely on?**
+    - cmath
+    - STL
+    
+- **How will you deal with elementary functions like sin, sqrt, log, and exp (and all the others)?**  
+    Overwrite those functions in `cmath` so that they can take `Node` as input and build graph correspondingly.
