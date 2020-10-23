@@ -1,8 +1,17 @@
 # Milestone 1
 
-## Background
+## Introduction
 
-Differentiation has its applications everywhere from finding zeros of functions to the back propagation algorithm in Deep Neural Networks. In this repository, we implement a library that uses Automatic Differentiation to find the derivatives of real and vector valued functions.
+Differentiation has its applications everywhere. Some examples are:
+* Finding zeros of functions - many problems in Engineering and Science require determining the maximum and minimum values such as the amount of material required in the construction industry, profit and loss calculation.
+* Modelling the behaviour of moving objects
+* The Back propagation algorithm in Deep Neural Networks
+
+In this repository, we implement a library that uses Automatic Differentiation to find the derivatives of real and vector valued functions.
+
+<hr/>
+
+## Background
 
 ### Why Automatic Differentiation
 
@@ -35,8 +44,8 @@ The forward mode is more suitable for functions where `m >> n`.
 ##### Reverse Mode
 
 This mode, on the other hand, is better for functions with `n >> m`. Reverse mode AD involves 2 passes:
-* A `forward pass` in which the function is decomposed into a set of primitive expressions
-* A `reverse pass` which takes advantage of the Chain rule for multiple variables, to calculate the derivative of each node of the computation graph, with respect to its parents.
+* A __forward pass__ in which the function is decomposed into a set of primitive expressions
+* A __reverse pass__ which takes advantage of the Chain rule for multiple variables, to calculate the derivative of each node of the computation graph, with respect to its parents.
 ![chain rule](./assets/chain_rule.png)
 
 <hr/>
