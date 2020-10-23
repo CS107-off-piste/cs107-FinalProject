@@ -3,11 +3,11 @@
 ## Introduction
 
 Differentiation has its applications everywhere. Some examples are:
-* Finding zeros of functions - many problems in Engineering and Science require determining the maximum and minimum values such as the amount of material required in the construction industry, profit and loss calculation.
+* Finding zeros of functions - many problems in Engineering and Science require determining the maximum and minimum values such as the amount of material required in the construction industry, profit and loss calculation, etc.
 * Modelling the behaviour of moving objects
 * The Back propagation algorithm in Deep Neural Networks
 
-In this repository, we implement a library that uses Automatic Differentiation to find the derivatives of real and vector valued functions.
+In this repository, we implement a library that uses __Automatic Differentiation__ to find the derivatives of real and vector valued functions.
 
 <hr/>
 
