@@ -12,7 +12,7 @@ int main() {
 
     a.value = 1;
     b.value = 2;
-    c.value = 3;
+    c.value = 0;
 
     EXPRESSION u = a + b;
     EXPRESSION v = a + exp(c);
@@ -20,8 +20,8 @@ int main() {
     EXPRESSIONS outputs = {u, v};
 
     Function f(outputs);
-    std::cout<<"f = "<<f.evaluate(u)<<std::endl;
-    std::cout<<"dg/db = "<<f.forward_derivative(v, c)<<std::endl;
+    std::cout<<"u = "<<f.evaluate(u)<<std::endl;
+    std::cout<<"dv/dc = "<<f.forward_derivative(v, c)<<std::endl;
 
     return 0;
 }
