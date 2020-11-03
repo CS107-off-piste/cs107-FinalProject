@@ -123,7 +123,7 @@ At this stage, we do not intend to rely on any external modules. However, we wil
 
 ### Where will your test suite live? Will you use TravisCI? CodeCov?
 
-As described above, we intend to have a separate `test/` directory in which test files will be placed. Our intention is to use [Google's C++ testing library](https://github.com/google/googletest).
+As described above, we intend to have a separate `test/` directory in which test files will be placed. Our intention is to use [Google's C++ testing library](https://github.com/google/googletest) to perform testing in this directory. This will include both "unit" tests to test specific functions, and broader "functional" tests to check that our library is performing as expected on tasks such as computing the derivative and value from a user-inputted function. We will also look into using their [benchmarking library](https://github.com/google/benchmark) to provide performance reports, so that we can notice if a commit has caused performance of core functions (such as building a computational graph or calculating its derivative and value using the reverse mode) to deteriorate.
 
 We have already set up TravisCI and CodeCov as part of the previous Milestone. We will update our `travis.yml` and `Makefile` to automate the running of tests following pushes to the project repository.
 
@@ -147,6 +147,9 @@ We plan to use Doxygen to generate documentation from inline comments in our sou
 
 - **What are the core data structures?**
     The core data structure for each component of vector functions is a Directed Acyclic Graph (DAG) with multiple inputs and multiple outputs.
+
+    In the DAG, each node represents one of the operations in the computational graph of our function. We store our operations in this DAG so that we can traverse the nodes of the DAG (in reverse) when computing the reverse mode.
+
     e.g. f(x, y, z) = (x + y^2, x - z)
   
 - **What classes will you implement? What method and name attributes will your classes have?**  
@@ -185,3 +188,13 @@ We plan to use Doxygen to generate documentation from inline comments in our sou
     
 - **How will you deal with elementary functions like sin, sqrt, log, and exp (and all the others)?**  
     Overload the relevant functions in `cmath` so that they can take `Nodes` as input and return new `Nodes`, so that we can build the graph accordingly.
+
+# Feedback
+
+- **Feedback 1: Can we hear more about the reasoning behind choosing DAG as your core data structure? Is it necessary because of the reverse mode feature?** 
+    - We would not need a permanent data structure if we were only implementing the forward mode. However, as was discussed in lecture, since we intend to implement reverse mode, we need some data structure to store our operations. 
+    - This is because, in forward mode, we only make one "pass" through the function, computing both the value and derivative of the function after each operation. As a result, we would not need to keep an internal record of values / derivatives from earlier operations, since we do not return to them after they are computed. 
+    - In contrast, for the reverse mode, after completing the forward pass to calculate the each operation's *values*, we then need to complete the reverse pass to calculate those operations' *derivatives*. We can only "go back" through our operations from the forward pass if we have kept a navigable record of the operations completed in the forward pass... so, we need some data structure to store this record.  
+    - It is not strictly necessary that data structure be a DAG. We could, for example, have represented our `Function` as a list or tree of operations. But we felt that: a) a DAG would allow us to represent multiple inputs / multiple outputs in a cleaner way than, for example, a simple list of operations, and b) a DAG has the additional benefit of lining up neatly with the "computational graph" representation of automatic differention that we have seen in lecture. 
+- **Feedback 2: Solid plan for unit testing. What can we expect to see functionality-wise and performance-wise?** 
+    - As described in our updated testing section, we expect that our `tests/` directory will include functional tests to check that our library is correctly calculating values on user-inputted functions. At this stage, we also intend to include benchmarking tests in this to check if the performance of key operations has deteriorated as a result of a commit.
