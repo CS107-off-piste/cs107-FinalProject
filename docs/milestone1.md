@@ -1,8 +1,17 @@
 # Milestone 1
 
-## Background
+## Introduction
 
-Differentiation has its applications everywhere from finding zeros of functions to the back propagation algorithm in Deep Neural Networks. In this repository, we implement a library that uses Automatic Differentiation to find the derivatives of real and vector valued functions.
+Differentiation has its applications everywhere. Some examples are:
+* Finding zeros of functions - many problems in Engineering and Science require determining the maximum and minimum values such as the amount of material required in the construction industry, profit and loss calculation, etc.
+* Modelling the behaviour of moving objects
+* The Back propagation algorithm in Deep Neural Networks
+
+In this repository, we implement a library that uses __Automatic Differentiation__ to find the derivatives of real and vector valued functions.
+
+<hr/>
+
+## Background
 
 ### Why Automatic Differentiation
 
@@ -35,8 +44,8 @@ The forward mode is more suitable for functions where `m >> n`.
 ##### Reverse Mode
 
 This mode, on the other hand, is better for functions with `n >> m`. Reverse mode AD involves 2 passes:
-* A `forward pass` in which the function is decomposed into a set of primitive expressions
-* A `reverse pass` which takes advantage of the Chain rule for multiple variables, to calculate the derivative of each node of the computation graph, with respect to its parents.
+* A __forward pass__ in which the function is decomposed into a set of primitive expressions
+* A __reverse pass__ which takes advantage of the Chain rule for multiple variables, to calculate the derivative of each node of the computation graph, with respect to its parents.
 ![chain rule](./assets/chain_rule.png)
 
 <hr/>
@@ -57,12 +66,12 @@ They should download *AutoD.lib* , set the search directory and include the head
 using namespace AutoD;
 
 int main(){
-    
+
     Variable x = 2.0;
     Function f = func(exp(cos(x + 3) + pow(x, 4)) + 1);
     std::cout<<"f = "<<f.evaluate()<<std::endl;
     std::cout<<"df/dx = "<<f.forward_derivative(x)<<std::endl;
-    
+
 }
 ```
 #### For Multi-variable function
@@ -72,7 +81,7 @@ int main(){
 using namespace AutoD;
 
 int main(){
-    
+
     Variable x = 2.0, y = 3.0, z = 4.0;
     Function u = func(exp(cos(x + 3) + pow(y, 4)) + z);
     std::cout<<"f = "<<f.evaluate()<<std::endl;
@@ -80,7 +89,7 @@ int main(){
     std::cout<<"df/dy = "<<f.forward_derivative(y)<<std::endl;
     std::cout<<"df/dz = "<<f.forward_derivative(z)<<std::endl;
     std::cout<<"Gradient of f"<<f.forward_gradient()<<std::endl;  //gradient of f: (dfdx, dfdy, dfdz)
-    
+
 }
 ```
 #### For Vector function
@@ -90,13 +99,13 @@ int main(){
 using namespace AutoD;
 
 int main(){
-    
+
     Variable x = 2.0, y = 3.0, z = 4.0;
     Expression u = exp(cos(x + 3) + pow(y, 4)) + z;
     Expression v = x + y;
-    
+
     Function F = func(u,v) //F is the vector function.
-    
+
     std::cout<<"F = "<<F.evaluate()<<std::endl;
     std::cout<<"dF/dx = "<<F.forward_derivative(x)<<std::endl;
     std::cout<<"dF/dy = "<<F.forward_derivative(y)<<std::endl;
@@ -131,7 +140,7 @@ We have already set up TravisCI and CodeCov as part of the previous Milestone. W
 
 Unfortunately, C++ does not have a well-established and widely-used package index like PyPI. However, we intend to investigate, and consider distributing the package through [Conan](https://conan.io/), a C++ package manager.
 
-We will also make a pre-built dynamically linked library version of project available in the repository. 
+We will also make a pre-built dynamically linked library version of project available in the repository.
 
 ### How will you package your software?
 
@@ -151,7 +160,7 @@ We plan to use Doxygen to generate documentation from inline comments in our sou
     In the DAG, each node represents one of the operations in the computational graph of our function. We store our operations in this DAG so that we can traverse the nodes of the DAG (in reverse) when computing the reverse mode.
 
     e.g. f(x, y, z) = (x + y^2, x - z)
-  
+
 - **What classes will you implement? What method and name attributes will your classes have?**  
     There are three basic classes needed to be implemented: `Node`, `Variable`, `Function`:
     - `Node`: A node of the DAG. It has the following attributes and methods:
@@ -161,11 +170,11 @@ We plan to use Doxygen to generate documentation from inline comments in our sou
         - `.derivative`: the derivative of this node.
         - `.parents`: a `std::vector<Node*>` containing the pointers to all parents of this node.
         - `.children`: `a std::vector<Node*>` containing the pointers to all children of this node.
-    
+
     - `Variable`: A derived class of `Node` that represents an input node.
-    
+
     - `Function`: A DAG that contains Nodes, with multiple inputs and multiple outputs.
-        - `Function(EXPRESSIONS)`: use `EXPRESSIONS` to initialize a DAG. 
+        - `Function(EXPRESSIONS)`: use `EXPRESSIONS` to initialize a DAG.
         - `.evaluate(Node &output_node)`: compute the output of `Node &output_node`.
         - `.evaluate()`: compute the output with respect to all output nodes, and return `std::vector<float>`.
         - `.set_seed(std::vector<float> p)`: set the seed *p* when taking directional derivative.
@@ -176,7 +185,7 @@ We plan to use Doxygen to generate documentation from inline comments in our sou
         - `.output_node_ptrs`: a `std::vector<Node*>` that stores the pointers to output nodes (top level nodes).
         - `.book_keeper`: a `std::map<Node*, size_t>` that stores pointers to each node and its number of children.
         - `.aov_sequence`: a `std::vector<Node*>` that stores a feasible AOV sequence of this DAG. It is obtained by invoking `.generate_aov_sequence()`.
-  
+
     Other than classes, there are also some definitions of macros that are helpful.
     - `EXPRESSION`: A macro for `Node&`.
 
@@ -185,16 +194,16 @@ We plan to use Doxygen to generate documentation from inline comments in our sou
 - **What external dependencies will you rely on?**
     - `cmath`
     - `STL`
-    
+
 - **How will you deal with elementary functions like sin, sqrt, log, and exp (and all the others)?**  
     Overload the relevant functions in `cmath` so that they can take `Nodes` as input and return new `Nodes`, so that we can build the graph accordingly.
 
 # Feedback
 
-- **Feedback 1: Can we hear more about the reasoning behind choosing DAG as your core data structure? Is it necessary because of the reverse mode feature?** 
-    - We would not need a permanent data structure if we were only implementing the forward mode. However, as was discussed in lecture, since we intend to implement reverse mode, we need some data structure to store our operations. 
-    - This is because, in forward mode, we only make one "pass" through the function, computing both the value and derivative of the function after each operation. As a result, we would not need to keep an internal record of values / derivatives from earlier operations, since we do not return to them after they are computed. 
+- **Feedback 1: Can we hear more about the reasoning behind choosing DAG as your core data structure? Is it necessary because of the reverse mode feature?**
+    - We would not need a permanent data structure if we were only implementing the forward mode. However, as was discussed in lecture, since we intend to implement reverse mode, we need some data structure to store our operations.
+    - This is because, in forward mode, we only make one "pass" through the function, computing both the value and derivative of the function after each operation. As a result, we would not need to keep an internal record of values / derivatives from earlier operations, since we do not return to them after they are computed.
     - In contrast, for the reverse mode, after completing the forward pass to calculate the each operation's *values*, we then need to complete the reverse pass to calculate those operations' *derivatives*. We can only "go back" through our operations from the forward pass if we have kept a navigable record of the operations completed in the forward pass... so, we need some data structure to store this record.  
-    - It is not strictly necessary that data structure be a DAG. We could, for example, have represented our `Function` as a list or tree of operations. But we felt that: a) a DAG would allow us to represent multiple inputs / multiple outputs in a cleaner way than, for example, a simple list of operations, and b) a DAG has the additional benefit of lining up neatly with the "computational graph" representation of automatic differention that we have seen in lecture. 
-- **Feedback 2: Solid plan for unit testing. What can we expect to see functionality-wise and performance-wise?** 
+    - It is not strictly necessary that data structure be a DAG. We could, for example, have represented our `Function` as a list or tree of operations. But we felt that: a) a DAG would allow us to represent multiple inputs / multiple outputs in a cleaner way than, for example, a simple list of operations, and b) a DAG has the additional benefit of lining up neatly with the "computational graph" representation of automatic differention that we have seen in lecture.
+- **Feedback 2: Solid plan for unit testing. What can we expect to see functionality-wise and performance-wise?**
     - As described in our updated testing section, we expect that our `tests/` directory will include functional tests to check that our library is correctly calculating values on user-inputted functions. At this stage, we also intend to include benchmarking tests in this to check if the performance of key operations has deteriorated as a result of a commit.
