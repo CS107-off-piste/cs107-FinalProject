@@ -7,15 +7,11 @@ addons:
     - lcov
 script:
   - cd 3PL
-  - bash build_3PL.sh
+  - bash build_3PL.sh # build 3PLs
   - cd ..
-  - cd OffPiste
-  - bash config.sh
+  - cd OffPiste 
+  - bash config.sh # build project
   - cd ..
-  # build the project
-  - make hello
-  # run test suite on the project and generate code coverage reports
-  - make test
 after_success:
   - cd OffPiste 
   - bash coverage.sh
