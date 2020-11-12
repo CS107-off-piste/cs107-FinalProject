@@ -1,11 +1,23 @@
 language: cpp
 compiler:
   - gcc
+addons:
+  apt:
+    packages:
+    - lcov
 script:
+  - cd 3PL
+  - bash build_3PL.sh
+  - cd ..
+  - cd OffPiste
+  - bash config.sh
+  - cd ..
   # build the project
   - make hello
   # run test suite on the project and generate code coverage reports
   - make test
 after_success:
+  - cd OffPiste 
+  - bash coverage.sh
   # upload results to codecov
   - bash <(curl -s https://codecov.io/bash) -t 036e96ae-9cba-429d-9a52-78e9d28e2f35
