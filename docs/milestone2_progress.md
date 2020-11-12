@@ -1,6 +1,6 @@
 # Milestone 2B
 
-### Tasks and Timeline
+## Tasks and Timeline
 
 The following sections describe our plan for the implementation of Milestone 2 that we have been following - the taks and the targeted internal deadlines (in GMT +8).
 
@@ -14,7 +14,7 @@ Doxygen integration | Aleksander Aleksiev
 Packaging and distribution (update Makefile with shared object library creation) | Krithika Sundararajan
 
 ### Phase 2: Complete the implementation + docs (Internal Deadline: Wednesday, Nov 18, noon)
-* Every member implements some functions, adds corresponding tests and documents the code in the Forward AD class.
+* Every member __implements some functions, adds corresponding tests and documents the code__ in the Forward AD class.
 
 Functions | Assignee
 ----------|---------
@@ -23,7 +23,7 @@ Subtraction, Power | Zeren Long
 Exponential, Sine | Aleksander Aleksiev
 Cosine, Tangent | Krithika Sundararajan
 
-* Documentation: This will be updating the contents from the existing Milestone 1 doc, for the following sections.
+* __Documentation:__ This will be updating the contents from the existing Milestone 1 doc, for the following sections.
 
 Item | Assignee
 -----|---------
@@ -37,7 +37,7 @@ Future Features | Krithika Sundararajan
 
 We will review the stretch goals and pick up one or more of the items below, once the main requirements for M2 are in place.
 * Benchmark against other C++ libraries
-* Creating DLL (Ref: https://stackoverflow.com/questions/16693273/how-do-i-create-a-library)
+* Creating DLL ([Reference](https://stackoverflow.com/questions/16693273/how-do-i-create-a-library))
 * UML diagrams for the documentation (Implementation Details)
 * AD for Vector functions of Vector inputs
 
