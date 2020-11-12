@@ -5,7 +5,6 @@
 # ================== #
 BUILD_3PL=0
 BUILD_LIB=0
-BUILD_APP=0
 BUILD_TYPE=0
 CLEAN_DIST=0
 CLEAN=0
@@ -52,7 +51,6 @@ help() {
     echo "  [OPTION]:"
     echo "    --3pl       -3pl    build the 3rd party libraries:  gtest"
     echo "    --library   -lib    build MyAwesomeLibrary"
-    echo "    --app       -app    build the App which uses MyAwesomeLibrary"
     echo " "
     echo "    --help      -h      displays this help message"
     echo "    --clean     -c      removes local build directories"
@@ -116,10 +114,6 @@ do
     echo -e "Found known argument: ${gC}$var${eC}"
     BUILD_LIB=1
 
-  elif [ "$var" == "--app" -o "$var" == "-app" ]; then
-    echo -e "Found known argument: ${gC}$var${eC}"
-    BUILD_APP=1
-
   elif [ "$var" == "--release" -o "$var" == "-release" -o "$var" == "-opt" ]; then
     echo -e "Found known argument: ${gC}$var${eC}"
     BUILD_TYPE=0
@@ -176,10 +170,10 @@ fi
 # =================================================================== #
 
 # =================================================================== #
-if [ $BUILD_APP == 0 -a $BUILD_LIB == 0 -a $BUILD_3PL == 0 ]; then
-  echo "================================================"
-  echo "Building the GTest, MyAwesomeLibrary, and App..."
-  echo "================================================"
+if [ $BUILD_LIB == 0 -a $BUILD_3PL == 0 ]; then
+  echo "===================================="
+  echo "Building the GTest, MyAwesomeLibrary"
+  echo "===================================="
   echo " "
 
   cd 3PL
@@ -191,12 +185,6 @@ if [ $BUILD_APP == 0 -a $BUILD_LIB == 0 -a $BUILD_3PL == 0 ]; then
   cd MyAwesomeLibrary
 
   # build library
-  ./config.sh $cmd_args
-
-  cd ..
-  cd App
-
-  # build app
   ./config.sh $cmd_args
 
   cd ..
@@ -224,16 +212,6 @@ if [ $BUILD_LIB == 1 ]; then
   echo "============================"
 
   cd MyAwesomeLibrary
-  ./config.sh $cmd_args
-  cd ..
-fi
-
-if [ $BUILD_APP == 1 ]; then
-  echo "==============="
-  echo "Building App..."
-  echo "==============="
-
-  cd App
   ./config.sh $cmd_args
   cd ..
 fi
