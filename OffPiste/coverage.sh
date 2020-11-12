@@ -19,7 +19,7 @@ cd ${CURRENT_PATH}
 INSTALL_PATH=${PROJECT_ROOT}/install
 INSTALL_GTEST=${INSTALL_PATH}/googletest/include/gtest
 
-SRCPATH=${CURRENT_PATH}/build/core/src/CMakeFiles/MyAwesomeLibrary.dir
+SRCPATH=${CURRENT_PATH}/build/core/src/CMakeFiles/OffPiste.dir
 TESTPATH=${CURRENT_PATH}/build/core/tests/src/CMakeFiles/MALTest.dir
 COVERAGE_DIRECTORY=${CURRENT_PATH}/coverage
 
@@ -47,17 +47,17 @@ cd ${COVERAGE_DIRECTORY}
 
 # gather coverage info
 if [ -d "${TESTPATH}" ]; then
-    lcov --capture -d ${SRCPATH} -d ${TESTPATH} -o AWESOME_COV.info
+    lcov --capture -d ${SRCPATH} -d ${TESTPATH} -o OffPiste.info
 else
     echo -e "${rC}ERROR:${eC} Need to compile GTEST to get code coverage!"
     exit 1
 fi
 
 # remove usr and gtest info
-lcov --remove AWESOME_COV.info "/usr/*" "${INSTALL_PATH}/*" "${TEST_SRC_PATH}/*" -o AWESOME_COV.info
+lcov --remove OffPiste.info "/usr/*" "${INSTALL_PATH}/*" "${TEST_SRC_PATH}/*" -o OffPiste.info
 
 # generate html version of coverage
-genhtml AWESOME_COV.info -o CODE_COVERAGE
+genhtml OffPiste.info -o CODE_COVERAGE
 cd ..
 
 echo 

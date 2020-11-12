@@ -1,16 +1,16 @@
 file(GLOB MAL_H *.h)
 
 set(MAL_SRC
-    MyAwesomeLibrary.cpp
+    OffPiste.cpp
 )
 
 # ==================== #
 # Build shared library #
 # ==================== #
-add_library(MyAwesomeLibrary SHARED ${MAL_SRC} ${MAL_H})
+add_library(OffPiste SHARED ${MAL_SRC} ${MAL_H})
 
 # Install targets into specific directories
-install(TARGETS MyAwesomeLibrary 
+install(TARGETS OffPiste 
     RUNTIME DESTINATION bin/
     LIBRARY DESTINATION lib/
 	ARCHIVE DESTINATION lib/

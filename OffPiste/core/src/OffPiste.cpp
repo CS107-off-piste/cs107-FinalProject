@@ -1,13 +1,5 @@
-/**
- * @file    MyAwesomeLibrary.cpp
- * @author  Andrew Kirby
- * @brief   MyAwesomeLibrary implementations.
- *
- * Created on October 21, 2020, 1:50 PM
- */
-
 /* header files */
-#include "MyAwesomeLibrary.hpp"
+#include "OffPiste.hpp"
 
 /* explicitly tell compiler to build these templates */
 //template class AutoDiff<int>;

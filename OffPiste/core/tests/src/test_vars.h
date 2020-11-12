@@ -1,9 +1,3 @@
-/**
- * \file    test_vars.h
- * \ingroup tests_group
- * \author  akirby
- */
-
 #ifndef TEST_VARS_H
 #define TEST_VARS_H
 
@@ -27,7 +21,7 @@ extern "C" {
 
 
 /** Display testing information */
-void MyAwesomeLibrary_testcheck();
+void OffPiste_testcheck();
 
 
 #ifdef __cplusplus

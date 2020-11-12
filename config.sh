@@ -50,7 +50,7 @@ help() {
     echo -e " ${aC}Options List:${eC}"
     echo "  [OPTION]:"
     echo "    --3pl       -3pl    build the 3rd party libraries:  gtest"
-    echo "    --library   -lib    build MyAwesomeLibrary"
+    echo "    --library   -lib    build OffPiste"
     echo " "
     echo "    --help      -h      displays this help message"
     echo "    --clean     -c      removes local build directories"
@@ -172,7 +172,7 @@ fi
 # =================================================================== #
 if [ $BUILD_LIB == 0 -a $BUILD_3PL == 0 ]; then
   echo "===================================="
-  echo "Building the GTest, MyAwesomeLibrary"
+  echo "Building the GTest, OffPiste"
   echo "===================================="
   echo " "
 
@@ -182,7 +182,7 @@ if [ $BUILD_LIB == 0 -a $BUILD_3PL == 0 ]; then
   ./build_3PL.sh $cmd_args
 
   cd ..
-  cd MyAwesomeLibrary
+  cd OffPiste
 
   # build library
   ./config.sh $cmd_args
@@ -208,10 +208,10 @@ fi
 
 if [ $BUILD_LIB == 1 ]; then
   echo "============================"
-  echo "Building MyAwesomeLibrary..."
+  echo "Building OffPiste..."
   echo "============================"
 
-  cd MyAwesomeLibrary
+  cd OffPiste
   ./config.sh $cmd_args
   cd ..
 fi

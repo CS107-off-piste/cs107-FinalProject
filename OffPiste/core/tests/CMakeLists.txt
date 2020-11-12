@@ -21,7 +21,7 @@ set(libs
 add_subdirectory(${TEST_SRC_PATH})
 
 add_executable(${TEST_EXE} test_main.cpp)
-target_link_libraries(${TEST_EXE} MALTest MyAwesomeLibrary ${libs})
+target_link_libraries(${TEST_EXE} MALTest OffPiste ${libs})
 target_link_libraries(${TEST_EXE} pthread)
 
 add_test(NAME ${TEST_EXE}

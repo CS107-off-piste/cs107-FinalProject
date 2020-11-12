@@ -6,11 +6,11 @@
 #include "gtest/gtest.h"
 
 /* header files */
-#include "MyAwesomeLibrary.hpp"
+#include "OffPiste.hpp"
 #include "test_vars.h"
 
-void MyAwesomeLibrary_testcheck(){
-    printf("Starting Awesome Library tests...\n");
+void OffPiste_testcheck(){
+    printf("Starting Off Piste tests...\n");
 }
 
 TEST(Getter,int){

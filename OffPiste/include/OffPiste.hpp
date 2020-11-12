@@ -1,10 +1,5 @@
-/**
- * @file MyAwesomeLibrary.h
- * @author Andrew Kirby
- */
-
-#ifndef MYAWESOMELIBRARY_H
-#define MYAWESOMELIBRARY_H
+#ifndef OFFPISTE_H
+#define OFFPISTE_H
 
 /* header files */
 
@@ -53,4 +48,4 @@ class AutoDiff {
     }
 };
 
-#endif /* MYAWESOMELIBRARY_H */
+#endif /* OFFPISTE_H */
