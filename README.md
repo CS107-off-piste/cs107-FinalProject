@@ -12,6 +12,8 @@ Final Project for [CS107/AC207/CSCI E-207](https://harvard-iacs.github.io/2020-C
 
 ## Local Development
 
+The local development setup for this project is based on the skeleton project provided by Andrew Kirby [here](https://github.com/ackirby88/CS107/tree/master/skeleton-project).
+
 An overview of important local development commands is provided below. For more information, see:
 
 ```
