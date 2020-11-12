@@ -12,6 +12,12 @@ Final Project for [CS107/AC207/CSCI E-207](https://harvard-iacs.github.io/2020-C
 
 ## Local Development
 
+An overview of important local development commands is provided below. For more information, see:
+
+```
+$ ./config.sh --help
+```
+
 ### Compilation
 
 The Off Piste library can be compiled with:
