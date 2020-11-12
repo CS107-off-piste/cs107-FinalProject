@@ -2,7 +2,7 @@
 
 ## Tasks and Timeline
 
-The following sections describe our plan for the implementation of Milestone 2 that we have been following - the taks and the targeted internal deadlines (in GMT +8).
+The following sections describe our plan for the implementation of Milestone 2 that we have been following - the tasks and the targeted internal deadlines (in GMT +8).
 
 ### Phase 1: Project Scaffolding (Internal Deadline: Saturday, Nov 14, midnight)
 
@@ -23,7 +23,7 @@ Subtraction, Power | Zeren Long
 Exponential, Sine | Aleksander Aleksiev
 Cosine, Tangent | Krithika Sundararajan
 
-* __Documentation:__ This will be updating the contents from the existing Milestone 1 doc, for the following sections.
+* __Documentation:__ Each member updates the following sections of the Milestone 1 document:
 
 Item | Assignee
 -----|---------
@@ -38,13 +38,13 @@ Future Features | Krithika Sundararajan
 We will review the stretch goals and pick up one or more of the items below, once the main requirements for M2 are in place.
 * Benchmark against other C++ libraries
 * Creating DLL ([Reference](https://stackoverflow.com/questions/16693273/how-do-i-create-a-library))
-* UML diagrams for the documentation (Implementation Details)
+* UML diagrams for the documentation, to help users to visualise the project's class structure (Implementation Details)
 * AD for Vector functions of Vector inputs
 
 ## Individual Progress Summary
 
 ### Aleksander Aleksiev
-For M2, my main focus will be on setting up the inline code documentation tools (Doxygen) and making sure that any code we add is appropriately documented using these tools. This documentation will continue to be a focus of mine through the rest of the project. Since M1, I set up the skeleton framework, on which the M2 work was based.
+For M2, my main focus will be on setting up the inline code documentation tools (Doxygen) and making sure that any code we add is appropriately documented using these tools. This documentation will continue to be a focus of mine through the rest of the project. Since M1, I set up the project's skeleton framework, on which the M2 work will be based.
 
 ### Krithika Sundararajan
 For Milestone 2, my focus would be on setting up the packaging and distribution of our AD library, and I have been reading up on this and reviewing the lectures. As a basic step, this would involve defining a make target to create a shared object library that can be linked to the user’s application. As a stretch goal, I would also like to investigate distributing the library as a .dll. I am also attempting to create the package as a part of the CI in TravisCI, and publishing it to Github releases.
