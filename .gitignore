@@ -35,3 +35,6 @@
 *.gcda
 *.gcno
 *.gcov
+
+# Mac-specific files
+.DS_Store
