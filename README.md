@@ -14,29 +14,30 @@ Final Project for [CS107/AC207/CSCI E-207](https://harvard-iacs.github.io/2020-C
 
 ### Compilation
 
-A simple C++ program `hello_world.cpp` has been added to the repo, for starters. This program can be compiled with:
+The Off Piste library can be compiled with:
+
 ```
-$ make hello
-```
-and executed with:
-```
-$ ./hello_world.o
+$ ./config.sh --3pl #build 3rd party testing libraries
+$ ./config.sh --library #build Off Piste library
 ```
 
 ### Running Tests
 
-Tests can be run locally using the following commands. At the end of the test run, a code coverage summary is displayed.
+Tests can be run locally using the following commands.
 
 ```
-$ make hello
-$ make test
+$ ./config.sh
 ```
+
+### Code Coverage
+
+**TBC**.
 
 ### Clean Up
 
 The compiled binary and test coverage output can be removed using:
 ```
-$ make clean
+$ ./config.sh --clean
 ```
 
 ## Documentation
