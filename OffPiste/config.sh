@@ -287,7 +287,7 @@ if [ $BUILD_CLEAN == 1 ]; then
   echo " "
   rm -rf $COMPILE_BUILD_MAL_DIRECTORY
   rm -rf $COMPILE_INSTALL_MAL_DIRECTORY
-  rm -rf coverage
+  rm -rf $CURRENT_PATH/coverage
 fi
 
 # =================================================================== 

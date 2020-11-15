@@ -8,6 +8,7 @@ BUILD_LIB=0
 BUILD_TYPE=0
 CLEAN_DIST=0
 CLEAN=0
+COVERAGE=0
 # ============== #
 # print strings
 # ============== #
@@ -122,6 +123,10 @@ do
     echo -e "Found known argument: ${gC}$var${eC}"
     BUILD_TYPE=1
 
+  elif [ "$var" == "--coverage" -o "$var" == "-coverage" -o "$var" == "-cov" ]; then
+    echo -e "Found known argument: ${gC}$var${eC}"
+    COVERAGE=1
+
   elif [ "$var" == "--clean" -o "$var" == "-clean" -o "$var" == "-c" -o \
          "$var" == "--testsOFF" -o "$var" == "-testsOFF" -o "$var" == "-toff" -o \
          "${var:0:3}" == "CC=" -o "${var:0:3}" == "cc=" -o \
@@ -138,7 +143,7 @@ do
          "${var:0:11}" == "solver_dir=" -o \
          "$var" == "--ALL3PL" -o "$var" == "--all3pl" -o "$var" == "-all3pl" -o \
          "$var" == "--GTEST" -o "$var" == "-gtest" -o \
-         "$var" == "--Coverage" -o "$var" == "-coverage" -o "$var" == "-cov" -o \
+         "$var" == "--coverage" -o "$var" == "-coverage" -o "$var" == "-cov" -o \
          "${var}" == "-go" ]; then
     echo -e "Found known argument: ${gC}$var${eC}"
 
@@ -220,6 +225,15 @@ if [ $BUILD_LIB == 1 ]; then
   ./config.sh $cmd_args
   cd ..
 fi
+
+if [ $COVERAGE == 1 ]; then
+  echo "============================"
+  echo "Building Coverage generation"
+  echo "============================"
+
+  cd OffPiste
+  ./config.sh --coverage
+  cd ..
 
 echo
 echo "======================================"
