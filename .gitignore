@@ -42,3 +42,4 @@
 # build artefacts
 build/
 install/
+coverage/
