@@ -37,7 +37,7 @@ fi
 echo "Rebuilding library with coverage flags!"
 echo "(Note: rebuilding library with coverage flags uses GCC)"
 cd build
-cmake -D COVERAGE=ON -D CMAKE_C_COMPILER=GNU .
+cmake -D COVERAGE=ON -D CMAKE_C_COMPILER=g++ -D CMAKE_C_COMPILER=gcc .
 make install
 cd ..
 
