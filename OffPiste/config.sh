@@ -193,6 +193,8 @@ do
 
   elif [ "$var" == "--coverage" -o "$var" == "-coverage" -o "$var" == "-cov" ]; then
     COVERAGE=ON
+    CC=gcc
+    CXX=g++
   
   elif [ "$var" == "-go" ]; then
     CC=gcc
@@ -362,6 +364,7 @@ if [ $BUILD_MAL == 1 ]; then
 fi
 
 if [ ${COVERAGE} == "ON" ]; then
+    cd $CURRENT_PATH
     echo "Building code coverage..."
     ./coverage.sh
 fi
