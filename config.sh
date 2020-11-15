@@ -159,12 +159,17 @@ cmd_args="${@:1}"
 # =================================================================== #
 if [ $CLEAN_DIST == 1 ]; then
   rm -rf install
-  rm -rf builds
+  CLEAN=1
   exit 0
 fi
 
 if [ $CLEAN == 1 ]; then
     rm -rf builds
+
+    # clean up OffPiste sub-folder
+    cd OffPiste
+    ./config.sh --clean
+    cd ..
     exit 0
 fi
 # =================================================================== #
