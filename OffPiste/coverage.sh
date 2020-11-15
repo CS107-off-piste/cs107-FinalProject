@@ -35,13 +35,14 @@ fi
 
 # Recompile code with COVERAGE enabled
 echo "Rebuilding library with coverage flags!"
+echo "(Note: rebuilding library with coverage flags uses GCC)"
 cd build
-cmake -DCOVERAGE=ON .
+cmake -D COVERAGE=ON -D CMAKE_FOO_COMPILER=GNU .
 make install
 cd ..
 
 # ===================
-# cuild code coverage
+# build code coverage
 # ===================
 cd ${COVERAGE_DIRECTORY}
 
