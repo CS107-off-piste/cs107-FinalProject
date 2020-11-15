@@ -35,3 +35,11 @@
 *.gcda
 *.gcno
 *.gcov
+
+# Mac-specific files
+.DS_Store
+
+# build artefacts
+build/
+install/
+coverage/
