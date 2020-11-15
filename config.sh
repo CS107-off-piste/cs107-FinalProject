@@ -3,12 +3,13 @@
 # ================== #
 # compiling defaults
 # ================== #
-BUILD_3PL=0
-BUILD_LIB=0
+BUILD_3PL=1
+BUILD_LIB=1
 BUILD_TYPE=0
 CLEAN_DIST=0
 CLEAN=0
 COVERAGE=0
+DOCUMENTATION_GEN=0
 # ============== #
 # print strings
 # ============== #
@@ -59,6 +60,8 @@ help() {
     echo "    --release   -opt    compile the project in optimized mode"
     echo "    --debug     -deb    compile the project in debug mode"
     echo "    --testsON   -ton    turn on unit tests (google tests)"
+    echo "    --coverage   -cov   generate a coverage report in OffPiste/coverage"
+    echo "    --gen-docs   -docs   generate a coverage report in OffPiste/coverage"
     echo " "
     echo "  [COMPILER OPTIONS]:"
     echo "     CC=<arg>   cc=<arg>    sets the C compiler"
@@ -126,6 +129,14 @@ do
   elif [ "$var" == "--coverage" -o "$var" == "-coverage" -o "$var" == "-cov" ]; then
     echo -e "Found known argument: ${gC}$var${eC}"
     COVERAGE=1
+    BUILD_3PL=0
+    BUILD_LIB=0
+
+  elif [ "$var" == "--gen-docs" -o "$var" == "-gen-docs" -o "$var" == "-docs" ]; then
+    echo -e "Found known argument: ${gC}$var${eC}"
+    DOCUMENTATION_GEN=1
+    BUILD_3PL=0
+    BUILD_LIB=0
 
   elif [ "$var" == "--clean" -o "$var" == "-clean" -o "$var" == "-c" -o \
          "$var" == "--testsOFF" -o "$var" == "-testsOFF" -o "$var" == "-toff" -o \
@@ -160,7 +171,6 @@ done
 echo "$0 $@"
 cmd_args="${@:1}"
 
-
 # =================================================================== #
 if [ $CLEAN_DIST == 1 ]; then
   rm -rf install
@@ -180,31 +190,6 @@ fi
 # =================================================================== #
 
 # =================================================================== #
-if [ $BUILD_LIB == 0 -a $BUILD_3PL == 0 ]; then
-  echo "===================================="
-  echo "Building the GTest, OffPiste"
-  echo "===================================="
-  echo " "
-
-  cd 3PL
-
-  # build 3PL libraries
-  ./build_3PL.sh $cmd_args
-
-  cd ..
-  cd OffPiste
-
-  # build library
-  ./config.sh $cmd_args
-
-  cd ..
-
-  echo
-  echo "================================================"
-  echo -e "${gC} Finished Successfully...${eC}"
-  echo "================================================"
-  exit 0
-fi
 
 if [ $BUILD_3PL == 1 ]; then
   echo "==================================="
@@ -234,10 +219,17 @@ if [ $COVERAGE == 1 ]; then
   cd OffPiste
   ./config.sh --coverage
   cd ..
+fi
 
-echo
+if [ $DOCUMENTATION_GEN == 1 ]; then
+  echo "============================"
+  echo "Building Docs using Doxygen"
+  echo "============================"
+
+  doxygen Doxyfile
+fi
+
 echo "======================================"
 echo -e "${gC} Finished Successfully...${eC}"
 echo "======================================"
 exit 0
-
