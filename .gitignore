@@ -43,3 +43,4 @@
 build/
 install/
 coverage/
+docs/doxygen/
