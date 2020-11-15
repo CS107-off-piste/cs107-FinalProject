@@ -26,12 +26,12 @@ The Off Piste library can be compiled with:
 
 ```
 $ ./config.sh --3pl #build 3rd party testing libraries
-$ ./config.sh --library #build Off Piste library
+$ ./config.sh --library #build OffPiste library and run tests
 ```
 
 ### Running Tests
 
-Tests can be run locally using the following commands.
+Tests can be run locally using the following command which will build the 3rd party libraries, the OffPiste library and run the tests.
 
 ```
 $ ./config.sh
@@ -39,7 +39,11 @@ $ ./config.sh
 
 ### Code Coverage
 
-**TBC**.
+After the library has been built, use the following command to rebuild the OffPiste library with the coverage flags, run tests and gather the code coverage report.
+
+```
+$ ./config.sh --coverage
+```
 
 ### Clean Up
 
