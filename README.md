@@ -29,6 +29,11 @@ $ ./config.sh --3pl #build 3rd party testing libraries
 $ ./config.sh --library #build OffPiste library and run tests
 ```
 
+To build the library in `.so` format, use:
+```
+bash config.sh -lib -so -testsOFF
+```
+
 ### Running Tests
 
 Tests can be run locally using the following command which will build the 3rd party libraries, the OffPiste library and run the tests.

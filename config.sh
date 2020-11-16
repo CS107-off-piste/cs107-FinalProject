@@ -57,6 +57,7 @@ help() {
     echo "    --debug     -deb    compile the project in debug mode"
     echo "    --testsON   -ton    turn on unit tests (google tests)"
     echo "    --coverage  -cov    generate code coverage report for unit tests"
+    echo "    --build_so  -so     compile the library into .so"
     echo " "
     echo "  [COMPILER OPTIONS]:"
     echo "     CC=<arg>   cc=<arg>    sets the C compiler"
@@ -136,9 +137,6 @@ do
          "${var}" == "--avx" -o  "${var}" == "-avx" -o \
          "${var}" == "--avx2" -o  "${var}" == "-avx2" -o \
          "${var}" == "--avx512" -o  "${var}" == "-avx512" -o \
-         "${var:0:13}" == "solver_so_2d=" -o \
-         "${var:0:13}" == "solver_so_3d=" -o \
-         "${var:0:11}" == "solver_dir=" -o \
          "$var" == "--ALL3PL" -o "$var" == "--all3pl" -o "$var" == "-all3pl" -o \
          "$var" == "--GTEST" -o "$var" == "-gtest" -o \
          "$var" == "--coverage" -o "$var" == "-coverage" -o "$var" == "-cov" -o \
