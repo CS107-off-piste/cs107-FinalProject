@@ -3,8 +3,8 @@
 # ================== #
 # compiling defaults
 # ================== #
-BUILD_3PL=1
-BUILD_LIB=1
+BUILD_3PL=0
+BUILD_LIB=0
 BUILD_TYPE=0
 CLEAN_DIST=0
 CLEAN=0
@@ -131,14 +131,10 @@ do
   elif [ "$var" == "--coverage" -o "$var" == "-coverage" -o "$var" == "-cov" ]; then
     echo -e "Found known argument: ${gC}$var${eC}"
     COVERAGE=1
-    BUILD_3PL=0
-    BUILD_LIB=0
 
   elif [ "$var" == "--gen-docs" -o "$var" == "-gen-docs" -o "$var" == "-docs" ]; then
     echo -e "Found known argument: ${gC}$var${eC}"
     DOCUMENTATION_GEN=1
-    BUILD_3PL=0
-    BUILD_LIB=0
 
   elif [ "$var" == "--format" -o "$var" == "-form" ]; then
     echo -e "Found known argument: ${gC}$var${eC}"
@@ -198,6 +194,11 @@ fi
 # =================================================================== #
 
 # =================================================================== #
+if [ $BUILD_LIB == 0 -a $BUILD_3PL == 0 -a $COVERAGE == 0 -a $DOCUMENTATION_GEN == 0 ]; then
+  # by default, if no options are set, build OffPiste and 3PL
+  BUILD_3PL=1
+  BUILD_LIB=1
+fi
 
 if [ $BUILD_3PL == 1 ]; then
   echo "==================================="

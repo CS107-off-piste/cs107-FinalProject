@@ -14,9 +14,11 @@ At this stage, we do not intend to rely on any external modules. However, we wil
 
 ### Where will your test suite live? Will you use TravisCI? CodeCov?
 
-As described above, we intend to have a separate `test/` directory in which test files will be placed. Our intention is to use [Google's C++ testing library](https://github.com/google/googletest).
+As described above, we intend to have a separate `test/` directory in which test files will be placed. Our intention is to use [Google's C++ testing library](https://github.com/google/googletest) to perform testing in this directory. This will include both "unit" tests to test specific functions, and broader "functional" tests to check that our library is performing as expected on end-user tasks such as computing the derivative and value from a user-inputted function. 
 
-We have already set up TravisCI and CodeCov as part of the previous Milestone. We will update our `travis.yml` and `Makefile` to automate the running of tests following pushes to the project repository.
+As the project progresses, we will also look into using their [benchmarking library](https://github.com/google/benchmark), in order to provide performance reports so that we can notice if a commit has caused performance of core functions (such as building a computational graph or calculating its derivative and value using the reverse mode) to deteriorate. Once the implementation is complete, we will also be benchmarking the running time, as a function of the number of independent variables, against other popular Automatic Differentiation libraries.
+
+We have already set up TravisCI and CodeCov as part of the previous Milestone. We will update our `travis.yml` and `Makefile` to automate the running of the tests described above, following each push to the project repository.
 
 ### How will you distribute your package (e.g. PyPI)?
 
