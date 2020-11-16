@@ -10,6 +10,7 @@ CLEAN_DIST=0
 CLEAN=0
 COVERAGE=0
 DOCUMENTATION_GEN=0
+FORMAT=0
 # ============== #
 # print strings
 # ============== #
@@ -61,7 +62,8 @@ help() {
     echo "    --debug     -deb    compile the project in debug mode"
     echo "    --testsON   -ton    turn on unit tests (google tests)"
     echo "    --coverage   -cov   generate a coverage report in OffPiste/coverage"
-    echo "    --gen-docs   -docs   generate a coverage report in OffPiste/coverage"
+    echo "    --gen-docs   -docs  generate a coverage report in OffPiste/coverage"
+    echo "    --format     -form  format source files in OffPiste/ using clang-format"
     echo " "
     echo "  [COMPILER OPTIONS]:"
     echo "     CC=<arg>   cc=<arg>    sets the C compiler"
@@ -135,6 +137,12 @@ do
   elif [ "$var" == "--gen-docs" -o "$var" == "-gen-docs" -o "$var" == "-docs" ]; then
     echo -e "Found known argument: ${gC}$var${eC}"
     DOCUMENTATION_GEN=1
+    BUILD_3PL=0
+    BUILD_LIB=0
+
+  elif [ "$var" == "--format" -o "$var" == "-form" ]; then
+    echo -e "Found known argument: ${gC}$var${eC}"
+    FORMAT=1
     BUILD_3PL=0
     BUILD_LIB=0
 
@@ -227,6 +235,20 @@ if [ $DOCUMENTATION_GEN == 1 ]; then
   echo "============================"
 
   doxygen Doxyfile
+fi
+
+if [ $FORMAT == 1 ]; then
+  echo "========================================"
+  echo "Formatting source code with clang-format"
+  echo "========================================"
+  
+  # find all .cpp, .hpp, .cc, .cxx files in OffPiste/core
+  # and run clang-format using the .clang-format file in the project root directory
+  find OffPiste/core \( -name '*.hpp' -or -name '*.cpp' \) -print -exec clang-format -style=file -i '{}' \;
+
+  # repeat for files in OffPiste/include
+  find OffPiste/include \( -name '*.hpp' -or -name '*.cpp' \) -print -exec clang-format -style=file -i '{}' \;
+
 fi
 
 echo "======================================"
