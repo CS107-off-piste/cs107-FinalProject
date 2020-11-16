@@ -70,6 +70,11 @@ COVERAGE=OFF
 BUILD_TYPE="Release"
 
 # ======================== 
+# compile into .so
+# ======================== 
+PACKAGE_MODULE=OFF
+
+# ======================== 
 # make and install command
 # ======================== 
 MAKE_CMD="make install"
@@ -89,7 +94,7 @@ mC="\x1B[0;43m"
 help() {
     echo "Usage: $0 [OPTION]...[COMPILER OPTIONS]..."
     echo " "
-    echo "  This script builds the sample finite volume solver for dg4est. "
+    echo " This script builds the OffPiste Autodiff library. "
     echo " "
     echo "  [OPTION]:"
     echo "    --help    -h      displays this help message"
@@ -110,13 +115,6 @@ help() {
     echo "     --avx     -avx         sets Intel AVX Instructions"
     echo "     --avx2    -avx2        sets Intel AVX-2 Instructions"
     echo "     --avx512  -avx512      sets Intel AVX-512 Instructions"
-    echo " "
-    echo "  Recommended Options:"
-    echo "    Default (-go):"
-    echo "      ./build_solver.sh CC=gcc CXX=g++ FC=gfortran"
-    echo " "
-    echo "    Intel Compilers (-iintel): "
-    echo "      ./build_solver.sh CC=icc CXX=icpc FC=ifort"
 }
 # ----------------------------- #
 # Start the compilation process #
@@ -195,6 +193,9 @@ do
     COVERAGE=ON
     CC=gcc
     CXX=g++
+
+  elif [ "$var" == "--build_so" -o "$var" == "-so" ]; then
+    PACKAGE_MODULE=ON
   
   elif [ "$var" == "-go" ]; then
     CC=gcc
@@ -325,6 +326,7 @@ if [ $BUILD_MAL == 1 ]; then
         -D gtest_dir=${GTEST_DIRECTORY}                             \
         -D UNIT_TEST=${UNIT_TEST}                                   \
         -D COVERAGE=${COVERAGE}                                     \
+        -D PACKAGE_MODULE=${PACKAGE_MODULE}                         \
         -G "Unix Makefiles" ${MAL_DIRECTORY} | tee cmake_config.out
 
   ${MAKE_CMD}

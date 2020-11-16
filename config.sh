@@ -26,19 +26,16 @@ oC="\x1B[3;93m"
 mC="\x1B[0;43m"
 
 logo() {
-    echo    " ╔══════════════════════════════════════════════════╗";
-    echo -e " ║${GC}██████${eC}${gC}╗${eC} ${GC} ██████${eC}${gC}╗ ${eC}██${gC}╗${eC}  ██${gC}╗${eC}███████${gC}╗${eC}███████${gC}╗${eC}████████${gC}╗${eC}║";
-    echo -e " ║${GC}██${eC}${gC}╔══${eC}${GC}██${gC}╗${eC}${GC}██${eC}${gC}╔════╝ ${eC}██${gC}║${eC}  ██${gC}║${eC}██${gC}╔════╝${eC}██${gC}╔════╝╚══${eC}██${gC}╔══╝${eC}║";
-    echo -e " ║${GC}██${eC}${gC}║${eC}  ${GC}██${eC}${gC}║${eC}${GC}██${eC}${gC}║${eC} ${GC}████${eC}${gC}╗${eC}███████${gC}║${eC}█████${gC}╗${eC}  ███████${gC}╗${eC}   ██${gC}║   ${eC}║";
-    echo -e " ║${GC}██${eC}${gC}║${eC}  ${GC}██${eC}${gC}║${eC}${GC}██${eC}${gC}║${eC} ${gC}╚═${eC}${GC}██${eC}${gC}║╚════${eC}██${gC}║${eC}██${gC}╔══╝  ╚════${eC}██${gC}║${eC}   ██${gC}║   ${eC}║";
-    echo -e " ║${GC}██████${eC}${gC}╔╝╚${eC}${GC}██████${eC}${gC}╔╝${eC}     ██${gC}║${eC}███████${gC}╗${eC}███████${gC}║${eC}   ██${gC}║${eC}   ║";
-    echo -e " ║${gC}╚═════╝  ╚═════╝      ╚═╝╚══════╝╚══════╝   ╚═╝${eC}   ║";
-    echo    " ║                                                  ║";
-    echo    " ║                 Andrew C. Kirby                  ║";
-    echo    " ╚══════════════════════════════════════════════════╝";
+    echo    " _______  _______  _______  _______  ___   _______  _______  _______ "
+    echo -e "|       ||       ||       ||       ||   | |       ||       ||       |"
+    echo -e "|   _   ||    ___||    ___||    _  ||   | |  _____||_     _||    ___|"
+    echo -e "|  | |  ||   |___ |   |___ |   |_| ||   | | |_____   |   |  |   |___ "
+    echo -e "|  |_|  ||    ___||    ___||    ___||   | |_____  |  |   |  |    ___|"
+    echo -e "|       ||   |    |   |    |   |    |   |  _____| |  |   |  |   |___ "
+    echo -e "|_______||___|    |___|    |___|    |___| |_______|  |___|  |_______|"
+    echo
     echo -e " ${GC} >>>>>>  Easy Build Option:   ./config.sh    <<<<<<${eC}"
-    echo -e " ==================================================== "
-
+    echo -e " ===================================================================="
 }
 
 help() {
@@ -60,7 +57,8 @@ help() {
     echo "    --release   -opt    compile the project in optimized mode"
     echo "    --debug     -deb    compile the project in debug mode"
     echo "    --testsON   -ton    turn on unit tests (google tests)"
-    echo "    --coverage   -cov   generate a coverage report in OffPiste/coverage"
+    echo "    --coverage  -cov    generate code coverage report for unit tests"
+    echo "    --build_so  -so     compile the library into .so"
     echo "    --gen-docs   -docs   generate a coverage report in OffPiste/coverage"
     echo " "
     echo "  [COMPILER OPTIONS]:"
@@ -114,7 +112,7 @@ do
     echo -e "Found known argument: ${gC}$var${eC}"
     BUILD_3PL=1
 
-  elif [ "$var" == "--lib" -o "$var" == "-lib" ]; then
+  elif [ "$var" == "--library" -o "$var" == "-lib" ]; then
     echo -e "Found known argument: ${gC}$var${eC}"
     BUILD_LIB=1
 
@@ -145,9 +143,6 @@ do
          "${var}" == "--avx" -o  "${var}" == "-avx" -o \
          "${var}" == "--avx2" -o  "${var}" == "-avx2" -o \
          "${var}" == "--avx512" -o  "${var}" == "-avx512" -o \
-         "${var:0:13}" == "solver_so_2d=" -o \
-         "${var:0:13}" == "solver_so_3d=" -o \
-         "${var:0:11}" == "solver_dir=" -o \
          "$var" == "--ALL3PL" -o "$var" == "--all3pl" -o "$var" == "-all3pl" -o \
          "$var" == "--GTEST" -o "$var" == "-gtest" -o \
          "$var" == "--coverage" -o "$var" == "-coverage" -o "$var" == "-cov" -o \
@@ -186,6 +181,7 @@ fi
 # =================================================================== #
 
 # =================================================================== #
+
 if [ $BUILD_LIB == 0 -a $BUILD_3PL == 0 -a $COVERAGE == 0 -a $DOCUMENTATION_GEN == 0 ]; then
   # by default, if no options are set, build OffPiste and 3PL
   BUILD_3PL=1

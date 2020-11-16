@@ -22,16 +22,23 @@ $ ./config.sh --help
 
 ### Compilation
 
-The Off Piste library can be compiled with:
+The Off Piste library can be compiled with the following commands. By default, this compiles the library to a `.dylib` on a Mac and `.so` on other Unix systems.
 
 ```
 $ ./config.sh --3pl #build 3rd party testing libraries
-$ ./config.sh --library #build Off Piste library
+$ ./config.sh --library #build OffPiste library and run tests
+```
+
+The resultant library and header files can be found in `OffPiste/install/`.
+
+On a Mac, to build the library in `.so` format, use:
+```
+bash config.sh -lib -so -testsOFF
 ```
 
 ### Running Tests
 
-Tests can be run locally using the following commands.
+Tests can be run locally using the following command which will build the 3rd party libraries, the OffPiste library and run the tests.
 
 ```
 $ ./config.sh
@@ -39,7 +46,11 @@ $ ./config.sh
 
 ### Code Coverage
 
-**TBC**.
+After the library has been built, use the following command to rebuild the OffPiste library with the coverage flags, run tests and gather the code coverage report.
+
+```
+$ ./config.sh --coverage
+```
 
 ### Clean Up
 
@@ -62,4 +73,5 @@ This folder also contains detailed documentation on each of the classes implemen
 
 This repository is configured to work with Travis CI. With every commit, the following actions are performed.
 * The code is compiled using the `gcc` compiler.
-* If the compilation is successful, the binary is executed and `gcov` is used to analyse what portion of code is covered. The code coverage results are provided on CodeCov.
+* If the compilation is successful, the binary is executed and `lcov` is used to analyse what portion of code is covered. The code coverage results are provided on CodeCov.
+* Creating a tag on Github will trigger a build on TravisCI and a Github release will be created with the compiled `.so` file.
