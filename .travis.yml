@@ -13,7 +13,10 @@ script:
 deploy:
   provider: releases
   api_key: $GITHUB_OAUTH_TOKEN
-  file: ./OffPiste/install/lib/libOffPiste.so
+  file_glob: true
+  file:
+    - OffPiste/install/lib/libOffPiste.so
+    - OffPiste/include/*
   skip_cleanup: true
   on:
     tags: true
