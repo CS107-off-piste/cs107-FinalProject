@@ -56,6 +56,8 @@ The `docs/` folder contains information on the implementation and the mathematic
 * [Software Organization](./docs/SOFTWARE_ORGANIZATION.md)
 * [Implementation](./docs/IMPLEMENTATION.md)
 
+This folder also contains detailed documentation on each of the classes implemented as part of this project, at `docs/doxygen/index.html`. This documentation can be manually generated using `./config.sh --gen-docs` if you have `doxygen` installed.
+
 ## Continuous Integration
 
 This repository is configured to work with Travis CI. With every commit, the following actions are performed.
