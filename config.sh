@@ -187,29 +187,9 @@ fi
 
 # =================================================================== #
 if [ $BUILD_LIB == 0 -a $BUILD_3PL == 0 -a $COVERAGE == 0 -a $DOCUMENTATION_GEN == 0 ]; then
-  echo "===================================="
-  echo "Building the GTest, OffPiste"
-  echo "===================================="
-  echo " "
-
-  cd 3PL
-
-  # build 3PL libraries
-  ./build_3PL.sh $cmd_args
-
-  cd ..
-  cd OffPiste
-
-  # build library
-  ./config.sh $cmd_args
-
-  cd ..
-
-  echo
-  echo "================================================"
-  echo -e "${gC} Finished Successfully...${eC}"
-  echo "================================================"
-  exit 0
+  # by default, if no options are set, build OffPiste and 3PL
+  BUILD_3PL=1
+  BUILD_LIB=1
 fi
 
 if [ $BUILD_3PL == 1 ]; then
