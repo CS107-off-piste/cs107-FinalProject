@@ -43,8 +43,4 @@
 build/
 install/
 coverage/
-<<<<<<< HEAD
 docs/doxygen/latex/
-=======
-docs/doxygen/
->>>>>>> a9f927282b3e76c6d7d1e0beaa98408206be9198
