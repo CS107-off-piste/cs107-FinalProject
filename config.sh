@@ -9,6 +9,7 @@ BUILD_TYPE=0
 CLEAN_DIST=0
 CLEAN=0
 COVERAGE=0
+DOCUMENTATION_GEN=0
 # ============== #
 # print strings
 # ============== #
@@ -58,6 +59,7 @@ help() {
     echo "    --testsON   -ton    turn on unit tests (google tests)"
     echo "    --coverage  -cov    generate code coverage report for unit tests"
     echo "    --build_so  -so     compile the library into .so"
+    echo "    --gen-docs   -docs   generate a coverage report in OffPiste/coverage"
     echo " "
     echo "  [COMPILER OPTIONS]:"
     echo "     CC=<arg>   cc=<arg>    sets the C compiler"
@@ -126,6 +128,10 @@ do
     echo -e "Found known argument: ${gC}$var${eC}"
     COVERAGE=1
 
+  elif [ "$var" == "--gen-docs" -o "$var" == "-gen-docs" -o "$var" == "-docs" ]; then
+    echo -e "Found known argument: ${gC}$var${eC}"
+    DOCUMENTATION_GEN=1
+
   elif [ "$var" == "--clean" -o "$var" == "-clean" -o "$var" == "-c" -o \
          "$var" == "--testsOFF" -o "$var" == "-testsOFF" -o "$var" == "-toff" -o \
          "${var:0:3}" == "CC=" -o "${var:0:3}" == "cc=" -o \
@@ -156,7 +162,6 @@ done
 echo "$0 $@"
 cmd_args="${@:1}"
 
-
 # =================================================================== #
 if [ $CLEAN_DIST == 1 ]; then
   rm -rf install
@@ -176,6 +181,7 @@ fi
 # =================================================================== #
 
 # =================================================================== #
+<<<<<<< HEAD
 if [ $BUILD_LIB == 0 -a $BUILD_3PL == 0 -a $COVERAGE == 0 ]; then
   echo "===================================="
   echo "Building the GTest, OffPiste"
@@ -200,6 +206,12 @@ if [ $BUILD_LIB == 0 -a $BUILD_3PL == 0 -a $COVERAGE == 0 ]; then
   echo -e "${gC} Finished Successfully...${eC}"
   echo "================================================"
   exit 0
+=======
+if [ $BUILD_LIB == 0 -a $BUILD_3PL == 0 -a $COVERAGE == 0 -a $DOCUMENTATION_GEN == 0 ]; then
+  # by default, if no options are set, build OffPiste and 3PL
+  BUILD_3PL=1
+  BUILD_LIB=1
+>>>>>>> origin/master
 fi
 
 if [ $BUILD_3PL == 1 ]; then
@@ -231,8 +243,18 @@ if [ $COVERAGE == 1 ]; then
   ./config.sh --coverage
   cd ..
 fi
+<<<<<<< HEAD
+=======
 
-echo
+if [ $DOCUMENTATION_GEN == 1 ]; then
+  echo "============================"
+  echo "Building Docs using Doxygen"
+  echo "============================"
+
+  doxygen Doxyfile
+fi
+>>>>>>> origin/master
+
 echo "======================================"
 echo -e "${gC} Finished Successfully...${eC}"
 echo "======================================"

@@ -82,7 +82,40 @@ TEST(Operators,Add_double){
 
     /* add operator */
     AutoDiff<double> c = x1 + x2;
+    x1 += x2;
 
     EXPECT_NEAR(c.val(), 3.0, 1E-6);
     EXPECT_NEAR(c.dval(), 6.3, 1E-6);
+    EXPECT_NEAR(x1.val(), 3.0, 1E-6);
+    EXPECT_NEAR(x1.dval(), 6.3, 1E-6);
+}
+
+TEST(Operators, mul_double) {
+    double seed1 = 1.9;
+    double seed2 = 4.4;
+
+    AutoDiff<double> x1(1.0,seed1);
+    AutoDiff<double> x2(2.0,seed2);
+
+    /* add operator */
+    AutoDiff<double> c = x1 * x2;
+    x1 *= x2;
+
+    EXPECT_NEAR(c.val(), 2.0, 1E-6);
+    EXPECT_NEAR(c.dval(), 8.2, 1E-6);
+    EXPECT_NEAR(x1.val(), 2.0, 1E-6);
+    EXPECT_NEAR(x1.dval(), 8.2, 1E-6);
+}
+
+TEST(Operators, pow_double) {
+    double seed1 = 1.9;
+
+    AutoDiff<double> x(1.0, seed1);
+
+    AutoDiff<double> y = x^3;
+
+    EXPECT_NEAR(x.val(), 1.0, 1E-6);
+    EXPECT_NEAR(x.dval(), 5.7, 1E-6);
+    EXPECT_NEAR(y.val(), 1.0, 1E-6);
+    EXPECT_NEAR(y.dval(), 5.7, 1E-6);
 }
