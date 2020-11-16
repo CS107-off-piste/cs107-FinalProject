@@ -5,7 +5,10 @@
 
 /* system header files */
 #ifndef DOXYGEN_IGNORE
+
 #  include <stdio.h>
+#  include <cmath>
+
 #endif
 
 
@@ -46,6 +49,23 @@ class AutoDiff {
         dv += other.dval();
         return *this;
     }
+
+    const AutoDiff<T> operator*(const AutoDiff<T> &other) const {
+        return AutoDiff<T>(v*other.val(), v*other.dval() + dv*other.val());
+    }
+
+    AutoDiff<T> &operator*=(const AutoDiff<T> &other) {
+        dv = v*other.dval() + dv*other.val();
+        v *=other.val();
+        return *this;
+    }
+
+    AutoDiff<T> &operator^(const float alpha) {
+        dv = alpha*std::pow(v, alpha-1) * dv;
+        v = std::pow(v, alpha);
+        return *this;
+    }
+
 };
 
 #endif /* OFFPISTE_H */
