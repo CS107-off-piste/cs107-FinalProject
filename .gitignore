@@ -43,4 +43,4 @@
 build/
 install/
 coverage/
-docs/doxygen/
+docs/doxygen/latex/
