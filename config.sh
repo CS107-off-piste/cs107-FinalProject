@@ -187,7 +187,7 @@ fi
 # =================================================================== #
 
 # =================================================================== #
-if [ $BUILD_LIB == 0 -a $BUILD_3PL == 0 -a $COVERAGE == 0 -a $DOCUMENTATION_GEN == 0 -a $FORMAT == 0 -a clean ]; then
+if [ $BUILD_LIB == 0 -a $BUILD_3PL == 0 -a $COVERAGE == 0 -a $DOCUMENTATION_GEN == 0 -a $FORMAT == 0 -a $CLEAN == 0 ]; then
   # by default, if no options are set, build OffPiste and 3PL
   BUILD_3PL=1
   BUILD_LIB=1
