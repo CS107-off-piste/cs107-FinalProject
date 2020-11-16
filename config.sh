@@ -139,8 +139,6 @@ do
   elif [ "$var" == "--format" -o "$var" == "-form" ]; then
     echo -e "Found known argument: ${gC}$var${eC}"
     FORMAT=1
-    BUILD_3PL=0
-    BUILD_LIB=0
 
   elif [ "$var" == "--clean" -o "$var" == "-clean" -o "$var" == "-c" -o \
          "$var" == "--testsOFF" -o "$var" == "-testsOFF" -o "$var" == "-toff" -o \
@@ -194,7 +192,7 @@ fi
 # =================================================================== #
 
 # =================================================================== #
-if [ $BUILD_LIB == 0 -a $BUILD_3PL == 0 -a $COVERAGE == 0 -a $DOCUMENTATION_GEN == 0 ]; then
+if [ $BUILD_LIB == 0 -a $BUILD_3PL == 0 -a $COVERAGE == 0 -a $DOCUMENTATION_GEN == 0 -a $FORMAT == 0 ]; then
   # by default, if no options are set, build OffPiste and 3PL
   BUILD_3PL=1
   BUILD_LIB=1
