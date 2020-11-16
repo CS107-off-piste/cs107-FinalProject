@@ -22,12 +22,14 @@ $ ./config.sh --help
 
 ### Compilation
 
-The Off Piste library can be compiled with. By default, this compiles the library to a `.dylib` on a Mac and `.so` on other Unix systems.
+The Off Piste library can be compiled with the following commands. By default, this compiles the library to a `.dylib` on a Mac and `.so` on other Unix systems.
 
 ```
 $ ./config.sh --3pl #build 3rd party testing libraries
 $ ./config.sh --library #build OffPiste library and run tests
 ```
+
+The resultant library and header files can be found in `OffPiste/install/`.
 
 On a Mac, to build the library in `.so` format, use:
 ```
