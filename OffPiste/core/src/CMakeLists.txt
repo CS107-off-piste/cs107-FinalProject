@@ -7,7 +7,12 @@ set(MAL_SRC
 # ==================== #
 # Build shared library #
 # ==================== #
-add_library(OffPiste SHARED ${MAL_SRC} ${MAL_H})
+OPTION(PACKAGE_MODULE "Enable module creation" OFF)
+if(PACKAGE_MODULE)
+  add_library(OffPiste MODULE ${MAL_SRC} ${MAL_H})
+else()
+  add_library(OffPiste SHARED ${MAL_SRC} ${MAL_H})
+endif()
 
 # Install targets into specific directories
 install(TARGETS OffPiste 
