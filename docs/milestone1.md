@@ -66,12 +66,12 @@ They should download *AutoD.lib* , set the search directory and include the head
 using namespace AutoD;
 
 int main(){
-    
+
     Variable x = 2.0;
     Function f = func(exp(cos(x + 3) + pow(x, 4)) + 1);
     std::cout<<"f = "<<f.evaluate()<<std::endl;
     std::cout<<"df/dx = "<<f.forward_derivative(x)<<std::endl;
-    
+
 }
 ```
 #### For Multi-variable function
@@ -81,7 +81,7 @@ int main(){
 using namespace AutoD;
 
 int main(){
-    
+
     Variable x = 2.0, y = 3.0, z = 4.0;
     Function u = func(exp(cos(x + 3) + pow(y, 4)) + z);
     std::cout<<"f = "<<f.evaluate()<<std::endl;
@@ -89,7 +89,7 @@ int main(){
     std::cout<<"df/dy = "<<f.forward_derivative(y)<<std::endl;
     std::cout<<"df/dz = "<<f.forward_derivative(z)<<std::endl;
     std::cout<<"Gradient of f"<<f.forward_gradient()<<std::endl;  //gradient of f: (dfdx, dfdy, dfdz)
-    
+
 }
 ```
 #### For Vector function
@@ -99,13 +99,13 @@ int main(){
 using namespace AutoD;
 
 int main(){
-    
+
     Variable x = 2.0, y = 3.0, z = 4.0;
     Expression u = exp(cos(x + 3) + pow(y, 4)) + z;
     Expression v = x + y;
-    
+
     Function F = func(u,v) //F is the vector function.
-    
+
     std::cout<<"F = "<<F.evaluate()<<std::endl;
     std::cout<<"dF/dx = "<<F.forward_derivative(x)<<std::endl;
     std::cout<<"dF/dy = "<<F.forward_derivative(y)<<std::endl;
@@ -132,15 +132,17 @@ At this stage, we do not intend to rely on any external modules. However, we wil
 
 ### Where will your test suite live? Will you use TravisCI? CodeCov?
 
-As described above, we intend to have a separate `test/` directory in which test files will be placed. Our intention is to use [Google's C++ testing library](https://github.com/google/googletest).
+As described above, we intend to have a separate `test/` directory in which test files will be placed. Our intention is to use [Google's C++ testing library](https://github.com/google/googletest) to perform testing in this directory. This will include both "unit" tests to test specific functions, and broader "functional" tests to check that our library is performing as expected on end-user tasks such as computing the derivative and value from a user-inputted function. 
 
-We have already set up TravisCI and CodeCov as part of the previous Milestone. We will update our `travis.yml` and `Makefile` to automate the running of tests following pushes to the project repository.
+As the project progresses, we will also look into using their [benchmarking library](https://github.com/google/benchmark), in order to provide performance reports so that we can notice if a commit has caused performance of core functions (such as building a computational graph or calculating its derivative and value using the reverse mode) to deteriorate. Once the implementation is complete, we will also be benchmarking the running time, as a function of the number of independent variables, against other popular Automatic Differentiation libraries.
+
+We have already set up TravisCI and CodeCov as part of the previous Milestone. We will update our `travis.yml` and `Makefile` to automate the running of the tests described above, following each push to the project repository.
 
 ### How will you distribute your package (e.g. PyPI)?
 
 Unfortunately, C++ does not have a well-established and widely-used package index like PyPI. However, we intend to investigate, and consider distributing the package through [Conan](https://conan.io/), a C++ package manager.
 
-We will also make a pre-built dynamically linked library version of project available in the repository. 
+We will also make a pre-built dynamically linked library version of project available in the repository.
 
 ### How will you package your software?
 
@@ -156,8 +158,11 @@ We plan to use Doxygen to generate documentation from inline comments in our sou
 
 - **What are the core data structures?**
     The core data structure for each component of vector functions is a Directed Acyclic Graph (DAG) with multiple inputs and multiple outputs.
+
+    In the DAG, each node represents one of the operations in the computational graph of our function. We store our operations in this DAG so that we can traverse the nodes of the DAG (in reverse) when computing the reverse mode.
+
     e.g. f(x, y, z) = (x + y^2, x - z)
-  
+
 - **What classes will you implement? What method and name attributes will your classes have?**  
     There are three basic classes needed to be implemented: `Node`, `Variable`, `Function`:
     - `Node`: A node of the DAG. It has the following attributes and methods:
@@ -167,11 +172,11 @@ We plan to use Doxygen to generate documentation from inline comments in our sou
         - `.derivative`: the derivative of this node.
         - `.parents`: a `std::vector<Node*>` containing the pointers to all parents of this node.
         - `.children`: `a std::vector<Node*>` containing the pointers to all children of this node.
-    
+
     - `Variable`: A derived class of `Node` that represents an input node.
-    
+
     - `Function`: A DAG that contains Nodes, with multiple inputs and multiple outputs.
-        - `Function(EXPRESSIONS)`: use `EXPRESSIONS` to initialize a DAG. 
+        - `Function(EXPRESSIONS)`: use `EXPRESSIONS` to initialize a DAG.
         - `.evaluate(Node &output_node)`: compute the output of `Node &output_node`.
         - `.evaluate()`: compute the output with respect to all output nodes, and return `std::vector<float>`.
         - `.set_seed(std::vector<float> p)`: set the seed *p* when taking directional derivative.
@@ -182,7 +187,7 @@ We plan to use Doxygen to generate documentation from inline comments in our sou
         - `.output_node_ptrs`: a `std::vector<Node*>` that stores the pointers to output nodes (top level nodes).
         - `.book_keeper`: a `std::map<Node*, size_t>` that stores pointers to each node and its number of children.
         - `.aov_sequence`: a `std::vector<Node*>` that stores a feasible AOV sequence of this DAG. It is obtained by invoking `.generate_aov_sequence()`.
-  
+
     Other than classes, there are also some definitions of macros that are helpful.
     - `EXPRESSION`: A macro for `Node&`.
 
@@ -191,6 +196,18 @@ We plan to use Doxygen to generate documentation from inline comments in our sou
 - **What external dependencies will you rely on?**
     - `cmath`
     - `STL`
-    
+
 - **How will you deal with elementary functions like sin, sqrt, log, and exp (and all the others)?**  
     Overload the relevant functions in `cmath` so that they can take `Nodes` as input and return new `Nodes`, so that we can build the graph accordingly.
+
+# Feedback
+
+- **Feedback 1: Can we hear more about the reasoning behind choosing DAG as your core data structure? Is it necessary because of the reverse mode feature?**
+    - We would not need a permanent data structure if we were only implementing the forward mode. However, as was discussed in lecture, since we intend to implement reverse mode, we need some data structure to store our operations.
+    - This is because, in forward mode, we only make one "pass" through the function, computing both the value and derivative of the function after each operation. As a result, we would not need to keep an internal record of values / derivatives from earlier operations, since we do not return to them after they are computed.
+    - In contrast, for the reverse mode, after completing the forward pass to calculate the each operation's *values*, we then need to complete the reverse pass to calculate those operations' *derivatives*. We can only "go back" through our operations from the forward pass if we have kept a navigable record of the operations completed in the forward pass -- so, we need some data structure to store this record.  
+    - It is not strictly necessary that data structure be a DAG. We could, for example, have represented our `Function` as a list of operations, with some attached metadata describing how the operations flow into eachother. But we felt that: a) a DAG would allow us to represent multiple inputs / multiple outputs in a cleaner way than, for example, a simple list of operations, and b) a DAG has the additional benefit of lining up neatly with the "computational graph" representation of automatic differention that we have seen in lecture.
+- **Feedback 2: Solid plan for unit testing. What can we expect to see functionality-wise and performance-wise?**
+    - As described in our updated testing section, we expect that our `tests/` directory will include functional tests to check that our library is correctly calculating values on user-inputted functions. As the project progesses, we also intend to include benchmarking / performance tests in the `tests/` directory to check if the performance of key operations has deteriorated as a result of a commit. Once the implementation is complete, we will also be benchmarking the running time, as a function of the number of independent variables, against other popular Automatic Differentiation libraries.
+- **Feedback 3: Implementing reverse mode sounds like a reasonable choice of extension.** 
+- **Feedback 4: Classes and methods are very well thought-through.**
