@@ -181,37 +181,11 @@ fi
 # =================================================================== #
 
 # =================================================================== #
-<<<<<<< HEAD
-if [ $BUILD_LIB == 0 -a $BUILD_3PL == 0 -a $COVERAGE == 0 ]; then
-  echo "===================================="
-  echo "Building the GTest, OffPiste"
-  echo "===================================="
-  echo " "
 
-  cd 3PL
-
-  # build 3PL libraries
-  ./build_3PL.sh $cmd_args
-
-  cd ..
-  cd OffPiste
-
-  # build library
-  ./config.sh $cmd_args
-
-  cd ..
-
-  echo
-  echo "================================================"
-  echo -e "${gC} Finished Successfully...${eC}"
-  echo "================================================"
-  exit 0
-=======
 if [ $BUILD_LIB == 0 -a $BUILD_3PL == 0 -a $COVERAGE == 0 -a $DOCUMENTATION_GEN == 0 ]; then
   # by default, if no options are set, build OffPiste and 3PL
   BUILD_3PL=1
   BUILD_LIB=1
->>>>>>> origin/master
 fi
 
 if [ $BUILD_3PL == 1 ]; then
@@ -243,8 +217,6 @@ if [ $COVERAGE == 1 ]; then
   ./config.sh --coverage
   cd ..
 fi
-<<<<<<< HEAD
-=======
 
 if [ $DOCUMENTATION_GEN == 1 ]; then
   echo "============================"
@@ -253,7 +225,6 @@ if [ $DOCUMENTATION_GEN == 1 ]; then
 
   doxygen Doxyfile
 fi
->>>>>>> origin/master
 
 echo "======================================"
 echo -e "${gC} Finished Successfully...${eC}"
