@@ -69,4 +69,5 @@ The `docs/` folder contains information on the implementation and the mathematic
 
 This repository is configured to work with Travis CI. With every commit, the following actions are performed.
 * The code is compiled using the `gcc` compiler.
-* If the compilation is successful, the binary is executed and `gcov` is used to analyse what portion of code is covered. The code coverage results are provided on CodeCov.
+* If the compilation is successful, the binary is executed and `lcov` is used to analyse what portion of code is covered. The code coverage results are provided on CodeCov.
+* Creating a tag on Github will trigger a build on TravisCI and a Github release will be created with the compiled `.so` file.
