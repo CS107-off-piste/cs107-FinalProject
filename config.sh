@@ -110,7 +110,7 @@ do
     echo -e "Found known argument: ${gC}$var${eC}"
     BUILD_3PL=1
 
-  elif [ "$var" == "--lib" -o "$var" == "-lib" ]; then
+  elif [ "$var" == "--library" -o "$var" == "-lib" ]; then
     echo -e "Found known argument: ${gC}$var${eC}"
     BUILD_LIB=1
 
