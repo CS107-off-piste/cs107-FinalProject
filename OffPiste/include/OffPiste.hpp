@@ -78,5 +78,18 @@ class AutoDiff {
         T dval = std::cos(other.val()) * other.dval();
         return AutoDiff<T>(val,dval);
     }
+
+    /**
+     * Apply the exponential function (i.e. e^x) to the provided AutoDiff node
+     * @param other The AutoDiff node to apply the exponential function to
+     * @return An AutoDiff object representing the exponential function applied to the current AutoDiff object
+     */
+    static AutoDiff<T> exp(AutoDiff<T> &other) {
+        // for the function y = exp(x), we expect that
+        //  -> y_value = exp(x_value)
+        //  -> y_derivative = exp(x_value) * x_derivative 
+        
+        return AutoDiff<T>(5.0,5.0); // PLACEHOLDER: should fail
+    }
 };
 #endif /* OFFPISTE_H */
