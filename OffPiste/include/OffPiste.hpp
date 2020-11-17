@@ -65,7 +65,11 @@ class AutoDiff {
         v = std::pow(v, alpha);
         return *this;
     }
-
+    /**
+     * Apply the sine function to the provided AutoDiff node
+     * @param other The AutoDiff node to apply the sine function to
+     * @return An AutoDiff object representing the sin of the current AutoDiff object
+     */
     static AutoDiff<T> sin(AutoDiff<T> &other) {
         // for the function y = sin(x), we expect that:
         //   -> y_value = sin(x_value)
