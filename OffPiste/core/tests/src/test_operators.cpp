@@ -97,7 +97,7 @@ TEST(Operators, mul_double) {
     AutoDiff<double> x1(1.0,seed1);
     AutoDiff<double> x2(2.0,seed2);
 
-    /* add operator */
+    /* multiplication operator */
     AutoDiff<double> c = x1 * x2;
     x1 *= x2;
 
