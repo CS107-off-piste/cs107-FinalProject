@@ -66,6 +66,13 @@ class AutoDiff {
         return *this;
     }
 
+    static AutoDiff<T> sin(AutoDiff<T> &other) {
+        // for the function y = sin(x), we expect that:
+        //   -> y_value = sin(x_value)
+        //   -> y_derivative = cos(x_value) * x_derivative
+        T val = std::sin(other.val());
+        T dval = std::cos(other.val()) * other.dval();
+        return AutoDiff<T>(val,dval);
+    }
 };
-
 #endif /* OFFPISTE_H */
