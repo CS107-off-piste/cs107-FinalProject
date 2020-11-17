@@ -1,6 +1,6 @@
-file(GLOB MAL_H *.h)
+file(GLOB OFFPISTE_SRC *.h)
 
-set(MAL_SRC
+set(OFFPISTE_SRC
     OffPiste.cpp
 )
 
@@ -9,9 +9,9 @@ set(MAL_SRC
 # ==================== #
 OPTION(PACKAGE_MODULE "Enable module creation" OFF)
 if(PACKAGE_MODULE)
-  add_library(OffPiste MODULE ${MAL_SRC} ${MAL_H})
+  add_library(OffPiste MODULE ${OFFPISTE_SRC} ${OFFPISTE_SRC})
 else()
-  add_library(OffPiste SHARED ${MAL_SRC} ${MAL_H})
+  add_library(OffPiste SHARED ${OFFPISTE_SRC} ${OFFPISTE_SRC})
 endif()
 
 # Install targets into specific directories
@@ -21,7 +21,7 @@ install(TARGETS OffPiste
 	ARCHIVE DESTINATION lib/
 )
 
-install(FILES ${MAL_H} DESTINATION include)
+install(FILES ${OFFPISTE_SRC} DESTINATION include)
 install(
     DIRECTORY ${CMAKE_SOURCE_DIR}/include/
     DESTINATION include
