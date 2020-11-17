@@ -88,8 +88,9 @@ class AutoDiff {
         // for the function y = exp(x), we expect that
         //  -> y_value = exp(x_value)
         //  -> y_derivative = exp(x_value) * x_derivative 
-        
-        return AutoDiff<T>(5.0,5.0); // PLACEHOLDER: should fail
+        T val = std::exp(other.val());
+        T dval = std::exp(other.val()) * other.dval();
+        return AutoDiff<T>(val,dval);
     }
 };
 #endif /* OFFPISTE_H */
