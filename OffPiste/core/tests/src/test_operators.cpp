@@ -121,9 +121,9 @@ TEST(Operators, pow_double) {
 }
 
 TEST(Operators, sin) {
-    using AD = AutoDiff<double>;
+    using AD = AutoDiff<double>; // alias for brevity
 
-    double seed1 = 1;
+    double seed1 = 1.0;
     double seed2 = 2.0;
 
     // x1 has value of 2, and a derivative of 1.0
@@ -142,8 +142,8 @@ TEST(Operators, sin) {
     // for our object x1, x_value = 2 and x_derivative = 1
     // so we expect to see y1 having a value of: sin(2) ≈ 0.9093 
     EXPECT_NEAR(y1.val(), 0.9093, 1E-1);
-    // and we expect a derivative of: cos(2) * 1 ≈ 0.4161 
-    EXPECT_NEAR(y1.dval(), 0.4161, 1E-1);
+    // and we expect a derivative of: cos(2) * 1 ≈ -0.4161 
+    EXPECT_NEAR(y1.dval(), -0.4161, 1E-1);
 
     // for our object x2, x_value = 3 and x_derivative = 2
     // so we expect to see y1 having a value of: sin(3) ≈ 0.1411 
