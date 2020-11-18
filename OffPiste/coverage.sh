@@ -20,7 +20,7 @@ INSTALL_PATH=${PROJECT_ROOT}/install
 INSTALL_GTEST=${INSTALL_PATH}/googletest/include/gtest
 
 SRCPATH=${CURRENT_PATH}/build/core/src/CMakeFiles/OffPiste.dir
-TESTPATH=${CURRENT_PATH}/build/core/tests/src/CMakeFiles/MALTest.dir
+TESTPATH=${CURRENT_PATH}/build/core/tests/src/CMakeFiles/OFFPISTE_OPERATORS_TESTS.dir
 COVERAGE_DIRECTORY=${CURRENT_PATH}/coverage
 
 TEST_SRC_PATH=${CURRENT_PATH}/core/tests
