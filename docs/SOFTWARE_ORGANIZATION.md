@@ -2,34 +2,48 @@
 
 ### What will the directory structure look like?
 
-The project's main directories will be:
+The project's main directories are:
 
-* `src/` which will contain our C++ source files,
-* `test/` which will contain tests, and
-* `docs/` which will contain files such as this one, which relate to documenting our development process. Documentation will also be stored here.
+* `OffPiste/` which contains the C++ source files, header files, and tests for the core automatic differentiation library.
+    * `OffPiste/core/src` contains the source code for OffPiste library
+    * `OffPiste/core/tests` contains unit and functional tests for the OffPiste library 
+    * `OffPiste/include` contains the header files for the OffPiste library
+    * `OffPiste/coverage` contains information relating to the coverage of the unit and functional tests
+    * `OffPiste/install` contains the  
+* `docs/` which contains files such as this one, documenting the library and development process. 
+    * `docs/doxygen` contains html documentation for the `AutoDiff` library's functions.
+* `3PL` contains 3rd party components. At present, this is Google test.
 
-### What external modules do you plan on including? What is their basic functionality?
+### What are the basic modules
 
-At this stage, we do not intend to rely on any external modules. However, we will use standard C++ headers, such as `<cmath>` and the various STL classes for `strings` and I/O.
+The core module is in `OffPiste/core/src`. This is where the source code for the automatic differentiation is held. 
 
-### Where will your test suite live? Will you use TravisCI? CodeCov?
+The tests are [insert]
 
-As described above, we intend to have a separate `test/` directory in which test files will be placed. Our intention is to use [Google's C++ testing library](https://github.com/google/googletest) to perform testing in this directory. This will include both "unit" tests to test specific functions, and broader "functional" tests to check that our library is performing as expected on end-user tasks such as computing the derivative and value from a user-inputted function. 
+The root directory also has a `./config.sh` file. This is a shell script that reads in a user's command and executes actions (such as compiling the library, generating documentation, or generating coverage information). `./config.sh` delegates some functionality to `OffPiste/config.sh` and `OffPiste/coverage.sh`.
 
-As the project progresses, we will also look into using their [benchmarking library](https://github.com/google/benchmark), in order to provide performance reports so that we can notice if a commit has caused performance of core functions (such as building a computational graph or calculating its derivative and value using the reverse mode) to deteriorate. Once the implementation is complete, we will also be benchmarking the running time, as a function of the number of independent variables, against other popular Automatic Differentiation libraries.
+Compilation is handled through `CMake`, using the `CMakeLists.txt` files in `OffPiste` and its subdirectories. 
 
-We have already set up TravisCI and CodeCov as part of the previous Milestone. We will update our `travis.yml` and `Makefile` to automate the running of the tests described above, following each push to the project repository.
+### Where do tests live
 
-### How will you distribute your package (e.g. PyPI)?
+As described above, tests are located in `OffPiste/core/tests`.
 
-Unfortunately, C++ does not have a well-established and widely-used package index like PyPI. However, we intend to investigate, and consider distributing the package through [Conan](https://conan.io/), a C++ package manager.
+As described in the `README.md`, tests are run with the command 
 
-We will also make a pre-built dynamically linked library version of project available in the repository. 
+```
+$ ./config.sh
+```
 
-### How will you package your software?
+which will also compile the 3rd party libraries and source code. 
 
-In the root directory of this repository, we have set up a `Makefile` for compiling and testing our source code. We will continue to augment this file as the project progresses.
+### How can a person install your library?
 
-### Other considerations?
+A user can install our library by cloning the repository from github and running
 
-We plan to use Doxygen to generate documentation from inline comments in our source code.
+```
+./config.sh
+```
+
+to compile the components. 
+
+<hr/>
