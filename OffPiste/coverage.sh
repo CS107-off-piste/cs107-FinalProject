@@ -55,7 +55,7 @@ else
 fi
 
 # remove usr and gtest info
-lcov --remove OffPiste.info "/usr/*" "${INSTALL_PATH}/*" "${TEST_SRC_PATH}/*" -o OffPiste.info
+lcov --remove OffPiste.info "/usr/*" "${INSTALL_PATH}/*" "${TEST_SRC_PATH}/*" "/Library/Developer/CommandLineTools/usr/include/*" -o OffPiste.info
 
 # generate html version of coverage
 genhtml OffPiste.info -o CODE_COVERAGE
