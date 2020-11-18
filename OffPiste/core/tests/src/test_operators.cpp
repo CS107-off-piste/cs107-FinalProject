@@ -5,9 +5,12 @@
 /* googletest header files */
 #include "gtest/gtest.h"
 
-/* header files */
-#include "OffPiste.hpp"
+/* source / header files */
+#include "OffPiste.cpp"
 #include "test_vars.h"
+
+// add an AD shortcut for brevity
+typedef AutoDiff<double> AD;
 
 void OffPiste_testcheck(){
     printf("Starting Off Piste tests...\n");
@@ -97,7 +100,7 @@ TEST(Operators, mul_double) {
     AutoDiff<double> x1(1.0,seed1);
     AutoDiff<double> x2(2.0,seed2);
 
-    /* add operator */
+    /* multiplication operator */
     AutoDiff<double> c = x1 * x2;
     x1 *= x2;
 
@@ -118,4 +121,66 @@ TEST(Operators, pow_double) {
     EXPECT_NEAR(x.dval(), 5.7, 1E-6);
     EXPECT_NEAR(y.val(), 1.0, 1E-6);
     EXPECT_NEAR(y.dval(), 5.7, 1E-6);
+}
+
+// test that sine operator computes correct value and derivative
+TEST(Operators, sine) {
+    double seed1 = 1.0;
+    double seed2 = 2.0;
+
+    // x1 has value of 2, and a derivative of 1.0
+    AD x1(2.0, seed1);
+    // x2 has value of 3, and a derivative of 2.0
+    AD x2(3.0, seed2);
+
+    // take sine of each one
+    AD y1 = AD::sin(x1);
+    AD y2 = AD::sin(x2);  
+
+    // for the function y = sin(x), we expect that
+    //  -> y_value = sin(x_value)
+    //  -> y_derivative = cos(x_value) * x_derivative 
+
+    // for our object x1, x_value = 2 and x_derivative = 1
+    // so we expect to see y1 having a value of: sin(2) ≈ 0.9093 
+    EXPECT_NEAR(y1.val(), 0.9093, 1E-1);
+    // and we expect a derivative of: cos(2) * 1 ≈ -0.4161 
+    EXPECT_NEAR(y1.dval(), -0.4161, 1E-1);
+
+    // for our object x2, x_value = 3 and x_derivative = 2
+    // so we expect to see y1 having a value of: sin(3) ≈ 0.1411 
+    EXPECT_NEAR(y2.val(), 0.1411, 1E-1);
+    // and we expect a derivative of: cos(3) * 2 ≈ -1.97998 
+    EXPECT_NEAR(y2.dval(), -1.97998, 1E-1);
+}
+
+// test that exponential operator computes correct value and derivative
+TEST(Operators, exp) {
+    double seed1 = 1.0;
+    double seed2 = 2.0;
+
+    // x1 has value of 2, and a derivative of 1.0
+    AD x1(2.0, seed1);
+    // x2 has value of 3, and a derivative of 2.0
+    AD x2(3.0, seed2);
+
+    // take exp() of each one
+    AD y1 = AD::exp(x1);
+    AD y2 = AD::exp(x2);  
+
+    // for the function y = exp(x), we expect that
+    //  -> y_value = exp(x_value)
+    //  -> y_derivative = exp(x_value) * x_derivative 
+
+    // for our object x1, x_value = 2 and x_derivative = 1
+    // so we expect to see y1 having a value of: exp(2) ≈ 7.38905 
+    EXPECT_NEAR(y1.val(), 7.38905, 1E-1);
+    // and we expect a derivative of: exp(2) * 1 ≈ 7.38905  
+    EXPECT_NEAR(y1.dval(), 7.38905, 1E-1);
+
+    // for our object x2, x_value = 3 and x_derivative = 2
+    // so we expect to see y1 having a value of: exp(3) ≈ 20.08553 
+    EXPECT_NEAR(y2.val(), 20.08553, 1E-1);
+    // and we expect a derivative of: exp(3) * 2 ≈ 40.17107 
+    EXPECT_NEAR(y2.dval(), 40.17107, 1E-1);
 }

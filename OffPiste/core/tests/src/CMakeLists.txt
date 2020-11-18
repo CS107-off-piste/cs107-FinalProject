@@ -7,10 +7,10 @@ link_directories(${gtest_dir}/lib)
 file(GLOB TEST_H *.h *.hpp)
 
 set(TEST_SRC
-    test_MAL.cpp
+    test_operators.cpp
 )
 
-add_library(MALTest SHARED ${TEST_SRC} ${TEST_H})
+add_library(OFFPISTE_OPERATORS_TESTS SHARED ${TEST_SRC} ${TEST_H})
 if(APPLE)
-  target_link_libraries(MALTest gtest gtest_main)
+  target_link_libraries(OFFPISTE_OPERATORS_TESTS gtest gtest_main)
 endif()
