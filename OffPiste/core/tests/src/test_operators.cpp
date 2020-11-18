@@ -5,8 +5,8 @@
 /* googletest header files */
 #include "gtest/gtest.h"
 
-/* header files */
-#include "OffPiste.hpp"
+/* source / header files */
+#include "OffPiste.cpp"
 #include "test_vars.h"
 
 using AD = AutoDiff<double>; // alias for brevity

@@ -35,62 +35,31 @@ class AutoDiff {
     void setval(T val){v = val;}
     void setdval(T dval){dv = dval;}
 
-    void print_hello() const;
-
     /* ==================== */
     /* overloaded operators */
     /* ==================== */
-    const AutoDiff<T> operator+(const AutoDiff<T> &other) const{
-        return AutoDiff<T>(v + other.val(), dv + other.dval());
-    }
+    const AutoDiff<T> operator+(const AutoDiff<T> &other) const;
 
-    AutoDiff<T>& operator+=(const AutoDiff<T> &other){
-        v += other.val();
-        dv += other.dval();
-        return *this;
-    }
+    AutoDiff<T> &operator+=(const AutoDiff<T> &other);
 
-    const AutoDiff<T> operator*(const AutoDiff<T> &other) const {
-        return AutoDiff<T>(v*other.val(), v*other.dval() + dv*other.val());
-    }
+    const AutoDiff<T> operator*(const AutoDiff<T> &other) const;
 
-    AutoDiff<T> &operator*=(const AutoDiff<T> &other) {
-        dv = v*other.dval() + dv*other.val();
-        v *=other.val();
-        return *this;
-    }
+    AutoDiff<T> &operator*=(const AutoDiff<T> &other);
 
-    AutoDiff<T> &operator^(const float alpha) {
-        dv = alpha*std::pow(v, alpha-1) * dv;
-        v = std::pow(v, alpha);
-        return *this;
-    }
+    AutoDiff<T> &operator^(const float alpha);
+
     /**
      * Apply the sine function to the provided AutoDiff node
      * @param other The AutoDiff node to apply the sine function to
      * @return An AutoDiff object representing the sin of the current AutoDiff object
      */
-    static AutoDiff<T> sin(AutoDiff<T> &other) {
-        // for the function y = sin(x), we expect that:
-        //   -> y_value = sin(x_value)
-        //   -> y_derivative = cos(x_value) * x_derivative
-        T val = std::sin(other.val());
-        T dval = std::cos(other.val()) * other.dval();
-        return AutoDiff<T>(val,dval);
-    }
+    static AutoDiff<T> sin(const AutoDiff<T> &other);
 
     /**
      * Apply the exponential function (i.e. e^x) to the provided AutoDiff node
      * @param other The AutoDiff node to apply the exponential function to
      * @return An AutoDiff object representing the exponential function applied to the current AutoDiff object
      */
-    static AutoDiff<T> exp(AutoDiff<T> &other) {
-        // for the function y = exp(x), we expect that
-        //  -> y_value = exp(x_value)
-        //  -> y_derivative = exp(x_value) * x_derivative 
-        T val = std::exp(other.val());
-        T dval = std::exp(other.val()) * other.dval();
-        return AutoDiff<T>(val,dval);
-    }
+    static AutoDiff<T> exp(const AutoDiff<T> &other);
 };
 #endif /* OFFPISTE_H */
