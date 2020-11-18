@@ -9,7 +9,8 @@
 #include "OffPiste.cpp"
 #include "test_vars.h"
 
-using AD = AutoDiff<double>; // alias for brevity
+// add an AD shortcut for brevity
+typedef AutoDiff<double> AD;
 
 void OffPiste_testcheck(){
     printf("Starting Off Piste tests...\n");
