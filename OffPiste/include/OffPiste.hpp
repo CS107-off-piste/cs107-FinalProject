@@ -38,28 +38,28 @@ class AutoDiff {
     /* ==================== */
     /* overloaded operators */
     /* ==================== */
-    const AutoDiff<T> operator+(const AutoDiff<T> &other) const;
+    const AutoDiff<T> operator+(const AutoDiff<T> &node) const;
 
-    AutoDiff<T> &operator+=(const AutoDiff<T> &other);
+    AutoDiff<T> &operator+=(const AutoDiff<T> &node);
 
-    const AutoDiff<T> operator*(const AutoDiff<T> &other) const;
+    const AutoDiff<T> operator*(const AutoDiff<T> &node) const;
 
-    AutoDiff<T> &operator*=(const AutoDiff<T> &other);
+    AutoDiff<T> &operator*=(const AutoDiff<T> &node);
 
     AutoDiff<T> &operator^(const float alpha);
 
     /**
      * Apply the sine function to the provided AutoDiff node
-     * @param other The AutoDiff node to apply the sine function to
+     * @param node The AutoDiff node to apply the sine function to
      * @return An AutoDiff object representing the sin of the current AutoDiff object
      */
-    static AutoDiff<T> sin(const AutoDiff<T> &other);
+    static AutoDiff<T> sin(const AutoDiff<T> &node);
 
     /**
      * Apply the exponential function (i.e. e^x) to the provided AutoDiff node
-     * @param other The AutoDiff node to apply the exponential function to
+     * @param node The AutoDiff node to apply the exponential function to
      * @return An AutoDiff object representing the exponential function applied to the current AutoDiff object
      */
-    static AutoDiff<T> exp(const AutoDiff<T> &other);
+    static AutoDiff<T> exp(const AutoDiff<T> &node);
 };
 #endif /* OFFPISTE_H */

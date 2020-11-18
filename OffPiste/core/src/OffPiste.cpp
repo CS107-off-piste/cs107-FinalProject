@@ -11,26 +11,26 @@
 /* ======================== */
 
 template <class T>
-const AutoDiff<T> AutoDiff<T>::operator+(const AutoDiff<T> &other) const{
-    return AutoDiff<T>(v + other.val(), dv + other.dval());
+const AutoDiff<T> AutoDiff<T>::operator+(const AutoDiff<T> &node) const{
+    return AutoDiff<T>(v + node.val(), dv + node.dval());
 }
 
 template <class T>
-AutoDiff<T>& AutoDiff<T>::operator+=(const AutoDiff<T> &other) {
-    v += other.val();
-    dv += other.dval();
+AutoDiff<T>& AutoDiff<T>::operator+=(const AutoDiff<T> &node) {
+    v += node.val();
+    dv += node.dval();
     return *this;
 }
 
 template <class T>
-const AutoDiff<T> AutoDiff<T>::operator*(const AutoDiff<T> &other) const{
-    return AutoDiff<T>(v*other.val(), v*other.dval() + dv*other.val());
+const AutoDiff<T> AutoDiff<T>::operator*(const AutoDiff<T> &node) const{
+    return AutoDiff<T>(v*node.val(), v*node.dval() + dv*node.val());
 }
 
 template <class T>
-AutoDiff<T>& AutoDiff<T>::operator*=(const AutoDiff<T> &other) {
-    dv = v*other.dval() + dv*other.val();
-    v *=other.val();
+AutoDiff<T>& AutoDiff<T>::operator*=(const AutoDiff<T> &node) {
+    dv = v*node.dval() + dv*node.val();
+    v *=node.val();
     return *this;
 }
 
@@ -42,21 +42,21 @@ AutoDiff<T>& AutoDiff<T>::operator^(const float alpha) {
 }
 
 template <class T>
-AutoDiff<T> AutoDiff<T>::sin(const AutoDiff<T> &other) {
+AutoDiff<T> AutoDiff<T>::sin(const AutoDiff<T> &node) {
     // for the function y = sin(x), we expect that:
     //   -> y_value = sin(x_value)
     //   -> y_derivative = cos(x_value) * x_derivative
-    T val = std::sin(other.val());
-    T dval = std::cos(other.val()) * other.dval();
+    T val = std::sin(node.val());
+    T dval = std::cos(node.val()) * node.dval();
     return AutoDiff<T>(val,dval);
 }
 
 template <class T>
-AutoDiff<T> AutoDiff<T>::exp(const AutoDiff<T> &other) {
+AutoDiff<T> AutoDiff<T>::exp(const AutoDiff<T> &node) {
     // for the function y = exp(x), we expect that
     //  -> y_value = exp(x_value)
     //  -> y_derivative = exp(x_value) * x_derivative 
-    T val = std::exp(other.val());
-    T dval = std::exp(other.val()) * other.dval();
+    T val = std::exp(node.val());
+    T dval = std::exp(node.val()) * node.dval();
     return AutoDiff<T>(val,dval);
 }
