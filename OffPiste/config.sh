@@ -368,7 +368,7 @@ fi
 if [ ${COVERAGE} == "ON" ]; then
     cd $CURRENT_PATH
     echo "Building code coverage..."
-    ./coverage || exit 1
+    ./coverage.sh || exit 1
 fi
 # =================================================================== 
 echo -e " ${gC}Build Script Completed Successfully!${eC}"
