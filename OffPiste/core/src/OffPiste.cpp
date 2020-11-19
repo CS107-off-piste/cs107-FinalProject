@@ -20,6 +20,7 @@ const AutoDiff<T> AutoDiff<T>::operator+(const AutoDiff<T> &node) const{
     return AutoDiff<T>(v + node.val(), dv + node.dval());
 }
 
+
 template <class T>
 AutoDiff<T>& AutoDiff<T>::operator+=(const AutoDiff<T> &node) {
     v += node.val();
@@ -100,3 +101,8 @@ AutoDiff<T> AutoDiff<T>::exp(const AutoDiff<T> &node) {
     T dval = std::exp(node.val()) * node.dval();
     return AutoDiff<T>(val,dval);
 }
+
+/*template <class T> 
+inline AutoDiff<T> operator/(const double x, const AutoDiff<T> &node) {
+	AutoDiff<T>(val, dval)
+}*/

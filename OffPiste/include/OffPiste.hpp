@@ -39,6 +39,14 @@ class AutoDiff {
     /* overloaded operators */
     /* ==================== */
     const AutoDiff<T> operator+(const AutoDiff<T> &node) const;
+	
+	
+	friend AutoDiff<T> operator+(const T a, const AutoDiff<T> &node) {
+		AutoDiff<T> a_node = AutoDiff<T>(a, 0);
+		return a_node + node;
+	};
+
+	friend AutoDiff<T> operator+(const AutoDiff<T> &node, const T a) {return a + node;};
 
     AutoDiff<T> &operator+=(const AutoDiff<T> &node);
 

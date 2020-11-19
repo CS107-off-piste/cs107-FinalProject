@@ -96,12 +96,19 @@ TEST(Operators,Add_double){
 
     /* add operator */
     AutoDiff<double> c = x1 + x2;
+	AutoDiff<double> d = 2.0 + x1;
+	AutoDiff<double> e = x1+2.0;
     x1 += x2;
+	
 
     EXPECT_NEAR(c.val(), 3.0, 1E-6);
     EXPECT_NEAR(c.dval(), 6.3, 1E-6);
     EXPECT_NEAR(x1.val(), 3.0, 1E-6);
     EXPECT_NEAR(x1.dval(), 6.3, 1E-6);
+	EXPECT_NEAR(d.val(), 3.0, 1E-6);
+	EXPECT_NEAR(d.dval(), 1.9, 1E-6);
+	EXPECT_NEAR(e.val(), 3.0, 1E-6);
+	EXPECT_NEAR(e.dval(), 1.9, 1E-6);
 }
 
 TEST(Operators, Sub_double) {
