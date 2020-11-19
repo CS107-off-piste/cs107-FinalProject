@@ -72,7 +72,19 @@ class AutoDiff {
 
 	const AutoDiff<T> operator/(const AutoDiff<T> &node) const;
 
-	AutoDiff<T> &operator/=(const AutoDiff<T> &node) ;
+	AutoDiff<T> &operator/=(const AutoDiff<T> &node);
+
+    // handle, e.g. 5.0 / Autodiff<double>
+    friend AutoDiff<T> operator/(const T a, const AutoDiff<T> &node) {
+        AutoDiff<T> a_node = AutoDiff<T>(a, 0);
+        return a_node / node;
+    };
+
+    // handle, e.g. Autodiff<double> / 5.0
+    friend AutoDiff<T> operator/(const AutoDiff<T> &node, const T a) {
+        AutoDiff<T> a_node = AutoDiff<T>(a, 0);
+        return node / a_node;
+    };
 
     AutoDiff<T> &operator^(const float alpha);
 

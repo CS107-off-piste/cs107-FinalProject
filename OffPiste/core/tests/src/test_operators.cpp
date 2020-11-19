@@ -170,10 +170,16 @@ TEST(Operators, div_double) {
 	}
 
 	AutoDiff<double> c = x1 /x2;
+    AutoDiff<double> d = x1 / 5.0;
+    AutoDiff<double> e = 5.0 / x2;
 	x1 /= x2;
 
 	EXPECT_NEAR(c.val(), 0.5, 1E-6);
 	EXPECT_NEAR(c.dval(), -0.15, 1E-6);
+    EXPECT_NEAR(d.val(), 1.0 / 5.0, 1E-6);
+    EXPECT_NEAR(d.dval(), seed1 / 5, 1E-6);
+    EXPECT_NEAR(e.val(), 5.0 / 2.0, 1E-6);
+    EXPECT_NEAR(e.dval(), (-(5.0*seed2)) / std::pow(2.0,2), 1E-6);
 	EXPECT_NEAR(x1.val(), 0.5, 1E-6);
 	EXPECT_NEAR(x1.dval(), -0.15, 1E-6);
 }
