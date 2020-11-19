@@ -92,6 +92,28 @@ AutoDiff<T> AutoDiff<T>::sin(const AutoDiff<T> &node) {
 }
 
 template <class T>
+AutoDiff<T> AutoDiff<T>::cos(const AutoDiff<T> &node) {
+    // for the function y = cos(x), we expect that:
+    //   -> y_value = cos(x_value)
+    //   -> y_derivative = -1 * sin(x_value) * x_derivative
+    T val = std::cos(node.val());
+    T dval = -std::sin(node.val()) * node.dval();
+    return AutoDiff<T>(val,dval);
+}
+
+template <class T>
+AutoDiff<T> AutoDiff<T>::tan(const AutoDiff<T> &node) {
+    // for the function y = tan(x), we expect that:
+    //   -> y_value = tan(x_value)
+    //   -> y_derivative = (sec(x_value))^2 * x_derivative
+    // Since sec(x) = 1 / cos(x), this is:
+    // (1 / cos(x_value))^2 * x_derivative
+    T val = std::tan(node.val());
+    T dval = 1.0 / std::pow(std::cos(node.val()), 2) * node.dval();
+    return AutoDiff<T>(val,dval);
+}
+
+template <class T>
 AutoDiff<T> AutoDiff<T>::exp(const AutoDiff<T> &node) {
     // for the function y = exp(x), we expect that
     //  -> y_value = exp(x_value)

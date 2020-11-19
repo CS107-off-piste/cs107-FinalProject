@@ -65,6 +65,20 @@ class AutoDiff {
     static AutoDiff<T> sin(const AutoDiff<T> &node);
 
     /**
+     * Apply the cosine function to the provided AutoDiff node
+     * @param node The AutoDiff node to apply the cosine function to
+     * @return An AutoDiff object representing the cosine of the current AutoDiff object
+     */
+    static AutoDiff<T> cos(const AutoDiff<T> &node);
+
+    /**
+     * Apply the tangent function to the provided AutoDiff node
+     * @param node The AutoDiff node to apply the tangent function to
+     * @return An AutoDiff object representing the tangent of the current AutoDiff object
+     */
+    static AutoDiff<T> tan(const AutoDiff<T> &node);
+
+    /**
      * Apply the exponential function (i.e. e^x) to the provided AutoDiff node
      * @param node The AutoDiff node to apply the exponential function to
      * @return An AutoDiff object representing the exponential function applied to the current AutoDiff object
