@@ -1,5 +1,5 @@
 #include <iostream>
-#include "OffPiste.cpp"
+#include "include/OffPiste.hpp"
 
 typedef AutoDiff<double> AD;
 
