@@ -1,7 +1,7 @@
 /* system header files */
 #include <stdlib.h>
 #include <stdio.h>
-
+#include <string>
 /* googletest header files */
 #include "gtest/gtest.h"
 
@@ -15,7 +15,7 @@ typedef AutoDiff<double> AD;
 void OffPiste_testcheck(){
     printf("Starting Off Piste tests...\n");
 }
-TEST(equal, float) {
+TEST(Equal, float) {
 	float value = 1.8f;
 	EXPECT_EQ(equal(value,1.8f),true);
 }
@@ -144,8 +144,18 @@ TEST(Operators, div_double) {
 
 	AutoDiff<double> x1(1.0, seed1);
 	AutoDiff<double> x2(2.0, seed2);
+	AutoDiff<double> x3(0.0, seed2);
+	/* division operator */
+	try { x1 / x3; }
+	catch (const char* msg) {
+		EXPECT_EQ(msg, "Divide by zero");
+	}
 
-	/* multiplication operator */
+	try { x1 /= x3; }
+	catch (const char* msg) {
+		EXPECT_EQ(msg, "Divide by zero");
+	}
+
 	AutoDiff<double> c = x1 /x2;
 	x1 /= x2;
 
