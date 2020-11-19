@@ -7,7 +7,7 @@ link_directories(${gtest_dir}/lib)
 find_library(gtest      NAMES gtest      gtestd      HINTS "${gtest_dir}/lib")
 find_library(gtest_main NAMES gtest_main gtest_maind HINTS "${gtest_dir}/lib")
 
-set(TEST_EXE MALTest.Unit.Test)
+set(TEST_EXE OFFPISTE_OPERATORS_TESTS.Unit.Test)
 set(TEST_SRC_PATH src)
 
 # include test headers
@@ -21,7 +21,7 @@ set(libs
 add_subdirectory(${TEST_SRC_PATH})
 
 add_executable(${TEST_EXE} test_main.cpp)
-target_link_libraries(${TEST_EXE} MALTest OffPiste ${libs})
+target_link_libraries(${TEST_EXE} OFFPISTE_OPERATORS_TESTS OffPiste ${libs})
 target_link_libraries(${TEST_EXE} pthread)
 
 add_test(NAME ${TEST_EXE}
@@ -29,7 +29,7 @@ add_test(NAME ${TEST_EXE}
 
 add_custom_command(
    TARGET ${TEST_EXE}
-   COMMENT "Run MAL Unit Tests"
+   COMMENT "Run Off Piste operator Unit Tests"
    POST_BUILD
    COMMAND ${TEST_EXE}
 )

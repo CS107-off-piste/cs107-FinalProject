@@ -180,7 +180,7 @@ if [ $CLEAN == 1 ]; then
 
     # clean up OffPiste sub-folder
     cd OffPiste
-    ./config.sh --clean
+    ./config.sh --clean || exit 1
     cd ..
     exit 0
 fi
@@ -199,7 +199,7 @@ if [ $BUILD_3PL == 1 ]; then
   echo "==================================="
 
   cd 3PL
-  ./build_3PL.sh $cmd_args
+  ./build_3PL.sh $cmd_args || exit 1
   cd ..
 fi
 
@@ -209,7 +209,7 @@ if [ $BUILD_LIB == 1 ]; then
   echo "============================"
 
   cd OffPiste
-  ./config.sh $cmd_args
+  ./config.sh $cmd_args || exit 1
   cd ..
 fi
 
@@ -219,7 +219,7 @@ if [ $COVERAGE == 1 ]; then
   echo "============================"
 
   cd OffPiste
-  ./config.sh --coverage
+  ./config.sh --coverage || exit 1
   cd ..
 fi
 

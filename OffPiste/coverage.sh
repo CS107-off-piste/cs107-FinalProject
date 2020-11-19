@@ -20,7 +20,7 @@ INSTALL_PATH=${PROJECT_ROOT}/install
 INSTALL_GTEST=${INSTALL_PATH}/googletest/include/gtest
 
 SRCPATH=${CURRENT_PATH}/build/core/src/CMakeFiles/OffPiste.dir
-TESTPATH=${CURRENT_PATH}/build/core/tests/src/CMakeFiles/MALTest.dir
+TESTPATH=${CURRENT_PATH}/build/core/tests/src/CMakeFiles/OFFPISTE_OPERATORS_TESTS.dir
 COVERAGE_DIRECTORY=${CURRENT_PATH}/coverage
 
 TEST_SRC_PATH=${CURRENT_PATH}/core/tests
@@ -55,7 +55,7 @@ else
 fi
 
 # remove usr and gtest info
-lcov --remove OffPiste.info "/usr/*" "${INSTALL_PATH}/*" "${TEST_SRC_PATH}/*" -o OffPiste.info
+lcov --remove OffPiste.info "/usr/*" "${INSTALL_PATH}/*" "${TEST_SRC_PATH}/*" "/Library/Developer/CommandLineTools/usr/include/*" -o OffPiste.info
 
 # generate html version of coverage
 genhtml OffPiste.info -o CODE_COVERAGE
