@@ -131,23 +131,6 @@ TEST(Operators, Sub_double) {
 	EXPECT_NEAR(x1.dval(), -2.5, 1E-6);
 }
 
-TEST(Operators, Sub_double) {
-	double seed1 = 1.9;
-	double seed2 = 4.4;
-
-	AutoDiff<double> x1(1.0, seed1);
-	AutoDiff<double> x2(2.0, seed2);
-
-	/* add operator */
-	AutoDiff<double> c = x1 - x2;
-	x1 -= x2;
-
-	EXPECT_NEAR(c.val(), -1.0, 1E-6);
-	EXPECT_NEAR(c.dval(), -2.5, 1E-6);
-	EXPECT_NEAR(x1.val(), -1.0, 1E-6);
-	EXPECT_NEAR(x1.dval(), -2.5, 1E-6);
-}
-
 TEST(Operators, mul_double) {
     double seed1 = 1.9;
     double seed2 = 4.4;
