@@ -51,11 +51,13 @@ class AutoDiff {
 
 	const AutoDiff<T> operator-(const AutoDiff<T> &node) const;
 
+
     // handle, e.g. AutoDiff<double> - 5.0 
     friend AutoDiff<T> operator-(const AutoDiff<T> &node, const T a) {
         AutoDiff<T> a_node = AutoDiff<T>(a, 0);
         return node - a_node;
     };
+
 
 	AutoDiff<T> &operator-=(const AutoDiff<T> &node);
 
@@ -86,8 +88,10 @@ class AutoDiff {
         return node / a_node;
     };
 
+
     AutoDiff<T> &operator^(const float alpha);
 
+	
     /**
      * Apply the sine function to the provided AutoDiff node
      * @param node The AutoDiff node to apply the sine function to

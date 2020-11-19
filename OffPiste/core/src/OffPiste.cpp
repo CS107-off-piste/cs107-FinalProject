@@ -54,6 +54,7 @@ AutoDiff<T>& AutoDiff<T>::operator*=(const AutoDiff<T> &node) {
 
 template <class T>
 const AutoDiff<T> AutoDiff<T>::operator/(const AutoDiff<T> &node) const {
+
 	if (equal(node.val(), 0.0)){
 		throw "Divide by zero";
 	}
@@ -62,6 +63,7 @@ const AutoDiff<T> AutoDiff<T>::operator/(const AutoDiff<T> &node) const {
 
 template <class T>
 AutoDiff<T>& AutoDiff<T>::operator/=(const AutoDiff<T> &node) {
+
 	if (equal(node.val(), 0.0)){
 		throw "Divide by zero";
 	}
