@@ -14,7 +14,7 @@ The project's main directories are:
     * `docs/doxygen` contains html documentation for the `AutoDiff` library's functions.
 * `3PL` contains 3rd party components. At present, this is Google test.
 
-### What are the basic modules
+### What are the basic modules?
 
 The core module is implemented in `OffPiste/core/src`. This is where the source code for the automatic differentiation library is held. The header file for this source code is in `Offpiste/include`. This header file also includes the in-line documentation for each function.
 
@@ -22,7 +22,7 @@ The root directory has a `./config.sh` file. This is a shell script that reads i
 
 `C++` compilation is handled through `CMake`, using the `CMakeLists.txt` files in `OffPiste/` and its subdirectories. 
 
-### Where do tests live
+### Where do tests live?
 
 As described above, tests for each operation supported by the library are located in `OffPiste/core/tests`.
 
@@ -46,6 +46,6 @@ A user can install our library by cloning the repository from github and running
 
 to compile the library.
 
-This will produce a `.so` and `.h` file in `OffPiste/install`. These do not rely on any external components, so the user can use these as described above in the section headed "how to use your package".  
+This will produce a `.so` (or `.dylib` on a Mac) and `.h` file in `OffPiste/install`. These do not rely on any external components, so the user can use these as described above in the section headed "how to use your package".  
 
 <hr/>
