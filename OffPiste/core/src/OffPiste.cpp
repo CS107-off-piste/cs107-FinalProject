@@ -1,6 +1,7 @@
 /* header files */
 #include "OffPiste.hpp"
-
+#include<iostream>
+#include<cmath>
 /* explicitly tell compiler to build these templates */
 //template class AutoDiff<int>;
 //template class AutoDiff<float>;
@@ -9,7 +10,11 @@
 /* ======================== */
 /* AutoDiff Class Operators */
 /* ======================== */
-
+bool equal(double a, double b) {
+	if (std::abs(a - b) < 1e-15)
+		return true;
+	return false;
+}
 template <class T>
 const AutoDiff<T> AutoDiff<T>::operator+(const AutoDiff<T> &node) const{
     return AutoDiff<T>(v + node.val(), dv + node.dval());
@@ -23,6 +28,18 @@ AutoDiff<T>& AutoDiff<T>::operator+=(const AutoDiff<T> &node) {
 }
 
 template <class T>
+const AutoDiff<T> AutoDiff<T>::operator-(const AutoDiff<T> &node) const {
+	return AutoDiff<T>(v - node.val(), dv - node.dval());
+}
+
+template <class T>
+AutoDiff<T>& AutoDiff<T>::operator-=(const AutoDiff<T> &node) {
+	v -= node.val();
+	dv -= node.dval();
+	return *this;
+}
+
+template <class T>
 const AutoDiff<T> AutoDiff<T>::operator*(const AutoDiff<T> &node) const{
     return AutoDiff<T>(v*node.val(), v*node.dval() + dv*node.val());
 }
@@ -32,6 +49,29 @@ AutoDiff<T>& AutoDiff<T>::operator*=(const AutoDiff<T> &node) {
     dv = v*node.dval() + dv*node.val();
     v *=node.val();
     return *this;
+}
+
+template <class T>
+const AutoDiff<T> AutoDiff<T>::operator/(const AutoDiff<T> &node) const {
+	if (equal(node.val(), 0.0))
+		throw "Divide by zero";
+	//if (sizeof(node.val()) == 4)
+		//return AutoDiff<float>(v / (float)node.val(), (dv*node.val() - node.dval()*v) / (float)pow(node.val(), 2));
+	return AutoDiff<T>(v / node.val(), (dv*node.val() - node.dval()*v) / pow(node.val(), 2));
+}
+
+template <class T>
+AutoDiff<T>& AutoDiff<T>::operator/=(const AutoDiff<T> &node) {
+	if (equal(node.val(), 0.0))
+		throw "Divide by zero";
+	/*if (sizeof(node.val()) == 4) {
+		v = v / (float)node.val();
+		dv = (dv*node.val() - node.dval()*v) / (float)pow(node.val(), 2);
+		return *this;
+	}*/
+	dv = (dv*node.val() - node.dval()*v) / pow(node.val(), 2);
+	v = v / node.val();
+	return *this;
 }
 
 template <class T>

@@ -1,7 +1,7 @@
 /* system header files */
 #include <stdlib.h>
 #include <stdio.h>
-
+#include <string>
 /* googletest header files */
 #include "gtest/gtest.h"
 
@@ -14,6 +14,16 @@ typedef AutoDiff<double> AD;
 
 void OffPiste_testcheck(){
     printf("Starting Off Piste tests...\n");
+}
+TEST(Equal, float) {
+	float value = 1.8f;
+	EXPECT_EQ(equal(value,1.8f),true);
+}
+
+TEST(Init, float) {
+	float value = 1.8f;
+	AutoDiff<float> x(value);
+	EXPECT_NEAR(x.val(), 1.8, 1E-6);
 }
 
 TEST(Getter,int){
@@ -56,6 +66,7 @@ TEST(Setter,int){
     EXPECT_EQ(x.val(), 3);
 }
 
+
 TEST(Setter,float){
     float value = 1.8f;
     float seed = 1.2f;
@@ -93,6 +104,23 @@ TEST(Operators,Add_double){
     EXPECT_NEAR(x1.dval(), 6.3, 1E-6);
 }
 
+TEST(Operators, Sub_double) {
+	double seed1 = 1.9;
+	double seed2 = 4.4;
+
+	AutoDiff<double> x1(1.0, seed1);
+	AutoDiff<double> x2(2.0, seed2);
+
+	/* add operator */
+	AutoDiff<double> c = x1 - x2;
+	x1 -= x2;
+
+	EXPECT_NEAR(c.val(), -1.0, 1E-6);
+	EXPECT_NEAR(c.dval(), -2.5, 1E-6);
+	EXPECT_NEAR(x1.val(), -1.0, 1E-6);
+	EXPECT_NEAR(x1.dval(), -2.5, 1E-6);
+}
+
 TEST(Operators, mul_double) {
     double seed1 = 1.9;
     double seed2 = 4.4;
@@ -108,6 +136,33 @@ TEST(Operators, mul_double) {
     EXPECT_NEAR(c.dval(), 8.2, 1E-6);
     EXPECT_NEAR(x1.val(), 2.0, 1E-6);
     EXPECT_NEAR(x1.dval(), 8.2, 1E-6);
+}
+
+TEST(Operators, div_double) {
+	double seed1 = 1.9;
+	double seed2 = 4.4;
+
+	AutoDiff<double> x1(1.0, seed1);
+	AutoDiff<double> x2(2.0, seed2);
+	AutoDiff<double> x3(0.0, seed2);
+	/* division operator */
+	try { x1 / x3; }
+	catch (const char* msg) {
+		EXPECT_EQ(msg, "Divide by zero");
+	}
+
+	try { x1 /= x3; }
+	catch (const char* msg) {
+		EXPECT_EQ(msg, "Divide by zero");
+	}
+
+	AutoDiff<double> c = x1 /x2;
+	x1 /= x2;
+
+	EXPECT_NEAR(c.val(), 0.5, 1E-6);
+	EXPECT_NEAR(c.dval(), -0.15, 1E-6);
+	EXPECT_NEAR(x1.val(), 0.5, 1E-6);
+	EXPECT_NEAR(x1.dval(), -0.15, 1E-6);
 }
 
 TEST(Operators, pow_double) {
