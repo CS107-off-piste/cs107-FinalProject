@@ -1,18 +1,16 @@
-This folder gives an example of using the `OffPiste` library, in the file `example.cpp` and the accompanying `makefile`.
+# Example Usage
 
-The `include/` and `lib/` subdirectories are a snapshot of the `OffPiste` library. You should update these by re-compiling the `OffPiste` library as described in the project root's `README.md`. i.e.:
+This folder gives an example of using the `OffPiste` library, in the file `example.cpp` and the accompanying `Makefile`.
 
-```bash
-# compile OffPiste library into OffPiste/install
-$ .config.sh -lib -so -testsOFF
-
-# copy OffPiste library into the example project folder
-$ cp -r OffPiste/install/ example_usage/
+## Steps
+1. Compile the `OffPiste` library using:
 ```
+$ cd example_usage/
+$ make compile_dependencies
+```
+This will compile the source code for the dependency into a `.so` (Linux) / `.dylib` (Mac) dynamically linked library which is placed under `../OffPiste/install/lib`.
 
-The example project can be compiled with:
-
-```bash
-$ make example # compile example project
-$ ./example.out # run example project
+2. Compile the code that uses the `OffPiste` library and run it:
+```
+$ make run
 ```

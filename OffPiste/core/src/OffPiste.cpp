@@ -109,8 +109,3 @@ AutoDiff AutoDiff::exp(const AutoDiff &node) {
   double dval = std::exp(node.val()) * node.dval();
   return AutoDiff(val, dval);
 }
-
-/* explicitly tell compiler to build these templates */
-template class AutoDiff<int>;
-template class AutoDiff<float>;
-template class AutoDiff<double>;

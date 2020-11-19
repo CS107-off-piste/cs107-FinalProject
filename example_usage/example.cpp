@@ -1,7 +1,7 @@
 #include <iostream>
-#include "OffPiste.cpp"
+#include "../OffPiste/include/OffPiste.hpp"
 
-typedef AutoDiff<double> AD;
+typedef AutoDiff AD;
 
 int main(int argc, char const *argv[])
 {
