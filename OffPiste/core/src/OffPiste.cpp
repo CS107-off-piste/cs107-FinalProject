@@ -80,6 +80,13 @@ AutoDiff<T>& AutoDiff<T>::operator^(const float alpha) {
 }
 
 template <class T>
+AutoDiff<T>& AutoDiff<T>::operator^(const AutoDiff<T> &node) {
+	dv = node.val() * std::pow(v, node.val() - 1) * dv+ std::pow(v, node.val())*std::log(v)*node.dval();
+	v = std::pow(v, node.val());
+	return *this;
+}
+
+template <class T>
 AutoDiff<T> AutoDiff<T>::sin(const AutoDiff<T> &node) {
     // for the function y = sin(x), we expect that:
     //   -> y_value = sin(x_value)

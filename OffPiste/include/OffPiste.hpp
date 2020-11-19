@@ -38,6 +38,7 @@ class AutoDiff {
     /* ==================== */
     /* overloaded operators */
     /* ==================== */
+	//===========================================ADD=============================================
     const AutoDiff<T> operator+(const AutoDiff<T> &node) const;
 	
 	friend AutoDiff<T> operator+(const T a, const AutoDiff<T> &node) {
@@ -49,6 +50,9 @@ class AutoDiff {
 
     AutoDiff<T> &operator+=(const AutoDiff<T> &node);
 
+	friend void operator+=(AutoDiff<T> &node, const T a) { node.setval(node.val() + a); }
+
+	//===========================================SUBSTRACTION=====================================
 	const AutoDiff<T> operator-(const AutoDiff<T> &node) const;
 
 
@@ -58,9 +62,17 @@ class AutoDiff {
         return node - a_node;
     };
 
+	// handle, e.g. 5.0 - AutoDiff<double> 
+	friend AutoDiff<T> operator-( const T a, const AutoDiff<T> &node) {
+		AutoDiff<T> a_node = AutoDiff<T>(a, 0);
+		return  a_node-node;
+	};
 
 	AutoDiff<T> &operator-=(const AutoDiff<T> &node);
 
+	friend void operator-=(AutoDiff<T> &node, const T a) { node.setval(node.val() - a); }
+
+	//===========================================MULTIPLICATION================================
     const AutoDiff<T> operator*(const AutoDiff<T> &node) const;
 
     friend AutoDiff<T> operator*(const T a, const AutoDiff<T> &node) {
@@ -72,9 +84,16 @@ class AutoDiff {
 
     AutoDiff<T> &operator*=(const AutoDiff<T> &node);
 
+	friend void operator*=(AutoDiff<T> &node, const T a) { 
+		node.setval(node.val() * a);
+		node.setdval(node.dval()*a); 
+	}
+
+	//===========================================DIVISION=====================================
 	const AutoDiff<T> operator/(const AutoDiff<T> &node) const;
 
 	AutoDiff<T> &operator/=(const AutoDiff<T> &node);
+
 
     // handle, e.g. 5.0 / Autodiff<double>
     friend AutoDiff<T> operator/(const T a, const AutoDiff<T> &node) {
@@ -88,10 +107,21 @@ class AutoDiff {
         return node / a_node;
     };
 
+	friend void operator/=(AutoDiff<T> &node, const T a) {
+		AutoDiff<T> result = node / a;
+		node.setval(result.val());
+		node.setdval(result.dval());
+	}
 
+	//===========================================POW=============================================
     AutoDiff<T> &operator^(const float alpha);
 
-	
+	AutoDiff<T> &operator^(const AutoDiff<T> &node);
+
+	friend AutoDiff<T> operator^(const T a, const AutoDiff<T> &node) {
+		AutoDiff<T> a_node= AutoDiff<T>(a, 0);
+		return a_node ^ node;
+	}
     /**
      * Apply the sine function to the provided AutoDiff node
      * @param node The AutoDiff node to apply the sine function to

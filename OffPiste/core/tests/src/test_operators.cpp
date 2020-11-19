@@ -99,7 +99,7 @@ TEST(Operators,Add_double){
 	AutoDiff<double> d = 2.0 + x1;
 	AutoDiff<double> e = x1+2.0;
     x1 += x2;
-	
+	x2 += 2.0;
 
     EXPECT_NEAR(c.val(), 3.0, 1E-6);
     EXPECT_NEAR(c.dval(), 6.3, 1E-6);
@@ -109,6 +109,8 @@ TEST(Operators,Add_double){
 	EXPECT_NEAR(d.dval(), 1.9, 1E-6);
 	EXPECT_NEAR(e.val(), 3.0, 1E-6);
 	EXPECT_NEAR(e.dval(), 1.9, 1E-6);
+	EXPECT_NEAR(x2.val(), 4.0, 1E-6);
+	EXPECT_NEAR(x2.dval(), 4.4, 1E-6);
 }
 
 TEST(Operators, Sub_double) {
@@ -121,7 +123,9 @@ TEST(Operators, Sub_double) {
 	/* add operator */
 	AutoDiff<double> c = x1 - x2;
     AutoDiff<double> d = x1 - 5.0;
+	AutoDiff<double> e = 5.0 - x1;
 	x1 -= x2;
+	x2 -= 2.0;
 
 	EXPECT_NEAR(c.val(), -1.0, 1E-6);
 	EXPECT_NEAR(c.dval(), -2.5, 1E-6);
@@ -129,6 +133,10 @@ TEST(Operators, Sub_double) {
     EXPECT_NEAR(d.dval(), seed1, 1E-6);
 	EXPECT_NEAR(x1.val(), -1.0, 1E-6);
 	EXPECT_NEAR(x1.dval(), -2.5, 1E-6);
+	EXPECT_NEAR(e.val(), 4.0, 1E-6);
+	EXPECT_NEAR(e.dval(), -1.9, 1E-6);
+	EXPECT_NEAR(x2.val(), 0.0, 1E-6);
+	EXPECT_NEAR(x2.dval(), 4.4, 1E-6);
 }
 
 TEST(Operators, mul_double) {
@@ -141,7 +149,9 @@ TEST(Operators, mul_double) {
     /* multiplication operator */
     AutoDiff<double> c = x1 * x2;
     AutoDiff<double> d = x1 * 5.0;
+	AutoDiff<double> e = 5.0*x1;
     x1 *= x2;
+	x2 *= 5.0;
 
     EXPECT_NEAR(c.val(), 2.0, 1E-6);
     EXPECT_NEAR(c.dval(), 8.2, 1E-6);
@@ -149,6 +159,10 @@ TEST(Operators, mul_double) {
     EXPECT_NEAR(d.dval(), seed1 * 5, 1E-6);
     EXPECT_NEAR(x1.val(), 2.0, 1E-6);
     EXPECT_NEAR(x1.dval(), 8.2, 1E-6);
+	EXPECT_NEAR(e.val(), 5.0, 1E-6);
+	EXPECT_NEAR(e.dval(), seed1 * 5, 1E-6);
+	EXPECT_NEAR(x2.val(), 10.0, 1E-6);
+	EXPECT_NEAR(x2.dval(), seed2 * 5, 1E-6);
 }
 
 TEST(Operators, div_double) {
@@ -175,7 +189,7 @@ TEST(Operators, div_double) {
     AutoDiff<double> e = 5.0 / x2;
 
 	x1 /= x2;
-
+	x2 /= 2.0;
 	EXPECT_NEAR(c.val(), 0.5, 1E-6);
 	EXPECT_NEAR(c.dval(), -0.15, 1E-6);
     EXPECT_NEAR(d.val(), 1.0 / 5.0, 1E-6);
@@ -185,19 +199,28 @@ TEST(Operators, div_double) {
 
 	EXPECT_NEAR(x1.val(), 0.5, 1E-6);
 	EXPECT_NEAR(x1.dval(), -0.15, 1E-6);
+	EXPECT_NEAR(x2.val(), 1.0, 1E-6);
+	EXPECT_NEAR(x2.dval(), 2.2, 1E-6);
 }
 
 TEST(Operators, pow_double) {
     double seed1 = 1.9;
+	double seed2 = 4.4;
 
-    AutoDiff<double> x(1.0, seed1);
+    AutoDiff<double> x1(1.0, seed1);
+	AutoDiff<double> x2(2.0, seed2);
 
-    AutoDiff<double> y = x^3;
+    AutoDiff<double> y = x1^3;
+	AutoDiff<double> z = x1 ^ x2;
+	AutoDiff<double> k = 3 ^ x2;
 
-    EXPECT_NEAR(x.val(), 1.0, 1E-6);
-    EXPECT_NEAR(x.dval(), 5.7, 1E-6);
+
     EXPECT_NEAR(y.val(), 1.0, 1E-6);
     EXPECT_NEAR(y.dval(), 5.7, 1E-6);
+	EXPECT_NEAR(z.val(), 1.0, 1E-6);
+	EXPECT_NEAR(z.dval(), 11.4, 1E-6);
+	EXPECT_NEAR(k.val(), 9.0, 1E-6);
+	EXPECT_NEAR(k.dval(), 43.505, 1E-3);
 }
 
 // test that sine operator computes correct value and derivative
