@@ -1,6 +1,7 @@
 /* header files */
 #include "OffPiste.hpp"
 #include<iostream>
+#include<cmath>
 /* explicitly tell compiler to build these templates */
 //template class AutoDiff<int>;
 //template class AutoDiff<float>;
