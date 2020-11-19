@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['sin_6',['sin',['../class_auto_diff.html#aac181b03186c9924c0e0a0b5240de7ed',1,'AutoDiff']]]
+  ['exp_8',['exp',['../class_auto_diff.html#a816cfbc9512827db3c31fced0dcea9af',1,'AutoDiff']]]
 ];

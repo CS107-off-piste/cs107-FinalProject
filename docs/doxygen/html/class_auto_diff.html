@@ -64,6 +64,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="class_auto_diff-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">AutoDiff&lt; T &gt; Class Template Reference</div>  </div>
@@ -72,9 +73,9 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a48fe0f805c3349c4e00777b2c051b346"><td class="memItemLeft" align="right" valign="top"><a id="a48fe0f805c3349c4e00777b2c051b346"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>AutoDiff</b> (T val, T dval)</td></tr>
-<tr class="separator:a48fe0f805c3349c4e00777b2c051b346"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbea2a9c754b005b297648564ae9ad59"><td class="memItemLeft" align="right" valign="top"><a id="abbea2a9c754b005b297648564ae9ad59"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>AutoDiff</b> (T val, T dval=1.0)</td></tr>
+<tr class="separator:abbea2a9c754b005b297648564ae9ad59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a575fac095ff5a3655ed9b3318a00a4ed"><td class="memItemLeft" align="right" valign="top"><a id="a575fac095ff5a3655ed9b3318a00a4ed"></a>
 T&#160;</td><td class="memItemRight" valign="bottom"><b>val</b> () const</td></tr>
 <tr class="separator:a575fac095ff5a3655ed9b3318a00a4ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -87,43 +88,188 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setval</b> (T val)</t
 <tr class="memitem:ace0320aa4166135f8bd3c8791e52c88c"><td class="memItemLeft" align="right" valign="top"><a id="ace0320aa4166135f8bd3c8791e52c88c"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setdval</b> (T dval)</td></tr>
 <tr class="separator:ace0320aa4166135f8bd3c8791e52c88c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7db1e76e148b3ad6bed7fd9a130b13e4"><td class="memItemLeft" align="right" valign="top"><a id="a7db1e76e148b3ad6bed7fd9a130b13e4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>print_hello</b> () const</td></tr>
-<tr class="separator:a7db1e76e148b3ad6bed7fd9a130b13e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7438b1be78260c2ed4b6f7ce5ba857a5"><td class="memItemLeft" align="right" valign="top"><a id="a7438b1be78260c2ed4b6f7ce5ba857a5"></a>
-const <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (const <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt; &amp;other) const</td></tr>
-<tr class="separator:a7438b1be78260c2ed4b6f7ce5ba857a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a57e64047eb91a8fc92c4a8beadc7509b"><td class="memItemLeft" align="right" valign="top"><a id="a57e64047eb91a8fc92c4a8beadc7509b"></a>
-<a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator+=</b> (const <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt; &amp;other)</td></tr>
-<tr class="separator:a57e64047eb91a8fc92c4a8beadc7509b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48fe0f805c3349c4e00777b2c051b346"><td class="memItemLeft" align="right" valign="top"><a id="a48fe0f805c3349c4e00777b2c051b346"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>AutoDiff</b> (T val, T dval)</td></tr>
-<tr class="separator:a48fe0f805c3349c4e00777b2c051b346"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a575fac095ff5a3655ed9b3318a00a4ed"><td class="memItemLeft" align="right" valign="top"><a id="a575fac095ff5a3655ed9b3318a00a4ed"></a>
-T&#160;</td><td class="memItemRight" valign="bottom"><b>val</b> () const</td></tr>
-<tr class="separator:a575fac095ff5a3655ed9b3318a00a4ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2d38d8ced74eb91e58170a721e222b4"><td class="memItemLeft" align="right" valign="top"><a id="ae2d38d8ced74eb91e58170a721e222b4"></a>
-T&#160;</td><td class="memItemRight" valign="bottom"><b>dval</b> () const</td></tr>
-<tr class="separator:ae2d38d8ced74eb91e58170a721e222b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affaa79d6808fc90abb0fab4ab6262b50"><td class="memItemLeft" align="right" valign="top"><a id="affaa79d6808fc90abb0fab4ab6262b50"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setval</b> (T val)</td></tr>
-<tr class="separator:affaa79d6808fc90abb0fab4ab6262b50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace0320aa4166135f8bd3c8791e52c88c"><td class="memItemLeft" align="right" valign="top"><a id="ace0320aa4166135f8bd3c8791e52c88c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setdval</b> (T dval)</td></tr>
-<tr class="separator:ace0320aa4166135f8bd3c8791e52c88c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7db1e76e148b3ad6bed7fd9a130b13e4"><td class="memItemLeft" align="right" valign="top"><a id="a7db1e76e148b3ad6bed7fd9a130b13e4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>print_hello</b> () const</td></tr>
-<tr class="separator:a7db1e76e148b3ad6bed7fd9a130b13e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7438b1be78260c2ed4b6f7ce5ba857a5"><td class="memItemLeft" align="right" valign="top"><a id="a7438b1be78260c2ed4b6f7ce5ba857a5"></a>
-const <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (const <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt; &amp;other) const</td></tr>
-<tr class="separator:a7438b1be78260c2ed4b6f7ce5ba857a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a57e64047eb91a8fc92c4a8beadc7509b"><td class="memItemLeft" align="right" valign="top"><a id="a57e64047eb91a8fc92c4a8beadc7509b"></a>
-<a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator+=</b> (const <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt; &amp;other)</td></tr>
-<tr class="separator:a57e64047eb91a8fc92c4a8beadc7509b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2aea1d7e4276c6d9be578694ef8a4a3"><td class="memItemLeft" align="right" valign="top"><a id="ac2aea1d7e4276c6d9be578694ef8a4a3"></a>
+const <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (const <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt; &amp;node) const</td></tr>
+<tr class="separator:ac2aea1d7e4276c6d9be578694ef8a4a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a436855f007e9382c3d86dce6821c54f0"><td class="memItemLeft" align="right" valign="top"><a id="a436855f007e9382c3d86dce6821c54f0"></a>
+<a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator+=</b> (const <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt; &amp;node)</td></tr>
+<tr class="separator:a436855f007e9382c3d86dce6821c54f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a876f91d1ee602d4cb7f41be05eb5afb1"><td class="memItemLeft" align="right" valign="top"><a id="a876f91d1ee602d4cb7f41be05eb5afb1"></a>
+const <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> (const <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt; &amp;node) const</td></tr>
+<tr class="separator:a876f91d1ee602d4cb7f41be05eb5afb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a627bd35bd96de0c4e22983e70304b61c"><td class="memItemLeft" align="right" valign="top"><a id="a627bd35bd96de0c4e22983e70304b61c"></a>
+<a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator-=</b> (const <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt; &amp;node)</td></tr>
+<tr class="separator:a627bd35bd96de0c4e22983e70304b61c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2c64f71c6134d87400d61b7d772aa91"><td class="memItemLeft" align="right" valign="top"><a id="aa2c64f71c6134d87400d61b7d772aa91"></a>
+const <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> (const <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt; &amp;node) const</td></tr>
+<tr class="separator:aa2c64f71c6134d87400d61b7d772aa91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b16e8f9c976372febcd1c165be6dc18"><td class="memItemLeft" align="right" valign="top"><a id="a1b16e8f9c976372febcd1c165be6dc18"></a>
+<a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator*=</b> (const <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt; &amp;node)</td></tr>
+<tr class="separator:a1b16e8f9c976372febcd1c165be6dc18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9660c1ed4a695a72a5cff5540993582d"><td class="memItemLeft" align="right" valign="top"><a id="a9660c1ed4a695a72a5cff5540993582d"></a>
+const <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>operator/</b> (const <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt; &amp;node) const</td></tr>
+<tr class="separator:a9660c1ed4a695a72a5cff5540993582d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55b2361bd1caaca830510a22eff16ae8"><td class="memItemLeft" align="right" valign="top"><a id="a55b2361bd1caaca830510a22eff16ae8"></a>
+<a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator/=</b> (const <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt; &amp;node)</td></tr>
+<tr class="separator:a55b2361bd1caaca830510a22eff16ae8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29eeca1999ac093176609ce7cd3afa79"><td class="memItemLeft" align="right" valign="top"><a id="a29eeca1999ac093176609ce7cd3afa79"></a>
+<a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator^</b> (const float alpha)</td></tr>
+<tr class="separator:a29eeca1999ac093176609ce7cd3afa79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:aaba1ed631c3d601cce752228dd04cbad"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_auto_diff.html#aaba1ed631c3d601cce752228dd04cbad">sin</a> (const <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt; &amp;node)</td></tr>
+<tr class="separator:aaba1ed631c3d601cce752228dd04cbad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f54a971a6d88214b5f8c2b4c25fe11c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_auto_diff.html#a9f54a971a6d88214b5f8c2b4c25fe11c">cos</a> (const <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt; &amp;node)</td></tr>
+<tr class="separator:a9f54a971a6d88214b5f8c2b4c25fe11c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abeafdbafeda80cc30b6aeb9218fd2bd4"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_auto_diff.html#abeafdbafeda80cc30b6aeb9218fd2bd4">tan</a> (const <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt; &amp;node)</td></tr>
+<tr class="separator:abeafdbafeda80cc30b6aeb9218fd2bd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a816cfbc9512827db3c31fced0dcea9af"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_auto_diff.html#a816cfbc9512827db3c31fced0dcea9af">exp</a> (const <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt; &amp;node)</td></tr>
+<tr class="separator:a816cfbc9512827db3c31fced0dcea9af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/>The documentation for this class was generated from the following files:<ul>
-<li>OffPiste/include/<a class="el" href="include_2_off_piste_8hpp_source.html">OffPiste.hpp</a></li>
-<li>OffPiste/core/src/OffPiste.cpp</li>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a9f54a971a6d88214b5f8c2b4c25fe11c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f54a971a6d88214b5f8c2b4c25fe11c">&#9670;&nbsp;</a></span>cos()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt;T&gt; <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt;::cos </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt; &amp;&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Apply the cosine function to the provided <a class="el" href="class_auto_diff.html">AutoDiff</a> node </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">node</td><td>The <a class="el" href="class_auto_diff.html">AutoDiff</a> node to apply the cosine function to </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An <a class="el" href="class_auto_diff.html">AutoDiff</a> object representing the cosine of the current <a class="el" href="class_auto_diff.html">AutoDiff</a> object </dd></dl>
+
+</div>
+</div>
+<a id="a816cfbc9512827db3c31fced0dcea9af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a816cfbc9512827db3c31fced0dcea9af">&#9670;&nbsp;</a></span>exp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt;T&gt; <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt;::exp </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt; &amp;&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Apply the exponential function (i.e. e^x) to the provided <a class="el" href="class_auto_diff.html">AutoDiff</a> node </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">node</td><td>The <a class="el" href="class_auto_diff.html">AutoDiff</a> node to apply the exponential function to </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An <a class="el" href="class_auto_diff.html">AutoDiff</a> object representing the exponential function applied to the current <a class="el" href="class_auto_diff.html">AutoDiff</a> object </dd></dl>
+
+</div>
+</div>
+<a id="aaba1ed631c3d601cce752228dd04cbad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaba1ed631c3d601cce752228dd04cbad">&#9670;&nbsp;</a></span>sin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt;T&gt; <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt;::sin </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt; &amp;&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Apply the sine function to the provided <a class="el" href="class_auto_diff.html">AutoDiff</a> node </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">node</td><td>The <a class="el" href="class_auto_diff.html">AutoDiff</a> node to apply the sine function to </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An <a class="el" href="class_auto_diff.html">AutoDiff</a> object representing the sin of the current <a class="el" href="class_auto_diff.html">AutoDiff</a> object </dd></dl>
+
+</div>
+</div>
+<a id="abeafdbafeda80cc30b6aeb9218fd2bd4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abeafdbafeda80cc30b6aeb9218fd2bd4">&#9670;&nbsp;</a></span>tan()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt;T&gt; <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt;::tan </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_auto_diff.html">AutoDiff</a>&lt; T &gt; &amp;&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Apply the tangent function to the provided <a class="el" href="class_auto_diff.html">AutoDiff</a> node </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">node</td><td>The <a class="el" href="class_auto_diff.html">AutoDiff</a> node to apply the tangent function to </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An <a class="el" href="class_auto_diff.html">AutoDiff</a> object representing the tangent of the current <a class="el" href="class_auto_diff.html">AutoDiff</a> object </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>OffPiste/include/<a class="el" href="_off_piste_8hpp_source.html">OffPiste.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
