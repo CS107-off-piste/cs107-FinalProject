@@ -5,9 +5,9 @@ typedef AutoDiff AD;
 
 int main(int argc, char const *argv[])
 {
-	// some test values
-	double value1 = 1.2; 
-	double value2 = 3.4;
+    // some test values
+    double value1 = 1.2; 
+    double value2 = 3.4;
     double seed1 = 1.0;
     double seed2 = 1.0;
 
@@ -24,5 +24,5 @@ int main(int argc, char const *argv[])
     AD z = AD::exp(AD::sin(x+y));
     std::cout << "Z value, derivative: " << z.val() << ", "<< z.dval() << "\n"; 
 
-	return 0;
+    return 0;
 }
