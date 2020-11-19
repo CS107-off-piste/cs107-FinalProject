@@ -25,7 +25,7 @@ class AutoDiff {
 
     /* constructors */
     AutoDiff(){};
-    AutoDiff(T val,T dval) : v(val),dv(dval) {};
+    AutoDiff(T val,T dval=1.0) : v(val),dv(dval) {};
 
     /* getters */
     T val() const {return v;};
@@ -42,12 +42,21 @@ class AutoDiff {
 
     AutoDiff<T> &operator+=(const AutoDiff<T> &node);
 
+	const AutoDiff<T> operator-(const AutoDiff<T> &node) const;
+
+	AutoDiff<T> &operator-=(const AutoDiff<T> &node);
+
     const AutoDiff<T> operator*(const AutoDiff<T> &node) const;
 
     AutoDiff<T> &operator*=(const AutoDiff<T> &node);
 
+	const AutoDiff<T> operator/(const AutoDiff<T> &node) const;
+
+	AutoDiff<T> &operator/=(const AutoDiff<T> &node) ;
+
     AutoDiff<T> &operator^(const float alpha);
 
+	
     /**
      * Apply the sine function to the provided AutoDiff node
      * @param node The AutoDiff node to apply the sine function to
