@@ -14,8 +14,8 @@ int main() {
     b.value = 2;
     c.value = 0;
 
-    EXPRESSION u = a + b;
-    EXPRESSION v = a + exp(c);
+    EXPRESSION u = a + b + 1;
+    EXPRESSION v = a + exp(1 + c);
 
     EXPRESSIONS outputs = {u, v};
 
