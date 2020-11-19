@@ -10,6 +10,7 @@ CLEAN_DIST=0
 CLEAN=0
 COVERAGE=0
 DOCUMENTATION_GEN=0
+FORMAT=0
 # ============== #
 # print strings
 # ============== #
@@ -57,9 +58,10 @@ help() {
     echo "    --release   -opt    compile the project in optimized mode"
     echo "    --debug     -deb    compile the project in debug mode"
     echo "    --testsON   -ton    turn on unit tests (google tests)"
+    echo "    --gen-docs   -docs  generate documentation using Doxygen"
+    echo "    --format     -form  format source files in OffPiste/ using clang-format"
     echo "    --coverage  -cov    generate code coverage report for unit tests"
     echo "    --build_so  -so     compile the library into .so"
-    echo "    --gen-docs   -docs   generate a coverage report in OffPiste/coverage"
     echo " "
     echo "  [COMPILER OPTIONS]:"
     echo "     CC=<arg>   cc=<arg>    sets the C compiler"
@@ -132,6 +134,10 @@ do
     echo -e "Found known argument: ${gC}$var${eC}"
     DOCUMENTATION_GEN=1
 
+  elif [ "$var" == "--format" -o "$var" == "-form" ]; then
+    echo -e "Found known argument: ${gC}$var${eC}"
+    FORMAT=1
+
   elif [ "$var" == "--clean" -o "$var" == "-clean" -o "$var" == "-c" -o \
          "$var" == "--testsOFF" -o "$var" == "-testsOFF" -o "$var" == "-toff" -o \
          "${var:0:3}" == "CC=" -o "${var:0:3}" == "cc=" -o \
@@ -181,8 +187,7 @@ fi
 # =================================================================== #
 
 # =================================================================== #
-
-if [ $BUILD_LIB == 0 -a $BUILD_3PL == 0 -a $COVERAGE == 0 -a $DOCUMENTATION_GEN == 0 ]; then
+if [ $BUILD_LIB == 0 -a $BUILD_3PL == 0 -a $COVERAGE == 0 -a $DOCUMENTATION_GEN == 0 -a $FORMAT == 0 -a $CLEAN == 0 ]; then
   # by default, if no options are set, build OffPiste and 3PL
   BUILD_3PL=1
   BUILD_LIB=1
@@ -224,6 +229,20 @@ if [ $DOCUMENTATION_GEN == 1 ]; then
   echo "============================"
 
   doxygen Doxyfile
+fi
+
+if [ $FORMAT == 1 ]; then
+  echo "========================================"
+  echo "Formatting source code with clang-format"
+  echo "========================================"
+
+  # find all .cpp, .hpp, .cc, .cxx files in OffPiste/core
+  # and run clang-format using the .clang-format file in the project root directory
+  find OffPiste/core \( -name '*.hpp' -or -name '*.cpp' \) -print -exec clang-format -style=file -i '{}' \;
+
+  # repeat for files in OffPiste/include
+  find OffPiste/include \( -name '*.hpp' -or -name '*.cpp' \) -print -exec clang-format -style=file -i '{}' \;
+
 fi
 
 echo "======================================"
