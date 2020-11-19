@@ -154,6 +154,70 @@ TEST(Operators, sine) {
     EXPECT_NEAR(y2.dval(), -1.97998, 1E-1);
 }
 
+// test that cosine operator computes correct value and derivative
+TEST(Operators, cosine) {
+    double seed1 = 1.0;
+    double seed2 = 2.0;
+
+    // x1 has value of 2, and a derivative of 1.0
+    AD x1(2.0, seed1);
+    // x2 has value of 3, and a derivative of 2.0
+    AD x2(3.0, seed2);
+
+    // take cosine of each one
+    AD y1 = AD::cos(x1);
+    AD y2 = AD::cos(x2);  
+
+    // for the function y = cos(x), we expect that:
+    //   -> y_value = cos(x_value)
+    //   -> y_derivative = -1 * sin(x_value) * x_derivative
+
+    // for our object x1, x_value = 2 and x_derivative = 1
+    // so we expect to see y1 having a value of: cos(2) ≈ -0.4161
+    EXPECT_NEAR(y1.val(), -0.4161, 1E-1);
+    // and we expect a derivative of: -sin(2) * 1 ≈ -0.9093
+    EXPECT_NEAR(y1.dval(), -0.9093, 1E-1);
+
+    // for our object x2, x_value = 3 and x_derivative = 2
+    // so we expect to see y1 having a value of: cos(3) ≈ -0.9900
+    EXPECT_NEAR(y2.val(), -0.99, 1E-1);
+    // and we expect a derivative of: -sin(3) * 2 ≈ -0.2822 
+    EXPECT_NEAR(y2.dval(), -0.2822, 1E-1);
+}
+
+// test that tangent operator computes correct value and derivative
+TEST(Operators, tangent) {
+    double seed1 = 1.0;
+    double seed2 = 2.0;
+
+    // x1 has value of 2, and a derivative of 1.0
+    AD x1(2.0, seed1);
+    // x2 has value of 3, and a derivative of 2.0
+    AD x2(3.0, seed2);
+
+    // take tangent of each one
+    AD y1 = AD::tan(x1);
+    AD y2 = AD::tan(x2);  
+
+    // for the function y = tan(x), we expect that:
+    //   -> y_value = tan(x_value)
+    //   -> y_derivative = (sec(x_value))^2 * x_derivative
+    // Since sec(x) = 1 / cos(x), this is:
+    // (1 / cos(x_value))^2 * x_derivative
+
+    // for our object x1, x_value = 2 and x_derivative = 1
+    // so we expect to see y1 having a value of: tan(2) ≈ -2.1850 
+    EXPECT_NEAR(y1.val(), -2.1850, 1E-1);
+    // and we expect a derivative of: (sec(2)^2) * 1 ≈ 5.7743
+    EXPECT_NEAR(y1.dval(), 5.7744, 1E-1);
+
+    // for our object x2, x_value = 3 and x_derivative = 2
+    // so we expect to see y1 having a value of: tan(3) ≈ -0.1425
+    EXPECT_NEAR(y2.val(), -0.1425, 1E-1);
+    // and we expect a derivative of: (sec(3)^2) * 2 ≈ 2.0406 
+    EXPECT_NEAR(y2.dval(), 2.0406, 1E-1);
+}
+
 // test that exponential operator computes correct value and derivative
 TEST(Operators, exp) {
     double seed1 = 1.0;
