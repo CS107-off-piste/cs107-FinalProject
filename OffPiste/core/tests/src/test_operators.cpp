@@ -120,10 +120,13 @@ TEST(Operators, Sub_double) {
 
 	/* add operator */
 	AutoDiff<double> c = x1 - x2;
+    AutoDiff<double> d = x1 - 5.0;
 	x1 -= x2;
 
 	EXPECT_NEAR(c.val(), -1.0, 1E-6);
 	EXPECT_NEAR(c.dval(), -2.5, 1E-6);
+    EXPECT_NEAR(d.val(), -4.0, 1E-6);
+    EXPECT_NEAR(d.dval(), seed1, 1E-6);
 	EXPECT_NEAR(x1.val(), -1.0, 1E-6);
 	EXPECT_NEAR(x1.dval(), -2.5, 1E-6);
 }

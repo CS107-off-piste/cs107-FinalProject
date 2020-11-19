@@ -54,22 +54,17 @@ AutoDiff<T>& AutoDiff<T>::operator*=(const AutoDiff<T> &node) {
 
 template <class T>
 const AutoDiff<T> AutoDiff<T>::operator/(const AutoDiff<T> &node) const {
-	if (equal(node.val(), 0.0))
+	if (equal(node.val(), 0.0)){
 		throw "Divide by zero";
-	//if (sizeof(node.val()) == 4)
-		//return AutoDiff<float>(v / (float)node.val(), (dv*node.val() - node.dval()*v) / (float)pow(node.val(), 2));
+	}
 	return AutoDiff<T>(v / node.val(), (dv*node.val() - node.dval()*v) / pow(node.val(), 2));
 }
 
 template <class T>
 AutoDiff<T>& AutoDiff<T>::operator/=(const AutoDiff<T> &node) {
-	if (equal(node.val(), 0.0))
+	if (equal(node.val(), 0.0)){
 		throw "Divide by zero";
-	/*if (sizeof(node.val()) == 4) {
-		v = v / (float)node.val();
-		dv = (dv*node.val() - node.dval()*v) / (float)pow(node.val(), 2);
-		return *this;
-	}*/
+	}
 	dv = (dv*node.val() - node.dval()*v) / pow(node.val(), 2);
 	v = v / node.val();
 	return *this;
@@ -101,8 +96,3 @@ AutoDiff<T> AutoDiff<T>::exp(const AutoDiff<T> &node) {
     T dval = std::exp(node.val()) * node.dval();
     return AutoDiff<T>(val,dval);
 }
-
-/*template <class T> 
-inline AutoDiff<T> operator/(const double x, const AutoDiff<T> &node) {
-	AutoDiff<T>(val, dval)
-}*/
