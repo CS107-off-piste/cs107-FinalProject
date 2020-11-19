@@ -38,6 +38,8 @@
 
 # Mac-specific files
 .DS_Store
+# CLion files
+.idea/
 
 # build artefacts
 build/
