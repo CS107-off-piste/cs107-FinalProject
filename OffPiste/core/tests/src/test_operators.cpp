@@ -140,10 +140,13 @@ TEST(Operators, mul_double) {
 
     /* multiplication operator */
     AutoDiff<double> c = x1 * x2;
+    AutoDiff<double> d = x1 * 5.0;
     x1 *= x2;
 
     EXPECT_NEAR(c.val(), 2.0, 1E-6);
     EXPECT_NEAR(c.dval(), 8.2, 1E-6);
+    EXPECT_NEAR(d.val(), 5, 1E-6);
+    EXPECT_NEAR(d.dval(), seed1 * 5, 1E-6);
     EXPECT_NEAR(x1.val(), 2.0, 1E-6);
     EXPECT_NEAR(x1.dval(), 8.2, 1E-6);
 }
