@@ -11,7 +11,7 @@
 #include "test_vars.h"
 
 // add an AD shortcut for brevity
-typedef AutoDiff<double> AD;
+typedef AutoDiff AD;
 
 void OffPiste_testcheck() { printf("Starting Off Piste tests...\n"); }
 TEST(Equal, float) {
@@ -21,24 +21,24 @@ TEST(Equal, float) {
 
 TEST(Init, float) {
   float value = 1.8f;
-  AutoDiff<float> x(value);
+  AutoDiff x(value);
   EXPECT_NEAR(x.val(), 1.8, 1E-6);
 }
 
 TEST(Getter, int) {
   int value = 3;
   int seed = 7;
-  AutoDiff<int> x1(value, seed);
+  AutoDiff x1(value, seed);
 
   /* test getters */
-  EXPECT_EQ(x1.val(), value);  // note: EXECT_EQ used only for integers
-  EXPECT_EQ(x1.dval(), seed);
+  EXPECT_NEAR(x1.val(), value, 1E-10);  // note: EXECT_EQ used only for integers
+  EXPECT_NEAR(x1.dval(), seed, 1E-10);
 }
 
 TEST(Getter, float) {
   float value = 9.8f;
   float seed = 1.0f;
-  AutoDiff<float> x(value, seed);
+  AutoDiff x(value, seed);
 
   /* test getters */
   EXPECT_NEAR(x.val(), value, DTOL);
@@ -48,7 +48,7 @@ TEST(Getter, float) {
 TEST(Getter, double) {
   double value = 9.8;
   double seed = 1.0;
-  AutoDiff<double> x(value, seed);
+  AutoDiff x(value, seed);
 
   /* test getters */
   EXPECT_NEAR(x.val(), value, DTOL);
@@ -58,17 +58,17 @@ TEST(Getter, double) {
 TEST(Setter, int) {
   int value = 2;
   int seed = 1;
-  AutoDiff<int> x(value, seed);
+  AutoDiff x(value, seed);
 
   /* test getters */
   x.setval(3);
-  EXPECT_EQ(x.val(), 3);
+  EXPECT_NEAR(x.val(), 3, 1E-6);
 }
 
 TEST(Setter, float) {
   float value = 1.8f;
   float seed = 1.2f;
-  AutoDiff<float> x(value, seed);
+  AutoDiff x(value, seed);
 
   /* test getters */
   x.setval(3.3);
@@ -78,7 +78,7 @@ TEST(Setter, float) {
 TEST(Setter, double) {
   double value = 1.8;
   double seed = 1.2;
-  AutoDiff<double> x(value, seed);
+  AutoDiff x(value, seed);
 
   /* test getters */
   x.setval(3.3);
@@ -89,136 +89,137 @@ TEST(Operators, Add_double) {
   double seed1 = 1.9;
   double seed2 = 4.4;
 
-  AutoDiff<double> x1(1.0, seed1);
-  AutoDiff<double> x2(2.0, seed2);
+  AutoDiff x1(1.0, seed1);
+  AutoDiff x2(2.0, seed2);
 
-    /* add operator */
-    AutoDiff<double> c = x1 + x2;
-	AutoDiff<double> d = 2.0 + x1;
-	AutoDiff<double> e = x1+2.0;
-    x1 += x2;
-	x2 += 2.0;
+  /* add operator */
+  AutoDiff c = x1 + x2;
+  AutoDiff d = 2.0 + x1;
+  AutoDiff e = x1 + 2.0;
+  x1 += x2;
+  x2 += 2.0;
 
-    EXPECT_NEAR(c.val(), 3.0, 1E-6);
-    EXPECT_NEAR(c.dval(), 6.3, 1E-6);
-    EXPECT_NEAR(x1.val(), 3.0, 1E-6);
-    EXPECT_NEAR(x1.dval(), 6.3, 1E-6);
-	EXPECT_NEAR(d.val(), 3.0, 1E-6);
-	EXPECT_NEAR(d.dval(), 1.9, 1E-6);
-	EXPECT_NEAR(e.val(), 3.0, 1E-6);
-	EXPECT_NEAR(e.dval(), 1.9, 1E-6);
-	EXPECT_NEAR(x2.val(), 4.0, 1E-6);
-	EXPECT_NEAR(x2.dval(), 4.4, 1E-6);
+  EXPECT_NEAR(c.val(), 3.0, 1E-6);
+  EXPECT_NEAR(c.dval(), 6.3, 1E-6);
+  EXPECT_NEAR(x1.val(), 3.0, 1E-6);
+  EXPECT_NEAR(x1.dval(), 6.3, 1E-6);
+  EXPECT_NEAR(d.val(), 3.0, 1E-6);
+  EXPECT_NEAR(d.dval(), 1.9, 1E-6);
+  EXPECT_NEAR(e.val(), 3.0, 1E-6);
+  EXPECT_NEAR(e.dval(), 1.9, 1E-6);
+  EXPECT_NEAR(x2.val(), 4.0, 1E-6);
+  EXPECT_NEAR(x2.dval(), 4.4, 1E-6);
 }
 
 TEST(Operators, Sub_double) {
   double seed1 = 1.9;
   double seed2 = 4.4;
 
-  AutoDiff<double> x1(1.0, seed1);
-  AutoDiff<double> x2(2.0, seed2);
+  AutoDiff x1(1.0, seed1);
+  AutoDiff x2(2.0, seed2);
 
-	/* add operator */
-	AutoDiff<double> c = x1 - x2;
-    AutoDiff<double> d = x1 - 5.0;
-	AutoDiff<double> e = 5.0 - x1;
-	x1 -= x2;
-	x2 -= 2.0;
+  /* add operator */
+  AutoDiff c = x1 - x2;
+  AutoDiff d = x1 - 5.0;
+  AutoDiff e = 5.0 - x1;
+  x1 -= x2;
+  x2 -= 2.0;
 
-	EXPECT_NEAR(c.val(), -1.0, 1E-6);
-	EXPECT_NEAR(c.dval(), -2.5, 1E-6);
-    EXPECT_NEAR(d.val(), -4.0, 1E-6);
-    EXPECT_NEAR(d.dval(), seed1, 1E-6);
-	EXPECT_NEAR(x1.val(), -1.0, 1E-6);
-	EXPECT_NEAR(x1.dval(), -2.5, 1E-6);
-	EXPECT_NEAR(e.val(), 4.0, 1E-6);
-	EXPECT_NEAR(e.dval(), -1.9, 1E-6);
-	EXPECT_NEAR(x2.val(), 0.0, 1E-6);
-	EXPECT_NEAR(x2.dval(), 4.4, 1E-6);
+  EXPECT_NEAR(c.val(), -1.0, 1E-6);
+  EXPECT_NEAR(c.dval(), -2.5, 1E-6);
+  EXPECT_NEAR(d.val(), -4.0, 1E-6);
+  EXPECT_NEAR(d.dval(), seed1, 1E-6);
+  EXPECT_NEAR(x1.val(), -1.0, 1E-6);
+  EXPECT_NEAR(x1.dval(), -2.5, 1E-6);
+  EXPECT_NEAR(e.val(), 4.0, 1E-6);
+  EXPECT_NEAR(e.dval(), -1.9, 1E-6);
+  EXPECT_NEAR(x2.val(), 0.0, 1E-6);
+  EXPECT_NEAR(x2.dval(), 4.4, 1E-6);
 }
 
 TEST(Operators, mul_double) {
   double seed1 = 1.9;
   double seed2 = 4.4;
 
-  AutoDiff<double> x1(1.0, seed1);
-  AutoDiff<double> x2(2.0, seed2);
+  AutoDiff x1(1.0, seed1);
+  AutoDiff x2(2.0, seed2);
 
-    /* multiplication operator */
-    AutoDiff<double> c = x1 * x2;
-    AutoDiff<double> d = x1 * 5.0;
-	AutoDiff<double> e = 5.0*x1;
-    x1 *= x2;
-	x2 *= 5.0;
+  /* multiplication operator */
+  AutoDiff c = x1 * x2;
+  AutoDiff d = x1 * 5.0;
+  AutoDiff e = 5.0 * x1;
+  x1 *= x2;
+  x2 *= 5.0;
 
-    EXPECT_NEAR(c.val(), 2.0, 1E-6);
-    EXPECT_NEAR(c.dval(), 8.2, 1E-6);
-    EXPECT_NEAR(d.val(), 5, 1E-6);
-    EXPECT_NEAR(d.dval(), seed1 * 5, 1E-6);
-    EXPECT_NEAR(x1.val(), 2.0, 1E-6);
-    EXPECT_NEAR(x1.dval(), 8.2, 1E-6);
-	EXPECT_NEAR(e.val(), 5.0, 1E-6);
-	EXPECT_NEAR(e.dval(), seed1 * 5, 1E-6);
-	EXPECT_NEAR(x2.val(), 10.0, 1E-6);
-	EXPECT_NEAR(x2.dval(), seed2 * 5, 1E-6);
+  EXPECT_NEAR(c.val(), 2.0, 1E-6);
+  EXPECT_NEAR(c.dval(), 8.2, 1E-6);
+  EXPECT_NEAR(d.val(), 5, 1E-6);
+  EXPECT_NEAR(d.dval(), seed1 * 5, 1E-6);
+  EXPECT_NEAR(x1.val(), 2.0, 1E-6);
+  EXPECT_NEAR(x1.dval(), 8.2, 1E-6);
+  EXPECT_NEAR(e.val(), 5.0, 1E-6);
+  EXPECT_NEAR(e.dval(), seed1 * 5, 1E-6);
+  EXPECT_NEAR(x2.val(), 10.0, 1E-6);
+  EXPECT_NEAR(x2.dval(), seed2 * 5, 1E-6);
 }
 
 TEST(Operators, div_double) {
-	double seed1 = 1.9;
-	double seed2 = 4.4;
+  double seed1 = 1.9;
+  double seed2 = 4.4;
 
-	AutoDiff<double> x1(1.0, seed1);
-	AutoDiff<double> x2(2.0, seed2);
-	AutoDiff<double> x3(0.0, seed2);
-	/* division operator */
-	try { x1 / x3; }
-	catch (const char* msg) {
-		EXPECT_EQ(msg, "Divide by zero");
-	}
+  AutoDiff x1(1.0, seed1);
+  AutoDiff x2(2.0, seed2);
+  AutoDiff x3(0.0, seed2);
+  /* division operator */
+  try {
+    x1 / x3;
+  } catch (const char* msg) {
+    EXPECT_EQ(msg, "Divide by zero");
+  }
 
-	try { x1 /= x3; }
-	catch (const char* msg) {
-		EXPECT_EQ(msg, "Divide by zero");
-	}
+  try {
+    x1 /= x3;
+  } catch (const char* msg) {
+    EXPECT_EQ(msg, "Divide by zero");
+  }
 
-	AutoDiff<double> c = x1 /x2;
+  AutoDiff c = x1 / x2;
 
-    AutoDiff<double> d = x1 / 5.0;
-    AutoDiff<double> e = 5.0 / x2;
+  AutoDiff d = x1 / 5.0;
+  AutoDiff e = 5.0 / x2;
 
-	x1 /= x2;
-	x2 /= 2.0;
-	EXPECT_NEAR(c.val(), 0.5, 1E-6);
-	EXPECT_NEAR(c.dval(), -0.15, 1E-6);
-    EXPECT_NEAR(d.val(), 1.0 / 5.0, 1E-6);
-    EXPECT_NEAR(d.dval(), seed1 / 5, 1E-6);
-    EXPECT_NEAR(e.val(), 5.0 / 2.0, 1E-6);
-    EXPECT_NEAR(e.dval(), (-(5.0*seed2)) / std::pow(2.0,2), 1E-6);
+  x1 /= x2;
+  x2 /= 2.0;
+  EXPECT_NEAR(c.val(), 0.5, 1E-6);
+  EXPECT_NEAR(c.dval(), -0.15, 1E-6);
+  EXPECT_NEAR(d.val(), 1.0 / 5.0, 1E-6);
+  EXPECT_NEAR(d.dval(), seed1 / 5, 1E-6);
+  EXPECT_NEAR(e.val(), 5.0 / 2.0, 1E-6);
+  EXPECT_NEAR(e.dval(), (-(5.0 * seed2)) / std::pow(2.0, 2), 1E-6);
 
-	EXPECT_NEAR(x1.val(), 0.5, 1E-6);
-	EXPECT_NEAR(x1.dval(), -0.15, 1E-6);
-	EXPECT_NEAR(x2.val(), 1.0, 1E-6);
-	EXPECT_NEAR(x2.dval(), 2.2, 1E-6);
+  EXPECT_NEAR(x1.val(), 0.5, 1E-6);
+  EXPECT_NEAR(x1.dval(), -0.15, 1E-6);
+  EXPECT_NEAR(x2.val(), 1.0, 1E-6);
+  EXPECT_NEAR(x2.dval(), 2.2, 1E-6);
 }
 
 TEST(Operators, pow_double) {
-    double seed1 = 1.9;
-	double seed2 = 4.4;
+  double seed1 = 1.9;
+  double seed2 = 4.4;
 
-    AutoDiff<double> x1(1.0, seed1);
-	AutoDiff<double> x2(2.0, seed2);
+  AutoDiff x1(1.0, seed1);
+  AutoDiff x2(2.0, seed2);
 
-    AutoDiff<double> y = x1^3;
-	AutoDiff<double> z = x1 ^ x2;
-	AutoDiff<double> k = 3 ^ x2;
+  AutoDiff y = x1 ^ 3;
+  AutoDiff z = x1 ^ x2;
+  AutoDiff k = 3 ^ x2;
 
-
-    EXPECT_NEAR(y.val(), 1.0, 1E-6);
-    EXPECT_NEAR(y.dval(), 5.7, 1E-6);
-	EXPECT_NEAR(z.val(), 1.0, 1E-6);
-	EXPECT_NEAR(z.dval(), 11.4, 1E-6);
-	EXPECT_NEAR(k.val(), 9.0, 1E-6);
-	EXPECT_NEAR(k.dval(), 43.505, 1E-3);
+  EXPECT_NEAR(y.val(), 1.0, 1E-6);
+  EXPECT_NEAR(y.dval(), 5.7, 1E-6);
+  EXPECT_NEAR(z.val(), 1.0, 1E-6);
+  EXPECT_NEAR(z.dval(), 11.4, 1E-6);
+  EXPECT_NEAR(k.val(), 9.0, 1E-6);
+  EXPECT_NEAR(k.dval(), 43.505, 1E-3);
 }
 
 // test that sine operator computes correct value and derivative
