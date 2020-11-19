@@ -1,2 +1,2 @@
 example:
-	g++ -Wall -Iinclude -Llib/ example.cpp -o example.out
+	g++ -Wall -Iinclude example.cpp -o example.out
