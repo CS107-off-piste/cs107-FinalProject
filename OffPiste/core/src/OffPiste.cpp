@@ -11,7 +11,7 @@
 /* AutoDiff Class Operators */
 /* ======================== */
 bool equal(double a, double b) {
-	if (abs(a - b) < 1e-15)
+	if (std::abs(a - b) < 1e-15)
 		return true;
 	return false;
 }
