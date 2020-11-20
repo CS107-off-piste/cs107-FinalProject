@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['exp_2',['exp',['../class_auto_diff.html#affe2437cce3f0bd525f9bd2d9bac75e5',1,'AutoDiff']]]
+  ['dval_2',['dval',['../class_auto_diff.html#a7b50c0d32520a21965f3d2dbe271fe09',1,'AutoDiff']]]
 ];

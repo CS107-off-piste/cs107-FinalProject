@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['tan_5',['tan',['../class_auto_diff.html#aa0461c5252f3c96fbe04ea5b0d78a9d5',1,'AutoDiff']]]
+  ['sin_14',['sin',['../class_auto_diff.html#a170acbc292bf535c2fb66d2b200f715f',1,'AutoDiff']]]
 ];
