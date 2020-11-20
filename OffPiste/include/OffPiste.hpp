@@ -96,6 +96,12 @@ class AutoDiff {
 
   //===========================================SUBSTRACTION=====================================
   /**
+   * Unary negation of the provided node
+   * @return A new node representing the result of the operation
+   */
+  const AutoDiff operator-() const;
+
+  /**
    * Subtract one node's value from another
    * @param Node the node to subtract
    * @return A new node representing the first node minus the second node.

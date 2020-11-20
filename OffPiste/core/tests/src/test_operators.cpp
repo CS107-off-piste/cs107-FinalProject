@@ -111,6 +111,19 @@ TEST(Operators, Add_double) {
   EXPECT_NEAR(x2.dval(), 4.4, 1E-6);
 }
 
+TEST(Operators, Sub_unary) {
+  double seed1 = 1.9;
+
+  AutoDiff x1(1.5, seed1);
+
+  // negate x1
+  AD c = -x1;
+
+  // expect that value and derivative are negated
+  EXPECT_NEAR(c.val(), -1.5, 1E-6);
+  EXPECT_NEAR(c.dval(), -1.9, 1E-6);
+}
+
 TEST(Operators, Sub_double) {
   double seed1 = 1.9;
   double seed2 = 4.4;
