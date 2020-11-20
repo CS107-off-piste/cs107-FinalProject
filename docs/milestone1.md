@@ -50,10 +50,10 @@ This mode, on the other hand, is better for functions with `n >> m`. Reverse mod
 
 <hr/>
 
-## How to use *AutoD*
+## How to use *OffPiste*
 
 ### **How do you envision that a user will interact with your package?**  
-*AutoD* will be used as an API.   
+*OffPiste* will be used as an API.   
 
 ### **What should they import?**  
 They should download *AutoD.lib* , set the search directory and include the header file `#include<AutoD.h>`.  
