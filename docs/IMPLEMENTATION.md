@@ -1,42 +1,34 @@
 ## Implementation
 
 - **What are the core data structures?**
-    The core data structure for each component of vector functions is a Directed Acyclic Graph (DAG) with multiple inputs and multiple outputs.
-    e.g. f(x, y, z) = (x + y^2, x - z)
+    The core data structure underlies our AD tool is a Directed Acyclic Graph (DAG) with multiple inputs and single output.
+    e.g. f(x, y, z) = x + y^2 + z^3.  
+    By invoking a unary operation on a node, a parent node of the previous node is constructed whose value and derivative is set according to the unary operation.
+    By invoking a binary operation between two nodes, a parent node of two previous nodes is constructed whose value and derivative is set according to the binary operation.
   
 - **What classes will you implement? What method and name attributes will your classes have?**  
-    There are three basic classes needed to be implemented: `Node`, `Variable`, `Function`:
-    - `Node`: A node of the DAG. It has the following attributes and methods:
-        - `.forward()`: represents the operation of this node, including binary and unary operation, e.g. +, -, exp, sin.
-        - `.backward()`: used in reverse mode when computing the derivative of each node.
-        - `.value`: the value of this node.
-        - `.derivative`: the derivative of this node.
-        - `.parents`: a `std::vector<Node*>` containing the pointers to all parents of this node.
-        - `.children`: `a std::vector<Node*>` containing the pointers to all children of this node.
-    
-    - `Variable`: A derived class of `Node` that represents each input.
-    
-    - `Function`: A DAG that containing Nodes, with multiple inputs and multiple outputs.
-        - `Function(EXPRESSIONS)`: use `EXPRESSIONS` to initialize a DAG.
-        - `.evaluate(Node &output_node)`: compute the output wrt `Node &output_node`.
-        - `.evaluate()`: compute the output wrt all output nodes, and return `std::vector<float>`.
-        - `.set_seed()`: set the seed *p* when taking directional derivative.
-        - `.forward_derivative(Node &output_node, Node &wrt)`: compute the derivative of `Node &output_node` wrt `Node &wrt`.
-        - `.jacobian()`: compute the jacobian of vector function of vector input represented by this graph, and return `std::vector<std::vector<float>>`.
-        - `.bfs()`: a private method that add every node in the graph and its in degree into `std::map<Node*, size_t> book_keeper`.
-        - `.generate_aov_sequence`: a private method that generate an feasible AOV sequence of this DAG and store it in `std::vector<Node*> aov_sequence`
-        - `.output_node_ptrs`: a `std::vector<Node*>` that stores the pointers to output nodes (top level nodes).
-        - `.book_keeper`: a `std::map<Node*, size_t>` that stores pointers to each node and its the number of its children.
-        - `.aov_sequence`: a `std::vector<Node*>` that stores a feasible AOV sequence of this DAG. It is obtained by invoking `.generate_aov_sequence()`.
-  
-    Other than classes, there are also some definitions of macro that are helpful.
-    - `EXPRESSION`: A macro for `Node&`.
+    The core class for milestone 2 is `AutoDiff`:
+    - `private` members:
+        - `T v`: The value of this node
+        - `T dv`: The derivative of this node
+        
+    - `public` members:
+        - `AutoDiff()`: Default constructor
+        - `AutoDiff(T val, T dval=1.0)`: Contructor with fixed initial `v` and `dv`
+        - `T val()`: Getter function of `v`
+        - `T dval()`: Getter function of `dv`
+        - `void setval(T val)`: Setter function of `v`
+        - `void setval(T dval)`: Setter function of `dv`
+        
+        - Operator overloading. Support unary and binary operation:
+            - Unary operators: power(^), sin, cos, tan, exp.
+            - Binary operators: addition(+), subtraction(-), multiply(*), divide(/), +=, -=, *=, /=.  
+            *P.S. The binary operator are **only** between `AutoDiff` object for this milestone)*
 
-    - `EXPRESSIONS`: A macro for `std::vector<std::reference_wrapper<Node>>`.
+- The functions above are described in further detail via code comments in `OffPiste.cpp` and `.hpp`, as well as in the Doxygen documentation available at `docs/doxygen/html`.
 
-- **What external dependencies will you rely on?**
-    - cmath
-    - STL
+- As set out in a previous milestone document, we intend to implement reverse mode and so, going forward, we will need to store a graph of operations. Our intended class structure for this remains as set out in that previous milestone document. 
     
-- **How will you deal with elementary functions like sin, sqrt, log, and exp (and all the others)?**  
-    Overwrite those functions in `cmath` so that they can take `Node` as input and build the graph accordingly.
+- **What external dependencies you rely on?**
+    - We do not use any external dependencies. However, we do use the c standard libraries such as `cmath` for computing the value of some functions, e.g. sin, cos, exp.
+    
