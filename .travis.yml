@@ -1,25 +1,38 @@
 language: cpp
+
+os:
+  - linux
+  - osx
+
 compiler:
   - gcc
+
+before_install:
+  - if \[[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install lcov; fi
+
 addons:
   apt:
     packages:
     - lcov
+
 script:
   # build 3PL, OffPiste lib
   - bash config.sh -3pl -lib -testsOFF
   # run tests and generate coverage report
   - bash config.sh -cov
+
 deploy:
   provider: releases
   api_key: $GITHUB_OAUTH_TOKEN
   file_glob: true
   file:
+    - OffPiste/install/lib/libOffPiste.dylib
     - OffPiste/install/lib/libOffPiste.so
     - OffPiste/include/*
   skip_cleanup: true
   on:
     tags: true
+
 after_success:
   # upload results to codecov
   - bash <(curl -s https://codecov.io/bash) -f OffPiste/coverage/OffPiste.info -t 036e96ae-9cba-429d-9a52-78e9d28e2f35
