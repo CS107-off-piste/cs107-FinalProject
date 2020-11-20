@@ -195,7 +195,7 @@ to compile the library. This will produce a `.so` (or `.dylib` on a Mac) and `.h
     
 - **What external dependencies you rely on?**
     - We do not use any external dependencies in our source code. However, we do use the c standard libraries such as `cmath` for computing the value of some functions, e.g. sin, cos, exp. 
-    - We use some external dependencies outside of our `c++` source code, such as `doxygen` for documentation generation, and `clang-format` for code formatting.
+    - We use some external tools outside of our `c++` source code, such as `doxygen` for documentation generation, and `clang-format` for code formatting. These external tools are not required to compile and run the project.
 
 ## Future Features
 
