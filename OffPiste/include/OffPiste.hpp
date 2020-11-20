@@ -97,7 +97,7 @@ class AutoDiff {
   //===========================================SUBSTRACTION=====================================
   /**
    * Unary negation of the provided node
-   * @return A new node representin the result of the operation
+   * @return A new node representing the result of the operation
    */
   const AutoDiff operator-() const;
 
