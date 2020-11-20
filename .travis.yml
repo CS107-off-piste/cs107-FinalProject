@@ -7,10 +7,6 @@ os:
 compiler:
   - gcc
 
-branches:
-  only: 
-    - master
-
 before_install:
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew update && brew install lcov; fi
 
