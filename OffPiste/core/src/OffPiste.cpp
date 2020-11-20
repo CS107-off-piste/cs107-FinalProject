@@ -46,7 +46,9 @@ const AutoDiff AutoDiff::operator/(const AutoDiff &node) const {
   if (equal(node.val(), 0.0)) {
     throw "Divide by zero";
   }
+
   return AutoDiff(v / node.val(),
+                  // quotient rule for differentiation
                   (dv * node.val() - node.dval() * v) / pow(node.val(), 2));
 }
 
@@ -54,13 +56,14 @@ AutoDiff &AutoDiff::operator/=(const AutoDiff &node) {
   if (equal(node.val(), 0.0)) {
     throw "Divide by zero";
   }
-  dv = (dv * node.val() - node.dval() * v) / pow(node.val(), 2);
+  dv = (dv * node.val() - node.dval() * v) /
+       pow(node.val(), 2);  // quotient rule for differentiation
   v = v / node.val();
   return *this;
 }
 
 AutoDiff &AutoDiff::operator^(const float alpha) {
-  dv = alpha * std::pow(v, alpha - 1) * dv;
+  dv = alpha * std::pow(v, alpha - 1) * dv;  // power rule for differentiation
   v = std::pow(v, alpha);
   return *this;
 }

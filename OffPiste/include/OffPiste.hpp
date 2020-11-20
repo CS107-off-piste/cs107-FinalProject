@@ -15,10 +15,10 @@
 /**
  * @brief A node in the AutoDiff computation graph.
  *
- * Each instance of AutoDiff represents a node in the AutoDiff computation graph.
- * Complicated functions can be composed by chaining multiple nodes.
- * Each node has a function value -- the value of the function.
- * Each node also has a derivative value -- the derivative of the function at the current value.
+ * Each instance of AutoDiff represents a node in the AutoDiff computation
+ * graph. Complicated functions can be composed by chaining multiple nodes. Each
+ * node has a function value -- the value of the function. Each node also has a
+ * derivative value -- the derivative of the function at the current value.
  */
 class AutoDiff {
  private:
@@ -42,10 +42,10 @@ class AutoDiff {
    * @return The value of this node
    */
   double val() const { return v; };
-    /**
-     * Fetch the derivative value of this node.
-     * @return The value of this node
-     */
+  /**
+   * Fetch the derivative value of this node.
+   * @return The value of this node
+   */
   double dval() const { return dv; };
 
   /* setters */
@@ -66,7 +66,8 @@ class AutoDiff {
    * Add a constant value to a node.
    * @param a The constant value to add.
    * @param node The node being added to
-   * @return A new node representing the sum of the input node and the constant value
+   * @return A new node representing the sum of the input node and the constant
+   * value
    */
   friend AutoDiff operator+(const double a, const AutoDiff &node) {
     AutoDiff a_node = AutoDiff(a, 0);
@@ -81,9 +82,9 @@ class AutoDiff {
   };
 
   /**
-    * Update a node by adding another node's value
-    * @return The updated node.
-    */
+   * Update a node by adding another node's value
+   * @return The updated node.
+   */
   AutoDiff &operator+=(const AutoDiff &node);
 
   /**
@@ -125,26 +126,28 @@ class AutoDiff {
    */
   AutoDiff &operator-=(const AutoDiff &node);
   /**
-      * Update a node by subtracting another node's value
-      * @return The updated node.
-     */
+   * Update a node by subtracting another node's value
+   * @return The updated node.
+   */
   friend void operator-=(AutoDiff &node, const double a) {
     node.setval(node.val() - a);
   }
 
   //===========================================MULTIPLICATION================================
-    /**
-     * Multiply one node by another
-     * @param node the node to multiply
-     * @return A new node representing the first node multiplied by the second node.
-     */
+  /**
+   * Multiply one node by another
+   * @param node the node to multiply
+   * @return A new node representing the first node multiplied by the second
+   * node.
+   */
   const AutoDiff operator*(const AutoDiff &node) const;
 
   /**
    * Multiply a node by a constant value
    * @param a The constant value to multiply
    * @param node The node to multiply
-   * @return A new new representing the multiplication of the node and constant value
+   * @return A new new representing the multiplication of the node and constant
+   * value
    */
   friend AutoDiff operator*(const double a, const AutoDiff &node) {
     AutoDiff a_node = AutoDiff(a, 0);
@@ -158,15 +161,15 @@ class AutoDiff {
     return a * node;
   };
 
-    /**
-     * @see AutoDiff::operator*=(AutoDiff&, double)
-     */
+  /**
+   * @see AutoDiff::operator*=(AutoDiff&, double)
+   */
   AutoDiff &operator*=(const AutoDiff &node);
 
-    /**
-        * Update a node by multiplying another node's value
-        * @return The updated node.
-       */
+  /**
+   * Update a node by multiplying another node's value
+   * @return The updated node.
+   */
   friend void operator*=(AutoDiff &node, const double a) {
     node.setval(node.val() * a);
     node.setdval(node.dval() * a);
@@ -180,11 +183,11 @@ class AutoDiff {
    */
   const AutoDiff operator/(const AutoDiff &node) const;
 
-    /**
-        * Update a node by dividing another node's value
-        * @param node The node to divide by
-        * @return The updated node.
-       */
+  /**
+   * Update a node by dividing another node's value
+   * @param node The node to divide by
+   * @return The updated node.
+   */
   AutoDiff &operator/=(const AutoDiff &node);
 
   /**
@@ -223,11 +226,11 @@ class AutoDiff {
    */
   AutoDiff &operator^(const float alpha);
 
-    /**
-     * Raise a node to another node
-     * @param node The node that is the exponent
-     * @return A new node representing the result of the power operation
-     */
+  /**
+   * Raise a node to another node
+   * @param node The node that is the exponent
+   * @return A new node representing the result of the power operation
+   */
   AutoDiff &operator^(const AutoDiff &node);
 
   /**
