@@ -24,7 +24,7 @@ AutoDiff &AutoDiff::operator+=(const AutoDiff &node) {
 
 const AutoDiff AutoDiff::operator-() const {
   // unary negation -> invert value and derivative
-  return AutoDiff(-this->val(), -this->dval());  
+  return AutoDiff(-this->val(), -this->dval());
 }
 
 const AutoDiff AutoDiff::operator-(const AutoDiff &node) const {
