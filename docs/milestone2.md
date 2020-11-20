@@ -50,9 +50,9 @@ This mode, on the other hand, is better for functions with `n >> m`. Reverse mod
 
 <hr/>
 
-## How to use *AutoD*
+## How to use *OffPiste*
 
-*AutoD* will be used as an API.   
+*OffPiste* will be used as an API.   
 
 ### **What should users import?**  
 

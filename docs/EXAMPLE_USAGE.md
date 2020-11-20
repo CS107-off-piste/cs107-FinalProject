@@ -1,6 +1,6 @@
-## How to use *AutoD*
+## How to use *OffPiste*
 
-*AutoD* will be used as an API.   
+*OffPiste* will be used as an API.   
 
 ### **What should users import?**  
 
