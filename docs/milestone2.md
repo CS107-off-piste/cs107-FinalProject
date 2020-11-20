@@ -113,85 +113,87 @@ This feature is a work in progress and will be documented once complete.
 
 ### What will the directory structure look like?
 
-The project's main directories will be:
+The project's main directories are:
 
-* `src/` which will contain our C++ source files,
-* `test/` which will contain tests, and
-* `docs/` which will contain files such as this one, which relate to documenting our development process. Documentation will also be stored here.
+* `OffPiste/` which contains the C++ source files, header files, and tests for the core automatic differentiation library.
+    * `OffPiste/core/src` contains the source code for OffPiste library
+    * `OffPiste/core/tests` contains unit and functional tests for the OffPiste library 
+    * `OffPiste/include` contains the header files for the OffPiste library
+    * `OffPiste/coverage` contains information relating to the coverage of the unit and functional tests
+    * `OffPiste/install` contains the compiled `.so` library. 
+* `docs/` which contains files such as this one, documenting the library and development process. 
+    * `docs/doxygen` contains html documentation for the `AutoDiff` library's functions.
+* `3PL` contains 3rd party components. At present, this is Google test.
 
-### What external modules do you plan on including? What is their basic functionality?
+### What are the basic modules?
 
-At this stage, we do not intend to rely on any external modules. However, we will use standard C++ headers, such as `<cmath>` and the various STL classes for `strings` and I/O.
+The core module is implemented in `OffPiste/core/src`. This is where the source code for the automatic differentiation library is held. The header file for this source code is in `Offpiste/include`. This header file also includes the in-line documentation for each function.
 
-### Where will your test suite live? Will you use TravisCI? CodeCov?
+The root directory has a `./config.sh` file. This is a shell script that reads in a user's command and executes actions (such as compiling the library, generating documentation, or generating coverage information). `./config.sh` delegates some functionality to `OffPiste/config.sh`, `OffPiste/coverage.sh`, and `CMake`.
 
-As described above, we intend to have a separate `test/` directory in which test files will be placed. Our intention is to use [Google's C++ testing library](https://github.com/google/googletest) to perform testing in this directory. This will include both "unit" tests to test specific functions, and broader "functional" tests to check that our library is performing as expected on end-user tasks such as computing the derivative and value from a user-inputted function. 
+`C++` compilation is handled through `CMake`, using the `CMakeLists.txt` files in `OffPiste/` and its subdirectories. 
 
-As the project progresses, we will also look into using their [benchmarking library](https://github.com/google/benchmark), in order to provide performance reports so that we can notice if a commit has caused performance of core functions (such as building a computational graph or calculating its derivative and value using the reverse mode) to deteriorate. Once the implementation is complete, we will also be benchmarking the running time, as a function of the number of independent variables, against other popular Automatic Differentiation libraries.
+### Where do tests live?
 
-We have already set up TravisCI and CodeCov as part of the previous Milestone. We will update our `travis.yml` and `Makefile` to automate the running of the tests described above, following each push to the project repository.
+As described above, tests for each operation supported by the library are located in `OffPiste/core/tests`.
 
-### How will you distribute your package (e.g. PyPI)?
+As described in the `README.md`, tests are run with the command 
 
-Unfortunately, C++ does not have a well-established and widely-used package index like PyPI. However, we intend to investigate, and consider distributing the package through [Conan](https://conan.io/), a C++ package manager.
+```bash
+$ ./config.sh --clean # clean up, if needed
+# $ ./config.sh --3pl # compile Google Test if needed
+$ ./config.sh --library
+```
 
-We will also make a pre-built dynamically linked library version of project available in the repository.
+which will re-compile the source code and run the test suite. 
 
-### How will you package your software?
+### How can a person install your library?
 
-In the root directory of this repository, we have set up a `Makefile` for compiling and testing our source code. We will continue to augment this file as the project progresses.
+A user can install our library by cloning the repository from github and running
 
-### Other considerations?
+```
+./config.sh
+```
 
-We plan to use Doxygen to generate documentation from inline comments in our source code.
+to compile the library.
+
+This will produce a `.so` (or `.dylib` on a Mac) and `.h` file in `OffPiste/install`. These do not rely on any external components, so the user can use these as described above in the section headed "how to use your package".  
 
 <hr/>
 
 ## Implementation
 
 - **What are the core data structures?**
-    The core data structure for each component of vector functions is a Directed Acyclic Graph (DAG) with multiple inputs and multiple outputs.
-
-    In the DAG, each node represents one of the operations in the computational graph of our function. We store our operations in this DAG so that we can traverse the nodes of the DAG (in reverse) when computing the reverse mode.
-
-    e.g. f(x, y, z) = (x + y^2, x - z)
-
+    The core data structure underlies our AD tool is a Directed Acyclic Graph (DAG) with multiple inputs and single output.
+    e.g. f(x, y, z) = x + y^2 + z^3.  
+    By invoking a unary operation on a node, a parent node of the previous node is constructed whose value and derivative is set according to the unary operation.
+    By invoking a binary operation between two nodes, a parent node of two previous nodes is constructed whose value and derivative is set according to the binary operation.
+  
 - **What classes will you implement? What method and name attributes will your classes have?**  
-    There are three basic classes needed to be implemented: `Node`, `Variable`, `Function`:
-    - `Node`: A node of the DAG. It has the following attributes and methods:
-        - `.forward()`: represents the operation of this node, including binary and unary operation, e.g. +, -, exp, sin.
-        - `.backward()`: used in reverse mode when computing the derivative of each node.
-        - `.value`: the value of this node.
-        - `.derivative`: the derivative of this node.
-        - `.parents`: a `std::vector<Node*>` containing the pointers to all parents of this node.
-        - `.children`: `a std::vector<Node*>` containing the pointers to all children of this node.
+    The core class for milestone 2 is `AutoDiff`:
+    - `private` members:
+        - `T v`: The value of this node
+        - `T dv`: The derivative of this node
+        
+    - `public` members:
+        - `AutoDiff()`: Default constructor
+        - `AutoDiff(T val, T dval=1.0)`: Contructor with fixed initial `v` and `dv`
+        - `T val()`: Getter function of `v`
+        - `T dval()`: Getter function of `dv`
+        - `void setval(T val)`: Setter function of `v`
+        - `void setval(T dval)`: Setter function of `dv`
+        
+        - Operator overloading. Support unary and binary operation:
+            - Unary operators: power(^), sin, cos, tan, exp.
+            - Binary operators: addition(+), subtraction(-), multiply(*), divide(/), +=, -=, *=, /=.  
+            *P.S. The binary operator are **only** between `AutoDiff` object for this milestone)*
 
-    - `Variable`: A derived class of `Node` that represents an input node.
+- The functions above are described in further detail via code comments in `OffPiste.cpp` and `.hpp`, as well as in the Doxygen documentation available at `docs/doxygen/html`.
 
-    - `Function`: A DAG that contains Nodes, with multiple inputs and multiple outputs.
-        - `Function(EXPRESSIONS)`: use `EXPRESSIONS` to initialize a DAG.
-        - `.evaluate(Node &output_node)`: compute the output of `Node &output_node`.
-        - `.evaluate()`: compute the output with respect to all output nodes, and return `std::vector<float>`.
-        - `.set_seed(std::vector<float> p)`: set the seed *p* when taking directional derivative.
-        - `.forward_derivative(Node &output_node, Node &wrt)`: compute the derivative of `Node &output_node` with respect to `Node &wrt`.
-        - `.jacobian()`: compute the jacobian of vector function of vector input represented by this graph, and return `std::vector<std::vector<float>>`.
-        - `.bfs()`: a private method that adds every node in the graph and its in degree into a `std::map<Node*, size_t> book_keeper`.
-        - `.generate_aov_sequence()`: a private method that generates a feasible AOV sequence of this DAG and store it in `std::vector<Node*> aov_sequence`
-        - `.output_node_ptrs`: a `std::vector<Node*>` that stores the pointers to output nodes (top level nodes).
-        - `.book_keeper`: a `std::map<Node*, size_t>` that stores pointers to each node and its number of children.
-        - `.aov_sequence`: a `std::vector<Node*>` that stores a feasible AOV sequence of this DAG. It is obtained by invoking `.generate_aov_sequence()`.
-
-    Other than classes, there are also some definitions of macros that are helpful.
-    - `EXPRESSION`: A macro for `Node&`.
-
-    - `EXPRESSIONS`: A macro for `std::vector<std::reference_wrapper<Node>>`.
-
-- **What external dependencies will you rely on?**
-    - `cmath`
-    - `STL`
-
-- **How will you deal with elementary functions like sin, sqrt, log, and exp (and all the others)?**  
-    Overload the relevant functions in `cmath` so that they can take `Nodes` as input and return new `Nodes`, so that we can build the graph accordingly.
+- As set out in a previous milestone document, we intend to implement reverse mode and so, going forward, we will need to store a graph of operations. Our intended class structure for this remains as set out in that previous milestone document. 
+    
+- **What external dependencies you rely on?**
+    - We do not use any external dependencies. However, we do use the c standard libraries such as `cmath` for computing the value of some functions, e.g. sin, cos, exp.
 
 ## Future Features
 
