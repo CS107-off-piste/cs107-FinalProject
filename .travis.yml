@@ -7,6 +7,7 @@ jobs:
   include:
     - os: linux
     - os: osx
+      # only build this on tagged commits, for publishing .dylib artifact
       if: tag IS present
       before_install:
         - brew install lcov

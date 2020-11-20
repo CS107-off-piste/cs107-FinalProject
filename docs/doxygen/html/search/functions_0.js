@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['cos_7',['cos',['../class_auto_diff.html#af74adcf84c9f47d7cdd4a3abee5db0fa',1,'AutoDiff']]]
+  ['autodiff_18',['AutoDiff',['../class_auto_diff.html#a08a0a306c7bb64e6af91b5fa5ccb8019',1,'AutoDiff']]]
 ];
