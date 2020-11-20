@@ -29,7 +29,7 @@ $ ./config.sh --3pl #build 3rd party testing libraries
 $ ./config.sh --library #build OffPiste library and run tests
 ```
 
-The resultant library and header files can be found in `OffPiste/install/`.
+The resultant library and header files can be found in `OffPiste/install/`. Compilation of the library requires `cmake`, which you might need to install if it is not already on your system. 
 
 ### Running Tests
 
