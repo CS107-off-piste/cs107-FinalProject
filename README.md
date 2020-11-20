@@ -29,7 +29,7 @@ $ ./config.sh --3pl #build 3rd party testing libraries
 $ ./config.sh --library #build OffPiste library and run tests
 ```
 
-The resultant library and header files can be found in `OffPiste/install/`.
+The resultant library and header files can be found in `OffPiste/install/`. Compilation of the library requires `cmake`, which you might need to install if it is not already on your system. 
 
 ### Running Tests
 
@@ -97,4 +97,4 @@ The documentation can be manually re-generated using `./config.sh --gen-docs` if
 This repository is configured to work with Travis CI. With every commit, the following actions are performed.
 * The code is compiled using the `gcc` compiler, in the `linux` environment.
 * If the compilation is successful, the tests are executed and `lcov` is used to analyse what portion of code is covered. The code coverage results are provided on `CodeCov`. The test results are provided on `Travis`. See the badges at the top of this `README.md` for the current status.
-* Creating a tag on Github will trigger a build on TravisCI that compiles and tests the code on `linux` and `osx` environments. If successful, a Github release will be created with the compiled `.so` and `.dylib` files that can be used on Linus and Mac OS, respectively.
+* Creating a tag on Github will trigger a build on TravisCI that compiles and tests the code on `linux` and `osx` environments. If successful, a Github release will be created with the compiled `.so` and `.dylib` files that can be used on Linux and Mac OS, respectively.
