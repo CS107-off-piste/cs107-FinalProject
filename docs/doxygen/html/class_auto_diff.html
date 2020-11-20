@@ -257,7 +257,7 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Fetch the derivative value of this node. </p><dl class="section return"><dt>Returns</dt><dd>The value of this node </dd></dl>
+<p>Fetch the derivative value of this node. </p><dl class="section return"><dt>Returns</dt><dd>The derivative of this node </dd></dl>
 
 </div>
 </div>
@@ -453,7 +453,13 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Divide a node by another node </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Divide a node by another node </p><dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Exception</td><td>On divide by 0 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">node</td><td>the node to divide by </td></tr>
   </table>
@@ -478,7 +484,13 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Update a node by dividing another node's value </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Update a node by dividing another node's value </p><dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Exception</td><td>On divide by 0 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">node</td><td>The node to divide by </td></tr>
   </table>
@@ -1055,7 +1067,13 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Divide a constant value by an <a class="el" href="class_auto_diff.html" title="A node in the AutoDiff computation graph.">AutoDiff</a> node </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Divide a constant value by an <a class="el" href="class_auto_diff.html" title="A node in the AutoDiff computation graph.">AutoDiff</a> node </p><dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Exception</td><td>On divide by 0 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">a</td><td>The constant value that is being divided </td></tr>
     <tr><td class="paramname">node</td><td>The node to divide by </td></tr>
