@@ -50,69 +50,62 @@ This mode, on the other hand, is better for functions with `n >> m`. Reverse mod
 
 <hr/>
 
-## How to use *AutoD*
+## How to use *OffPiste*
 
-### **How do you envision that a user will interact with your package?**  
-*AutoD* will be used as an API.   
+*OffPiste* will be used as an API.   
 
-### **What should they import?**  
-They should download *AutoD.lib* , set the search directory and include the header file `#include<AutoD.h>`.  
+### **What should users import?**  
 
-### **How can they instantiate AD objects?**  
-#### For single-variable function
+An example is included in the `example_usage` directory. Briefly, the steps to use the library are:
+
+1. Clone our repository.
+2. Compile the OffPiste library by the configure script we provide.
+```$ bash config.sh -lib -testsOFF```
+3. Compile the source code that uses the `OffPiste` library by:
+* Including the `OffPiste.hpp` in the source code
+* Linking to the compiled `OffPiste` library using:
+```
+$ export LIBRARY_PATH=${REPO_ROOT}/OffPiste/install/lib
+$ g++ -Wall ${SRC_FILES} -o example.o -L${LIBRARY_PATH} -lOffPiste
+```
+
+### **How can users instantiate AD objects?**  
+
+#### For scalar function
 ```
 #include<iostream>
-#include<AutoD.h>
-using namespace AutoD;
+#include "OffPiste.hpp"
+
+typedef AutoDiff AD;
+using namespace AutoDiff;
 
 int main(){
+   
+    // some test values
+    double value1 = 1.2; 
+    double value2 = 3.4;
+    double seed1 = 1.0;
+    double seed2 = 1.0;
 
-    Variable x = 2.0;
-    Function f = func(exp(cos(x + 3) + pow(x, 4)) + 1);
-    std::cout<<"f = "<<f.evaluate()<<std::endl;
-    std::cout<<"df/dx = "<<f.forward_derivative(x)<<std::endl;
+    // construct an AD object 
+    // AD is just a shortcut for AutoDiff<double>
+    AD x(value1,seed1);
+    AD y(value2,seed2);
 
+    // print initial value and seed
+    std::cout << "Initial x, y value: " << x.val() << ", "<< y.val() << "\n"; 
+    std::cout << "Initial x, y deriv: " << x.dval() << ", "<< y.dval() << "\n";
+
+    // perform the operation z = e^(sin(x + y))
+    AD z = exp(sin(x+y));
+    std::cout << "Z value, derivative: " << z.val() << ", "<< z.dval() << "\n"; 
+    
 }
 ```
-#### For Multi-variable function
-```
-#include<iostream>
-#include<AutoD.h>
-using namespace AutoD;
 
-int main(){
+#### For Vector functions (TBD)
 
-    Variable x = 2.0, y = 3.0, z = 4.0;
-    Function u = func(exp(cos(x + 3) + pow(y, 4)) + z);
-    std::cout<<"f = "<<f.evaluate()<<std::endl;
-    std::cout<<"df/dx = "<<f.forward_derivative(x)<<std::endl;
-    std::cout<<"df/dy = "<<f.forward_derivative(y)<<std::endl;
-    std::cout<<"df/dz = "<<f.forward_derivative(z)<<std::endl;
-    std::cout<<"Gradient of f"<<f.forward_gradient()<<std::endl;  //gradient of f: (dfdx, dfdy, dfdz)
-
-}
-```
-#### For Vector function
-```
-#include<iostream>
-#include<AutoD.h>
-using namespace AutoD;
-
-int main(){
-
-    Variable x = 2.0, y = 3.0, z = 4.0;
-    Expression u = exp(cos(x + 3) + pow(y, 4)) + z;
-    Expression v = x + y;
-
-    Function F = func(u,v) //F is the vector function.
-
-    std::cout<<"F = "<<F.evaluate()<<std::endl;
-    std::cout<<"dF/dx = "<<F.forward_derivative(x)<<std::endl;
-    std::cout<<"dF/dy = "<<F.forward_derivative(y)<<std::endl;
-    std::cout<<"dF/dz = "<<F.forward_derivative(z)<<std::endl;
-    std::cout<<"Jacobian of F"<<F.Jacobian(x,y,z)<<std::endl;
-}   
-```
+This feature is a work in progress and will be documented once complete.
 
 <hr/>
 
