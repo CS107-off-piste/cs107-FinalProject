@@ -44,7 +44,7 @@ class AutoDiff {
   double val() const { return v; };
   /**
    * Fetch the derivative value of this node.
-   * @return The value of this node
+   * @return The derivative of this node
    */
   double dval() const { return dv; };
 
@@ -178,6 +178,7 @@ class AutoDiff {
   //===========================================DIVISION=====================================
   /**
    * Divide a node by another node
+   * @throw Exception On divide by 0
    * @param node the node to divide by
    * @return The new node representing the result of the division operation
    */
@@ -185,6 +186,7 @@ class AutoDiff {
 
   /**
    * Update a node by dividing another node's value
+   * @throw Exception On divide by 0
    * @param node The node to divide by
    * @return The updated node.
    */
@@ -192,6 +194,7 @@ class AutoDiff {
 
   /**
    * Divide a constant value by an AutoDiff node
+   * @throw Exception On divide by 0
    * @param a The constant value that is being divided
    * @param node The node to divide by
    * @return A new node representing the result of the operation.
