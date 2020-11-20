@@ -7,12 +7,9 @@ jobs:
   include:
     - os: linux
     - os: osx
-      compiler: gcc
+      if: tag IS present
       before_install:
         - brew install lcov
-      branches:
-        only:
-          - master
 
 addons:
   apt:
