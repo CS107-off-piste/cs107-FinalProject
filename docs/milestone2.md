@@ -59,15 +59,17 @@ This mode, on the other hand, is better for functions with `n >> m`. Reverse mod
 An example is included in the `example_usage` directory. Briefly, the steps to use the library are:
 
 1. Clone our repository.
-2. Compile the OffPiste library by the configure script we provide.
+2. Compile the OffPiste library by the configure script we provide in the project's root directory:
 ```$ bash config.sh -lib -testsOFF```
 3. Compile the source code that uses the `OffPiste` library by:
-* Including the `OffPiste.hpp` in the source code
+* `#include`ing the `OffPiste.hpp` in the source code
 * Linking to the compiled `OffPiste` library using:
 ```
 $ export LIBRARY_PATH=${REPO_ROOT}/OffPiste/install/lib
 $ g++ -Wall ${SRC_FILES} -o example.o -L${LIBRARY_PATH} -lOffPiste
 ```
+
+(With `${REPO_ROOT}` as the folder this folder you cloned the repository into, and `${SRC_FILES}` is location of your source files).
 
 ### **How can users instantiate AD objects?**  
 
@@ -88,7 +90,7 @@ int main(){
     double seed2 = 1.0;
 
     // construct an AD object 
-    // AD is just a shortcut for AutoDiff<double>
+    // AD is just a shortcut for AutoDiff
     AD x(value1,seed1);
     AD y(value2,seed2);
 
@@ -123,13 +125,14 @@ The project's main directories are:
     * `OffPiste/install` contains the compiled `.so` library. 
 * `docs/` which contains files such as this one, documenting the library and development process. 
     * `docs/doxygen` contains html documentation for the `AutoDiff` library's functions.
+* `example_usage` contains an example project showing how you can use the `OffPiste` library
 * `3PL` contains 3rd party components. At present, this is Google test.
 
 ### What are the basic modules?
 
 The core module is implemented in `OffPiste/core/src`. This is where the source code for the automatic differentiation library is held. The header file for this source code is in `Offpiste/include`. This header file also includes the in-line documentation for each function.
 
-The root directory has a `./config.sh` file. This is a shell script that reads in a user's command and executes actions (such as compiling the library, generating documentation, or generating coverage information). `./config.sh` delegates some functionality to `OffPiste/config.sh`, `OffPiste/coverage.sh`, and `CMake`.
+The root directory has a `./config.sh` file. This is a shell script that reads in a user's command and executes actions (such as compiling the library, generating documentation, or generating coverage information). Depending on the arguments passed to it, `./config.sh` calls `OffPiste/config.sh`, `OffPiste/coverage.sh`, and / or `CMake`.
 
 `C++` compilation is handled through `CMake`, using the `CMakeLists.txt` files in `OffPiste/` and its subdirectories. 
 
@@ -155,17 +158,15 @@ A user can install our library by cloning the repository from github and running
 ./config.sh
 ```
 
-to compile the library.
-
-This will produce a `.so` (or `.dylib` on a Mac) and `.h` file in `OffPiste/install`. These do not rely on any external components, so the user can use these as described above in the section headed "how to use your package".  
+to compile the library. This will produce a `.so` (or `.dylib` on a Mac) and `.h` file in `OffPiste/install`. These do not rely on any external components, so the user can use these as described above in the section above titled "How to use OffPiste".  
 
 <hr/>
 
 ## Implementation
 
 - **What are the core data structures?**
-    The core data structure underlies our AD tool is a Directed Acyclic Graph (DAG) with multiple inputs and single output.
-    e.g. f(x, y, z) = x + y^2 + z^3.  
+    The core data structure that will underly our AD tool is a Directed Acyclic Graph (DAG) with multiple inputs and single output.
+    e.g. `f(x, y, z) = x + y^2 + z^3`.  
     By invoking a unary operation on a node, a parent node of the previous node is constructed whose value and derivative is set according to the unary operation.
     By invoking a binary operation between two nodes, a parent node of two previous nodes is constructed whose value and derivative is set according to the binary operation.
   
