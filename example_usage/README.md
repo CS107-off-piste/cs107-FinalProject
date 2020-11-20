@@ -18,12 +18,11 @@ $ make run
 ```
 
 ### Use the published Artifacts
-
-1. Obtain the header file and compiled `.so` (Linux) / `.dylib` (Mac) from the latest Github Release: https://github.com/CS107-off-piste/cs107-FinalProject/releases
+1. Obtain the header file and compiled `.so` (Linux) / `.dylib` (Mac) from the latest [Github Release](https://github.com/CS107-off-piste/cs107-FinalProject/releases)
 2. Compile the source code that uses the `OffPiste` library by:
-* Including the downloaded `OffPiste.hpp` in the source code
+* `#include`ing the downloaded `OffPiste.hpp` in the source code
 * Linking to the compiled `OffPiste` library using:
 ```
-$ export LIBRARY_PATH=# Set the path to the folder containing the library file
 $ g++ -Wall ${SRC_FILES} -o example.o -L${LIBRARY_PATH} -lOffPiste
 ```
+(with `${LIBRARY_PATH}` as the folder containing the downloaded library file, and `${SRC_FILES}` as the paths of the source files).
