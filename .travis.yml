@@ -1,9 +1,5 @@
 language: cpp
 
-os:
-  - linux
-  - osx
-
 compiler:
   - gcc
 
@@ -12,12 +8,11 @@ jobs:
     - os: linux
     - os: osx
       compiler: gcc
+      before_install:
+        - brew install lcov
       branches:
         only:
           - master
-
-before_install:
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install lcov; fi
 
 addons:
   apt:
