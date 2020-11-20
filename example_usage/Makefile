@@ -8,4 +8,7 @@ run:
 	@g++ -Wall example.cpp -o example.o -L${LIBRARY_PATH} -lOffPiste; LD_LIBRARY_PATH=${LIBRARY_PATH} ./example.o
 
 clean:
-	@rm ./example
+	# Remove binaries
+	@rm -f ./example.o
+	# Remove compiled OffPiste Library
+	@cd ..; ./config.sh -clean
