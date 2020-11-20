@@ -69,12 +69,12 @@ $ export LIBRARY_PATH=${REPO_ROOT}/OffPiste/install/lib
 $ g++ -Wall ${SRC_FILES} -o example.o -L${LIBRARY_PATH} -lOffPiste
 ```
 
-(With `${REPO_ROOT}` as the folder this folder you cloned the repository into, and `${SRC_FILES}` is location of your source files).
+(With `${REPO_ROOT}` as the folder this folder you cloned the repository into, and `${SRC_FILES}` as location of your source files).
 
 ### **How can users instantiate AD objects?**  
 
 #### For scalar function
-```
+```c++
 #include<iostream>
 #include "OffPiste.hpp"
 
@@ -121,12 +121,12 @@ The project's main directories are:
     * `OffPiste/core/src` contains the source code for OffPiste library
     * `OffPiste/core/tests` contains unit and functional tests for the OffPiste library 
     * `OffPiste/include` contains the header files for the OffPiste library
-    * `OffPiste/coverage` contains information relating to the coverage of the unit and functional tests
+    * `OffPiste/coverage` contains information relating to the code coverage of the unit and functional tests
     * `OffPiste/install` contains the compiled `.so` library. 
 * `docs/` which contains files such as this one, documenting the library and development process. 
     * `docs/doxygen` contains html documentation for the `AutoDiff` library's functions.
 * `example_usage` contains an example project showing how you can use the `OffPiste` library
-* `3PL` contains 3rd party components. At present, this is Google test.
+* `3PL` contains 3rd party components. At present, this is just Google test.
 
 ### What are the basic modules?
 
@@ -184,17 +184,18 @@ to compile the library. This will produce a `.so` (or `.dylib` on a Mac) and `.h
         - `void setval(T val)`: Setter function of `v`
         - `void setval(T dval)`: Setter function of `dv`
         
-        - Operator overloading. Support unary and binary operation:
+        - Operator overloading. Support unary and binary operations on `AutoDiff` objects:
             - Unary operators: power(^), sin, cos, tan, exp.
             - Binary operators: addition(+), subtraction(-), multiply(*), divide(/), +=, -=, *=, /=.  
             *P.S. The binary operator are **only** between `AutoDiff` object for this milestone)*
 
-- The functions above are described in further detail via code comments in `OffPiste.cpp` and `.hpp`, as well as in the Doxygen documentation available at `docs/doxygen/html`.
+- The functions above are described in further detail via code comments in `OffPiste.cpp` and `.hpp`, as well as in the Doxygen documentation available at `docs/doxygen/html`. An example of using the autodiff operators is included in `../example_usage`.
 
 - As set out in a previous milestone document, we intend to implement reverse mode and so, going forward, we will need to store a graph of operations. Our intended class structure for this remains as set out in that previous milestone document. 
     
 - **What external dependencies you rely on?**
-    - We do not use any external dependencies. However, we do use the c standard libraries such as `cmath` for computing the value of some functions, e.g. sin, cos, exp.
+    - We do not use any external dependencies in our source code. However, we do use the c standard libraries such as `cmath` for computing the value of some functions, e.g. sin, cos, exp. 
+    - We use some external dependencies outside of our `c++` source code, such as `doxygen` for documentation generation, and `clang-format` for code formatting.
 
 ## Future Features
 
