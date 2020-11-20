@@ -2,30 +2,28 @@
 
 This folder gives an example of using the `OffPiste` library, in the file `example.cpp` and the accompanying `Makefile`.
 
-## Steps to Run the Example Code
-1. Compile the `OffPiste` library using:
+## Running the Example Code
+
+### Compile OffPiste from Source Code
+1. Clone this repo
+2. Compile the `OffPiste` library using:
 ```
 $ cd example_usage/
 $ make compile_dependencies
 ```
 This will compile the source code for the dependency into a `.so` (Linux) / `.dylib` (Mac) dynamically linked library which is placed under `../OffPiste/install/lib`.
-
-2. Compile the code that uses the `OffPiste` library and run it:
+3. Compile the code that uses the `OffPiste` library (in this case, `example.cpp`) and run it:
 ```
 $ make run
 ```
 
-## General Steps for Using the OffPiste Library
+### Use the published Artifacts
 
-1. Compile the OffPiste Library by cloning the repo and running:
-```
-$ bash config.sh -lib -testsOFF
-```
-
+1. Obtain the header file and compiled `.so` (Linux) / `.dylib` (Mac) from the latest Github Release: https://github.com/CS107-off-piste/cs107-FinalProject/releases
 2. Compile the source code that uses the `OffPiste` library by:
-* Including the `OffPiste.hpp` in the source code
+* Including the downloaded `OffPiste.hpp` in the source code
 * Linking to the compiled `OffPiste` library using:
 ```
-$ export LIBRARY_PATH=${REPO_ROOT}/OffPiste/install/lib
+$ export LIBRARY_PATH=# Set the path to the folder containing the library file
 $ g++ -Wall ${SRC_FILES} -o example.o -L${LIBRARY_PATH} -lOffPiste
 ```

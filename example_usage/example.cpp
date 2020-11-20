@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../OffPiste/include/OffPiste.hpp"
+#include "../OffPiste/install/include/OffPiste.hpp"
 
 typedef AutoDiff AD;
 
