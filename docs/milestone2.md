@@ -57,7 +57,7 @@ This mode, on the other hand, is better for functions with `n >> m`. Reverse mod
 
 ### **What should they import?**  
 
-An example usage is included in the docs.
+An example usage is included in the example_usage directory.
 1. Clone our repository.
 2. Compile the OffPiste Library by the configure script we provide.
 
