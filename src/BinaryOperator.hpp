@@ -5,6 +5,10 @@
 #ifndef CS107_FINALPROJECT_BINARYOPERATOR_HPP
 #define CS107_FINALPROJECT_BINARYOPERATOR_HPP
 
+#include "Node.hpp"
+#include "ForwardFunctions.hpp"
+#include "BackwardFunctions.hpp"
+
 #define BINARY_CONNECT(v1, v2, output)         \
         Node& tmp_v1 = const_cast<Node&>(v1);   \
         Node& tmp_v2 = const_cast<Node&>(v2);   \
@@ -15,18 +19,14 @@
 
 #define CONSTANT_NODE(constant) \
         Node *node = new Node();    \
-        node->value = constant;     \
+        node->val = constant;     \
         node->forward = identity_forward;   \
         node->backward = identity_backward;
 
 
-#include "Node.hpp"
-#include "ForwardFunctions.hpp"
-#include "BackwardFunctions.hpp"
-
 namespace OP {
 
-    // overload binary operator
+    // overload binary operators: +, -, *, /
 
     // overload +
     inline Node& operator+(const Node &v1, const Node &v2) {

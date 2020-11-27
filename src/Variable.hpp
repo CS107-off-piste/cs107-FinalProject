@@ -10,9 +10,9 @@
 #include "BackwardFunctions.hpp"
 
 namespace OP {
-    class Variable : public Node{
+    class Variable : public Node {
     public:
-        Variable() : Node() {
+        Variable(float val=0.f, float dval=0.f) : Node(val, dval) {
             forward = identity_forward;
             backward = identity_backward;
         }

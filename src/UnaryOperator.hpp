@@ -5,15 +5,15 @@
 #ifndef CS107_FINALPROJECT_UNARYOPERATOR_HPP
 #define CS107_FINALPROJECT_UNARYOPERATOR_HPP
 
-#define UNARY_CONNECT(input, output)         \
-    Node& tmp_input = const_cast<Node&>(input); \
-    tmp_input.parents.push_back(output); \
-    output->children.push_back(&tmp_input);
-
 #include <cmath>
 #include "Node.hpp"
 #include "ForwardFunctions.hpp"
 #include "BackwardFunctions.hpp"
+
+#define UNARY_CONNECT(input, output)         \
+    Node& tmp_input = const_cast<Node&>(input); \
+    tmp_input.parents.push_back(output); \
+    output->children.push_back(&tmp_input);
 
 namespace OP {
 

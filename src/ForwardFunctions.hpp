@@ -13,22 +13,18 @@ namespace OP {
     void identity_forward(Node &node) {}
 
     void add_forward(Node &node) {
-        for (Node* child: node.children) {
-            node.value += child->value;
-            node.derivative += child->derivative;
-        }
+        node.val = node.children[0]->val + node.children[1]->val;
+        node.dval = node.children[0]->dval + node.children[1]->dval;
     }
 
     void sub_forward(Node &node) {
-        for (Node* child: node.children) {
-            node.value -= child->value;
-            node.derivative -= child->derivative;
-        }
+        node.val = node.children[0]->val - node.children[1]->val;
+        node.dval = node.children[0]->dval - node.children[1]->dval;
     }
 
     void exp_forward(Node &node) {
-        node.value = std::exp(node.children[0]->value);
-        node.derivative = node.value*node.children[0]->derivative;
+        node.val = std::exp(node.children[0]->val);
+        node.dval = node.val*node.children[0]->dval;
     }
 
 }
