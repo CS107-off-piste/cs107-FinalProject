@@ -3,4 +3,6 @@ project(cs107_FinalProject)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(cs107_FinalProject main.cpp src/BinaryOperator.hpp src/UnaryOperator.hpp src/Node.hpp src/Function.hpp src/ForwardFunctions.hpp src/Function.cpp src/BackwardFunctions.hpp src/Variable.hpp)
+aux_source_directory(./src SRC_DIR)
+
+add_executable(cs107_FinalProject main.cpp ${SRC_DIR})

@@ -11,7 +11,26 @@ namespace OP {
 
     void identity_backward(Node &node) {};
 
+    /** backward methods for binary operation **/
     void add_backward(Node &node) {
+
+    }
+
+    void sub_backward(Node &node) {
+
+    }
+
+    void mul_backward(Node &node) {
+
+    }
+
+    void div_backward(Node &node) {
+
+    }
+
+
+    /** backward methods for unary operation **/
+    void neg_backward(Node &node) {
 
     }
 

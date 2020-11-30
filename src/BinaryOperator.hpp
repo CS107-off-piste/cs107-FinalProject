@@ -17,46 +17,38 @@
         output->children.push_back(&tmp_v1);    \
         output->children.push_back(&tmp_v2);
 
-#define CONSTANT_NODE(constant) \
+#define MAKE_CONSTANT_NODE(constant) \
         Node *node = new Node();    \
         node->val = constant;     \
         node->forward = identity_forward;   \
         node->backward = identity_backward;
 
+#define OVERLOAD_BINARY_OPERATOR(operator_symbol, forward_func, backward_func) \
+\
+        inline Node& operator_symbol(const Node &v1, const Node &v2) { \
+            Node* output = new Node(); \
+            output->forward = forward_func; \
+            output->backward = backward_func; \
+            BINARY_CONNECT(v1, v2, output); \
+            return *output; \
+        } \
+        inline Node& operator_symbol(const Node& v1, float constant){ \
+            MAKE_CONSTANT_NODE(constant); \
+            return operator_symbol(v1, *node); \
+        } \
+        inline Node& operator_symbol(float constant, const Node& v1){  \
+            MAKE_CONSTANT_NODE(constant); \
+            return operator_symbol(v1, *node); \
+        } \
 
 namespace OP {
 
-    // overload binary operators: +, -, *, /
+    /** overload binary operators: +, -, *, / **/
 
-    // overload +
-    inline Node& operator+(const Node &v1, const Node &v2) {
-
-        Node* output = new Node();
-
-        output->forward = (add_forward);
-        output->backward = (add_backward);
-
-        BINARY_CONNECT(v1, v2, output);
-
-        return *output;
-    }
-
-    inline Node& operator+(const Node& v1, float constant){
-        CONSTANT_NODE(constant)
-        return v1 + *node;
-    }
-
-    inline Node& operator+(float constant, const Node& v1){
-        CONSTANT_NODE(constant)
-        return v1 + *node;
-    }
-
-
-    // overload *
-
-
-    // overload /
-
+    OVERLOAD_BINARY_OPERATOR(operator+, add_forward, add_backward)
+    OVERLOAD_BINARY_OPERATOR(operator-, sub_forward, sub_backward)
+    OVERLOAD_BINARY_OPERATOR(operator*, mul_forward, mul_backward)
+    OVERLOAD_BINARY_OPERATOR(operator/, div_forward, div_backward)
 
 }
 
