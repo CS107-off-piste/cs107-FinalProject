@@ -1,7 +1,3 @@
-//
-// Created by Zeren Long on 2020/10/19.
-//
-
 #include <deque>
 #include <iostream>
 #include "Function.hpp"
@@ -34,10 +30,10 @@ namespace OP {
         while (!queue.empty()) {
             Node *ptr = queue[0];
             if (in_deg_book_keeper.count(ptr) == 0) {
-                in_deg_book_keeper[ptr] = ptr->children.size();
+                in_deg_book_keeper[ptr] = ptr->_children.size();
             }
             queue.pop_front();
-            for (Node* child : ptr->children) {
+            for (Node* child : ptr->_children) {
                 queue.push_back(child);
             }
         }
@@ -58,10 +54,13 @@ namespace OP {
         while (!stack.empty()) {
             Node* ptr = stack[stack.size()-1];  // get a node whose in degree is zero
             aov_sequence.push_back(ptr);
+            node2aov_idx.insert(std::pair<Node*, size_t>(ptr, count));  // update node2aov_idx map
+            ptr->function_ptr = this;
+
             stack.pop_back();
             count++;
 
-            for (auto & iter : ptr->parents) {
+            for (auto & iter : ptr->_parents) {
                 tmp_in_deg_book_keeper[iter]--;    // reduce one in degree
                 if (tmp_in_deg_book_keeper[iter] == 0) {
                     stack.push_back(iter);
@@ -74,10 +73,14 @@ namespace OP {
         }
     }
 
+//    size_t Function::get_node_idx_in_aov(Node *node_ptr) {
+//        return node2aov_idx[node_ptr];
+//    }
+
     VECTOR Function::evaluate() {
         VECTOR vec(output_node_ptrs.size(), 0);
         for (auto & it : aov_sequence) {
-            it->forward(*it);
+            it->_forward_func_ptr(*it);
         }
         for (int i=0; i<output_node_ptrs.size(); i++) {
             vec[i] = output_node_ptrs[i]->val;
@@ -135,7 +138,7 @@ namespace OP {
 
         wrt.dval = 1.f;
         for (auto & it : aov_sequence) {
-            it->forward(*it);
+            it->_forward_func_ptr(*it);
         }
 
         // restore from dval_keeper
@@ -144,6 +147,30 @@ namespace OP {
         }
 
         return output_node.dval;
+    }
+
+    void Function::zero_grad() {
+        for (auto &it : aov_sequence) {
+            it->grad = 0.f;
+        }
+    }
+
+    MATRIX Function::backward_jacobian() {
+        MATRIX jacob;
+        jacob.resize(output_node_ptrs.size());
+        for (auto &it : jacob) {
+            it.resize(input_node_ptrs.size());
+        }
+
+        for (int i=0; i<output_node_ptrs.size(); i++) {
+            zero_grad();
+            output_node_ptrs[i]->backward();
+            for (int j=0; j<input_node_ptrs.size(); j++) {
+                jacob[i][j] = input_node_ptrs[j]->grad;
+            }
+        }
+
+        return jacob;
     }
 
 }

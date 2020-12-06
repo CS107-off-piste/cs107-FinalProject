@@ -1,7 +1,3 @@
-//
-// Created by Zeren Long on 2020/10/19.
-//
-
 #ifndef CS107_FINALPROJECT_FUNCTION_HPP
 #define CS107_FINALPROJECT_FUNCTION_HPP
 
@@ -21,10 +17,16 @@ namespace OP {
     public:
         // constructor
         explicit Function(INPUTS &input_nodes, OUTPUTS &output_nodes);
-        VECTOR evaluate();                // evaluate each scalar function within Function class
-        MATRIX forward_jacobian();      // using forward mode to compute jacobian matrix
 
+        friend Node;
+        VECTOR evaluate();                // evaluate each scalar function within Function
+
+        MATRIX forward_jacobian();      // using forward mode to compute jacobian matrix
         float forward_derivative(Node &output_node, Node &wrt);
+
+        void zero_grad();               // set grads of all nodes in the graph f to zero
+        MATRIX backward_jacobian();     // using reverse mode to compute jabobian matrix
+
 
     private:
         void bfs(Node &output_node);
@@ -34,6 +36,7 @@ namespace OP {
         std::vector<Node*> output_node_ptrs;
         std::map<Node*, size_t> in_deg_book_keeper;
         std::vector<Node*> aov_sequence;
+        std::map<Node*, size_t> node2aov_idx;
     };
 }
 #endif //CS107_FINALPROJECT_FUNCTION_HPP

@@ -1,7 +1,3 @@
-//
-// Created by Zeren Long on 2020/10/18.
-//
-
 #ifndef CS107_FINALPROJECT_BINARYOPERATOR_HPP
 #define CS107_FINALPROJECT_BINARYOPERATOR_HPP
 
@@ -12,23 +8,23 @@
 #define BINARY_CONNECT(v1, v2, output)         \
         Node& tmp_v1 = const_cast<Node&>(v1);   \
         Node& tmp_v2 = const_cast<Node&>(v2);   \
-        tmp_v1.parents.push_back(output);       \
-        tmp_v2.parents.push_back(output);       \
-        output->children.push_back(&tmp_v1);    \
-        output->children.push_back(&tmp_v2);
+        tmp_v1._parents.push_back(output);       \
+        tmp_v2._parents.push_back(output);       \
+        output->_children.push_back(&tmp_v1);    \
+        output->_children.push_back(&tmp_v2);
 
 #define MAKE_CONSTANT_NODE(constant) \
         Node *node = new Node();    \
         node->val = constant;     \
-        node->forward = identity_forward;   \
-        node->backward = identity_backward;
+        node->_forward_func_ptr = identity_forward;   \
+        node->_backward_func_ptr = identity_backward;
 
 #define OVERLOAD_BINARY_OPERATOR(operator_symbol, forward_func, backward_func) \
 \
         inline Node& operator_symbol(const Node &v1, const Node &v2) { \
             Node* output = new Node(); \
-            output->forward = forward_func; \
-            output->backward = backward_func; \
+            output->_forward_func_ptr = forward_func; \
+            output->_backward_func_ptr = backward_func; \
             BINARY_CONNECT(v1, v2, output); \
             return *output; \
         } \

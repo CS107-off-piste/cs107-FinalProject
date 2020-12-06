@@ -1,7 +1,3 @@
-//
-// Created by Zeren Long on 2020/10/19.
-//
-
 #ifndef CS107_FINALPROJECT_VARIABLE_HPP
 #define CS107_FINALPROJECT_VARIABLE_HPP
 
@@ -12,9 +8,9 @@
 namespace OP {
     class Variable : public Node {
     public:
-        Variable(float val=0.f, float dval=0.f) : Node(val, dval) {
-            forward = identity_forward;
-            backward = identity_backward;
+        Variable(float val=0.f, float dval=0.f, float grad=0.f) : Node(val, dval, grad) {
+            _forward_func_ptr = identity_forward;
+            _backward_func_ptr = identity_backward;
         }
     };
 }

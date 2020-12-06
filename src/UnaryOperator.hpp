@@ -1,7 +1,3 @@
-//
-// Created by Zeren Long on 2020/10/18.
-//
-
 #ifndef CS107_FINALPROJECT_UNARYOPERATOR_HPP
 #define CS107_FINALPROJECT_UNARYOPERATOR_HPP
 
@@ -12,14 +8,14 @@
 
 #define UNARY_CONNECT(input, output)         \
     Node& tmp_input = const_cast<Node&>(input); \
-    tmp_input.parents.push_back(output); \
-    output->children.push_back(&tmp_input);
+    tmp_input._parents.push_back(output); \
+    output->_children.push_back(&tmp_input);
 
 #define OVERLOAD_UNARY_OPERATOR(operator_symbol, forward_func, backward_func) \
     inline Node& operator_symbol(const Node &v) { \
                 Node* output = new Node(); \
-                output->forward = forward_func; \
-                output->backward = backward_func; \
+                output->_forward_func_ptr = forward_func; \
+                output->_backward_func_ptr = backward_func; \
                 UNARY_CONNECT(v, output); \
                 return *output; \
         } \
