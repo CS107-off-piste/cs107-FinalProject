@@ -3,8 +3,8 @@
 
 #include <map>
 #include <vector>
-#include "Node.hpp"
 #include <functional>
+#include "Node.hpp"
 
 namespace OP {
 
