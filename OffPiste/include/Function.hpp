@@ -4,7 +4,7 @@
 #include <map>
 #include <vector>
 #include "Node.hpp"
-
+#include <functional>
 
 namespace OP {
 
