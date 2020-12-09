@@ -1,7 +1,8 @@
-file(GLOB OFFPISTE_SRC *.h)
+file(GLOB OFFPISTE_SRC *.hpp)
 
 set(OFFPISTE_SRC
-    OffPiste.cpp
+    Function.cpp
+    Node.cpp
 )
 
 # ==================== #
