@@ -14,14 +14,17 @@ jobs:
 
 addons:
   apt:
+    sources:
+    - ubuntu-toolchain-r-test
     packages:
     - lcov
+    - g++-7
 
 script:
   # build 3PL, OffPiste lib
-  - bash config.sh -3pl -lib -testsOFF
+  - bash config.sh -3pl -lib -testsOFF -CXX=g++-7 -CC=gcc-7
   # run tests and generate coverage report
-  - bash config.sh -cov
+  - bash config.sh -cov -CXX=g++-7 -CC=gcc-7
 
 deploy:
   provider: releases
