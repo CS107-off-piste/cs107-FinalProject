@@ -19,7 +19,7 @@ addons:
 
 script:
   # build 3PL, OffPiste lib
-  - bash config.sh -3pl -lib -testsOFF --CXX=clang++
+  - bash config.sh -3pl -lib -testsOFF
   # run tests and generate coverage report
   - bash config.sh -cov
 
