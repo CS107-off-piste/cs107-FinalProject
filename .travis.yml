@@ -6,6 +6,7 @@ compiler:
 jobs:
   include:
     - os: linux
+      env: CXX=g++-5 # use g++-5 for newer CXX feature support
     - os: osx
       # only build this on tagged commits, for publishing .dylib artifact
       if: tag IS present
@@ -16,12 +17,13 @@ addons:
   apt:
     packages:
     - lcov
+    - g++-5
 
 script:
   # build 3PL, OffPiste lib
-  - bash config.sh -3pl -lib -testsOFF
+  - bash config.sh -3pl -lib -testsOFF CXX=$CXX
   # run tests and generate coverage report
-  - bash config.sh -cov
+  - bash config.sh -cov CXX=$CXX
 
 deploy:
   provider: releases
