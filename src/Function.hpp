@@ -1,31 +1,37 @@
 #ifndef CS107_FINALPROJECT_FUNCTION_HPP
 #define CS107_FINALPROJECT_FUNCTION_HPP
 
-#define EXPRESSION OP::Node&
-#define INPUTS std::vector<std::reference_wrapper<Node>>
-#define OUTPUTS std::vector<std::reference_wrapper<Node>>
-#define VECTOR std::vector<float>
-#define MATRIX std::vector<std::vector<float>>
-
 #include <map>
 #include <vector>
 #include "Node.hpp"
 
 
 namespace OP {
+
+    typedef Node& Expression;
+    typedef std::vector<std::reference_wrapper<Node>> Input;
+    typedef std::vector<std::reference_wrapper<Node>> Output;
+    typedef std::vector<float> Vec;
+    typedef std::vector<std::vector<float>> Mat;
+
     class Function {
     public:
         // constructor
-        explicit Function(INPUTS &input_nodes, OUTPUTS &output_nodes);
+        explicit Function(Input &input_nodes, Output &output_nodes);
+        explicit Function(Input &&input_nodes, Output &&output_nodes) : Function(input_nodes, output_nodes){}
 
         friend Node;
-        VECTOR evaluate();                // evaluate each scalar function within Function
 
-        MATRIX forward_jacobian();      // using forward mode to compute jacobian matrix
+        void set_seed(Vec seeds);
+        void set_seed(Vec &&seeds);
+
+        Vec evaluate();                // evaluate each scalar function within Function
+
+        Mat forward_jacobian();      // using forward mode to compute jacobian matrix
         float forward_derivative(Node &output_node, Node &wrt);
 
         void zero_grad();               // set grads of all nodes in the graph f to zero
-        MATRIX backward_jacobian();     // using reverse mode to compute jabobian matrix
+        Mat backward_jacobian();     // using reverse mode to compute jabobian matrix
 
 
     private:

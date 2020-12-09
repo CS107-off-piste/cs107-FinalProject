@@ -39,12 +39,13 @@
 
 namespace OP {
 
-    /** overload binary operators: +, -, *, / **/
+    /** overload binary operators: +, -, *, /, pow **/
 
     OVERLOAD_BINARY_OPERATOR(operator+, add_forward, add_backward)
     OVERLOAD_BINARY_OPERATOR(operator-, sub_forward, sub_backward)
     OVERLOAD_BINARY_OPERATOR(operator*, mul_forward, mul_backward)
     OVERLOAD_BINARY_OPERATOR(operator/, div_forward, div_backward)
+    OVERLOAD_BINARY_OPERATOR(pow, pow_forward, pow_backward)
 
 }
 

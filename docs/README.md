@@ -20,14 +20,14 @@
     - `Variable`: A derived class of `Node` that represents each input node.
     
     - `Function`: A DAG that containing Nodes, with multiple inputs and multiple outputs.
-        - `Function(INPUTS, OUTPUTS)`: use `INPUTS` and `OUTPUTS` to initialize a computational DAG.
+        - `Function(Input, Output)`: use `Input` and `Output` to initialize a computational DAG.
         - `.evaluate()`: evaluate computational DAG, and return values of output nodes in `std::vector<float>`.
-        - `.set_seed()`: set the seed *p* when taking directional dval.
+        - `.set_seed(Vec seeds)`: set the seed for each input node in forward mode.
         - `.forward_derivative(Node &output_node, Node &wrt)`: compute the dval of `Node &output_node` wrt `Node &wrt` using forward mode.
         - `.forward_jacobian()`: compute the jacobian using forward mode and return `std::vector<std::vector<float>>`.
         - `.zero_grad()`: set `.grad` of all `Node`s in the computational DAG to 0.
         - `.backward_jabobian()`: compute the jabobian using reverse mode and return `std::vector<std::vector<float>>`.
-        - `.bfs()`: a private method that add every node in the graph and its in degree into `std::map<Node*, size_t> in_deg_book_keeper`.
+        - `.bfs()`: a private method that add every node in the graph and its in-degree into `std::map<Node*, size_t> in_deg_book_keeper`.
         - `.generate_aov_sequence`: a private method that generate an feasible AOV sequence of this DAG and store it in `std::vector<Node*> aov_sequence`.
         - `.input_node_ptrs`: a `std::vector<Node*>` that stores the pointers to all input nodes.
         - `.output_node_ptrs`: a `std::vector<Node*>` that stores the pointers to all output nodes.
@@ -35,12 +35,12 @@
         - `.aov_sequence`: a `std::vector<Node*>` that stores a feasible AOV sequence of this DAG. It is obtained by invoking `.generate_aov_sequence()`.
         - `.node2aov_idx`: a `std::map<Node*, size_t>` with key `Node*` and value the index of the `Node` in `.aov_sequence`.
   
-    Other than classes, there are also some definitions of macro that are helpful.
-    - `EXPRESSION`: A macro for `Node&`. Each `EXPRESSION` is a scalar function of vector input.
-    - `INPUTS`: A macro for `std::vector<std::reference_wrapper<Node>>`, which is a combination of input symbols.
-    - `OUPUTS`: A macro for `std::vector<std::reference_wrapper<Node>>`, which is a combination of output symbols.
-    - `VECTOR`: A macro for `std::vector<float>`.
-    - `MATRIX`: A macro for `std::vector<std::vector<float>>`.
+    Other than classes, there are also some type definitions with namespace OP that are helpful.
+    - `Expression`: An alias for `Node&`. Each `Expression` is a scalar function of vector input.
+    - `Input`: An alias for `std::vector<std::reference_wrapper<Node>>`, which is a vector of input `Variable`s.
+    - `output`: An alias for `std::vector<std::reference_wrapper<Node>>`, which is a vector of output `Variable`s.
+    - `Vec`: An alias for `std::vector<float>`.
+    - `Mat`: An alias for `std::vector<std::vector<float>>`.
 
 - **What external dependencies will you rely on?**
     - cmath

@@ -4,7 +4,7 @@
 
 namespace OP {
 
-    Function::Function(INPUTS &input_nodes, OUTPUTS &output_nodes) {
+    Function::Function(Input &input_nodes, Output &output_nodes) {
         // save pointers to all input nodes in input_node_ptrs
         for (auto &it : input_nodes) {
             input_node_ptrs.push_back(&it.get());
@@ -21,6 +21,8 @@ namespace OP {
         // building AOV network of DAG graph
         generate_aov_sequence();
     }
+
+//    Function::Function(Inputs &&input_nodes, Outputs &&output_nodes) : Function(input_nodes, output_nodes){}
 
     void Function::bfs(Node &output_node) {
         std::deque<Node*> queue;
@@ -73,12 +75,23 @@ namespace OP {
         }
     }
 
-//    size_t Function::get_node_idx_in_aov(Node *node_ptr) {
-//        return node2aov_idx[node_ptr];
-//    }
+    void Function::set_seed(Vec seeds) {
 
-    VECTOR Function::evaluate() {
-        VECTOR vec(output_node_ptrs.size(), 0);
+        if (seeds.size() != input_node_ptrs.size()) {
+            throw std::runtime_error("Number of seeds not equal number of input nodes!");
+        }
+
+        for (int i=0; i<seeds.size(); i++) {
+            input_node_ptrs[i]->dval = seeds.at(i);
+        }
+    }
+
+    void Function::set_seed(Vec &&seeds) {
+        set_seed(seeds);
+    }
+
+    Vec Function::evaluate() {
+        Vec vec(output_node_ptrs.size(), 0);
         for (auto & it : aov_sequence) {
             it->_forward_func_ptr(*it);
         }
@@ -88,10 +101,10 @@ namespace OP {
         return vec;
     }
 
-    MATRIX Function::forward_jacobian() {
+    Mat Function::forward_jacobian() {
 
         // initialize jacobian matrix and reserve space
-        MATRIX jacob;
+        Mat jacob;
         jacob.resize(output_node_ptrs.size());
         for (auto &it : jacob) {
             it.resize(input_node_ptrs.size());
@@ -155,8 +168,8 @@ namespace OP {
         }
     }
 
-    MATRIX Function::backward_jacobian() {
-        MATRIX jacob;
+    Mat Function::backward_jacobian() {
+        Mat jacob;
         jacob.resize(output_node_ptrs.size());
         for (auto &it : jacob) {
             it.resize(input_node_ptrs.size());

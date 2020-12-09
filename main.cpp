@@ -21,23 +21,18 @@ int main() {
     Variable b(value2, seed2);
     Variable c(value3, seed3);
 
-    // Each EXPRESSION is a scalar function of vector input
-    EXPRESSION u = a - b + 1;
-    EXPRESSION v = a + exp(1 + c);
+    // Each Expression is a scalar function of vector input
+    Expression u = a - b + 1;
+    Expression v = a + exp(1 + c);
 
-    // Combine input nodes and output nodes together respectively
-    INPUTS inputs = {a, b, c};
-    OUTPUTS outputs = {u, v};
+    // Construct the computational graph called f.
+    Function f({a,b,c}, {u, v});
 
-    // Construct the computational graph called f by inputs and outputs.
-    Function f(inputs, outputs);
-
-
-    /** Forward Mode Example**/
+    /** Forward Mode Example **/
     std::cout<<"Forward Example:"<<std::endl;
 
     // evaluate the computational graph and get forward derivative for free!
-    VECTOR vec_f = f.evaluate();
+    Vec vec_f = f.evaluate();
     std::cout<<"u = "<<u.val<<std::endl;    // get output value by output node
     std::cout<<"v = "<<v.val<<std::endl;    // get output value by output node
     std::cout<<"(u, v) = ("<<vec_f[0]<<", "<<vec_f[1]<<")"<<std::endl;      // get output values by vec
@@ -47,7 +42,7 @@ int main() {
     std::cout<<"dv/dseed = "<<v.dval<<std::endl;
 
     std::cout<<std::endl<<"Jacobian Matrix of (u, v) w.r.t (a, b, c): "<<std::endl;
-    MATRIX jacob_f = f.forward_jacobian();
+    Mat jacob_f = f.forward_jacobian();
     for (auto &i : jacob_f) {
         for (auto &j : i) {
             std::cout<<j<<" ";
@@ -56,10 +51,20 @@ int main() {
     }
 
 
-    /** Reverse Mode Example**/
+    /** Reverse Mode Example **/
     std::cout<<std::endl<<"Backward Example:"<<std::endl;
 
-    VECTOR vec_b = f.evaluate();
+    // Combine input nodes and output nodes together respectively
+    Input inputs = {a, b, c};
+    Output outputs = {u, v};
+
+    // onstruct the computational graph called g by inputs and outputs
+    Function g(inputs, outputs);
+
+    Vec seeds = {0,0,1};
+    g.set_seed(seeds);
+
+    Vec vec_b = f.evaluate();
     std::cout<<"u = "<<u.val<<std::endl;    // get output value by output node
     std::cout<<"v = "<<v.val<<std::endl;    // get output value by output node
     std::cout<<"(u, v) = ("<<vec_b[0]<<", "<<vec_b[1]<<")"<<std::endl;      // get output values by vec
@@ -76,7 +81,7 @@ int main() {
     std::cout<<"(dv/da, dv/db, dv/dc) = ("<<a.grad<<", "<<b.grad<<", "<<c.grad<<")"<<std::endl;
 
     std::cout<<std::endl<<"Jacobian Matrix of (u, v) w.r.t (a, b, c): "<<std::endl;
-    MATRIX jacob_b = f.backward_jacobian();
+    Mat jacob_b = f.backward_jacobian();
     for (auto &i : jacob_b) {
         for (auto &j : i) {
             std::cout<<j<<" ";

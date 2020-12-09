@@ -25,6 +25,12 @@ namespace OP {
     /** overload unary operators: **/
     OVERLOAD_UNARY_OPERATOR(operator-, neg_forward, neg_backward)
     OVERLOAD_UNARY_OPERATOR(exp, exp_forward, exp_backward)
+    OVERLOAD_UNARY_OPERATOR(sin, sin_forward, sin_backward)
+    OVERLOAD_UNARY_OPERATOR(cos, cos_forward, cos_backward)
+    OVERLOAD_UNARY_OPERATOR(tan, tan_forward, tan_backward)
+    OVERLOAD_UNARY_OPERATOR(asin, asin_forward, asin_backward)
+    OVERLOAD_UNARY_OPERATOR(acos, acos_forward, acos_backward)
+    OVERLOAD_UNARY_OPERATOR(atan, atan_forward, atan_backward)
 
 }
 #endif //CS107_FINALPROJECT_UNARYOPERATOR_HPP
