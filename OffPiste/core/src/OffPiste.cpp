@@ -67,17 +67,18 @@ AutoDiff &AutoDiff::operator/=(const AutoDiff &node) {
   return *this;
 }
 
-AutoDiff &AutoDiff::operator^(const float alpha) {
-  dv = alpha * std::pow(v, alpha - 1) * dv;  // power rule for differentiation
-  v = std::pow(v, alpha);
-  return *this;
+AutoDiff AutoDiff::operator^(const double alpha) const {
+  return AutoDiff(std::pow(v, alpha),
+                  // power rule for differentiation
+                  alpha * std::pow(v, alpha - 1) * dv);
 }
 
-AutoDiff &AutoDiff::operator^(const AutoDiff &node) {
-  dv = node.val() * std::pow(v, node.val() - 1) * dv +
-       std::pow(v, node.val()) * std::log(v) * node.dval();
-  v = std::pow(v, node.val());
-  return *this;
+AutoDiff AutoDiff::operator^(const AutoDiff &node) const {
+  double val = std::pow(v, node.val());
+  double dval1 = node.val() * std::pow(v, node.val() - 1) * dv;
+  double dval2 = node.dval() * (std::pow(v, node.val()) * std::log(v));
+  double dval = dval1 + dval2;
+  return AutoDiff(val, dval);
 }
 
 AutoDiff AutoDiff::sin(const AutoDiff &node) {

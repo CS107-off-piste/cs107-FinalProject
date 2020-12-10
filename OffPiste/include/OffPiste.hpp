@@ -233,14 +233,14 @@ class AutoDiff {
    * @param alpha The constant to raise the node to the power of
    * @return A new node representing the result of the power operation
    */
-  AutoDiff &operator^(const float alpha);
+  AutoDiff operator^(const double alpha) const;
 
   /**
    * Raise a node to another node
    * @param node The node that is the exponent
    * @return A new node representing the result of the power operation
    */
-  AutoDiff &operator^(const AutoDiff &node);
+  AutoDiff operator^(const AutoDiff &node) const;
 
   /**
    * Apply a power operation to the provided constant

@@ -5,24 +5,18 @@ typedef AutoDiff AD;
 
 int main(int argc, char const *argv[])
 {
-    // some test values
-    double value1 = 1.2; 
-    double value2 = 3.4;
-    double seed1 = 1.0;
-    double seed2 = 1.0;
+    double value = 2.0;
+    double seed = 1.0;
 
     // construct an AD object 
     // AD is just a shortcut for AutoDiff<double>
-    AD x(value1,seed1);
-    AD y(value2,seed2);
+    AD x(value, seed);
 
-    // print initial value and seed
-    std::cout << "Initial x, y value: " << x.val() << ", "<< y.val() << "\n"; 
-    std::cout << "Initial x, y deriv: " << x.dval() << ", "<< y.dval() << "\n";
+    AD v = AD::exp(AD::sin(x)) - AD::cos(x^0.5);
+    std::cout << "V value, derivative: " << v.val() << ", "<< v.dval() << "\n";
 
-    // perform the operation z = e^(sin(x + y))
-    AD z = AD::exp(AD::sin(x+y));
-    std::cout << "Z value, derivative: " << z.val() << ", "<< z.dval() << "\n"; 
+    AD w = AD::exp(AD::sin(x)) - AD::cos(x^0.5) * AD::sin(((AD::cos(x)^2) + (x^2))^0.5);
+    std::cout << "W value, derivative: " << w.val() << ", "<< w.dval() << "\n";
 
     return 0;
 }
