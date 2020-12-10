@@ -12,10 +12,12 @@ int main(int argc, char const *argv[])
     // AD is just a shortcut for AutoDiff<double>
     AD x(value, seed);
 
-    AD v = AD::exp(AD::sin(x)) - AD::cos(x^0.5);
+    AD v = AD::exp(AD::sin(x)) - AD::cos(AD::pow(x,0.5));
     std::cout << "V value, derivative: " << v.val() << ", "<< v.dval() << "\n";
 
-    AD w = AD::exp(AD::sin(x)) - AD::cos(x^0.5) * AD::sin(((AD::cos(x)^2) + (x^2))^0.5);
+    // (np.cos(x)**2 + x**2)
+    AD w = AD::exp(AD::sin(x)) - AD::cos(AD::pow(x,0.5))
+        * AD::sin(AD::pow(AD::pow(AD::cos(x),2) + AD::pow(x,2),0.5));
     std::cout << "W value, derivative: " << w.val() << ", "<< w.dval() << "\n";
 
     return 0;

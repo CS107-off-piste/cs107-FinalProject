@@ -229,30 +229,42 @@ class AutoDiff {
 
   //===========================================POW=============================================
   /**
-   * Raise a node to a constant power
-   * @param alpha The constant to raise the node to the power of
-   * @return A new node representing the result of the power operation
+   * Apply the power function (i.e. base^alpha) with the provided AutoDiff nodes
+   * @param base The AutoDiff node that acts as the base
+   * @param alpha The AutoDiff node that acts as the power
+   * @return An AutoDiff object representing the power function applied to
+   * the base AutoDiff object, with alpha as the power
    */
-  AutoDiff operator^(const double alpha) const;
+  static AutoDiff pow(const AutoDiff &base, const AutoDiff &alpha);
 
   /**
-   * Raise a node to another node
-   * @param node The node that is the exponent
-   * @return A new node representing the result of the power operation
+   * Apply the power function (i.e. base^alpha) with the provided values
+   * @param base The constant value that acts as the base
+   * @param alpha The AutoDiff node that acts as the power
+   * @return An AutoDiff object representing the power function applied to
+   * the base value, with alpha as the power
    */
-  AutoDiff operator^(const AutoDiff &node) const;
+  static AutoDiff pow(const double base, const AutoDiff &alpha);
 
   /**
-   * Apply a power operation to the provided constant
-   * @param a The constant value being raised to a power
-   * @param node The node that is the exponent
-   * @return A new node representing the result of the power operation
+   * Apply the power function (i.e. base^alpha) with the provided values
+   * @param base The AutoDiff node that acts as the base
+   * @param alpha The constant value that acts as the power
+   * @return An AutoDiff object representing the power function applied to
+   * the base AutoDiff object, with alpha as the power
    */
-  friend AutoDiff operator^(const double a, const AutoDiff &node) {
-    AutoDiff a_node = AutoDiff(a, 0);
-    return a_node ^ node;
-  }
+  static AutoDiff pow(const AutoDiff &base, const double alpha);
 
+  /**
+   * Apply the power function (i.e. base^alpha) with the provided values
+   * @param base The constant value that acts as the base
+   * @param alpha The constant value that acts as the power
+   * @return An AutoDiff object representing the power function applied to
+   * the base value, with alpha as the power
+   */
+  static AutoDiff pow(const double base, const double alpha);
+
+  //====================== TRIGONOMETRIC FUNCTION =============================
   /**
    * Apply the sine function to the provided AutoDiff node
    * @param node The AutoDiff node to apply the sine function to

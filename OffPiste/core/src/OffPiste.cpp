@@ -54,7 +54,7 @@ const AutoDiff AutoDiff::operator/(const AutoDiff &node) const {
 
   return AutoDiff(v / node.val(),
                   // quotient rule for differentiation
-                  (dv * node.val() - node.dval() * v) / pow(node.val(), 2));
+                  (dv * node.val() - node.dval() * v) / std::pow(node.val(), 2));
 }
 
 AutoDiff &AutoDiff::operator/=(const AutoDiff &node) {
@@ -62,23 +62,29 @@ AutoDiff &AutoDiff::operator/=(const AutoDiff &node) {
     throw "Divide by zero";
   }
   dv = (dv * node.val() - node.dval() * v) /
-       pow(node.val(), 2);  // quotient rule for differentiation
+       std::pow(node.val(), 2);  // quotient rule for differentiation
   v = v / node.val();
   return *this;
 }
 
-AutoDiff AutoDiff::operator^(const double alpha) const {
-  return AutoDiff(std::pow(v, alpha),
-                  // power rule for differentiation
-                  alpha * std::pow(v, alpha - 1) * dv);
-}
-
-AutoDiff AutoDiff::operator^(const AutoDiff &node) const {
-  double val = std::pow(v, node.val());
-  double dval1 = node.val() * std::pow(v, node.val() - 1) * dv;
-  double dval2 = node.dval() * (std::pow(v, node.val()) * std::log(v));
+AutoDiff AutoDiff::pow(const AutoDiff &base, const AutoDiff &alpha) {
+  double val = std::pow(base.v, alpha.val());
+  double dval1 = alpha.val() * std::pow(base.v, alpha.val() - 1) * base.dv;
+  double dval2 = alpha.dval() * (std::pow(base.v, alpha.val()) * std::log(base.v));
   double dval = dval1 + dval2;
   return AutoDiff(val, dval);
+}
+
+AutoDiff AutoDiff::pow(const double base, const AutoDiff &alpha) {
+  return AutoDiff::pow(AutoDiff(base, 0), alpha);
+}
+
+AutoDiff AutoDiff::pow(const AutoDiff &base, const double alpha) {
+  return AutoDiff(std::pow(base.v, alpha), alpha * std::pow(base.v, alpha - 1) * base.dv);
+}
+
+AutoDiff AutoDiff::pow(const double base, const double alpha) {
+  return AutoDiff(std::pow(base, alpha), 0);
 }
 
 AutoDiff AutoDiff::sin(const AutoDiff &node) {

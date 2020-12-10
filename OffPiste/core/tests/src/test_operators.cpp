@@ -223,16 +223,13 @@ TEST(Operators, pow_double) {
   AutoDiff x1(1.0, seed1);
   AutoDiff x2(2.0, seed2);
 
-  AutoDiff y = x1 ^ 3;
-  AutoDiff z = x1 ^ x2;
-  AutoDiff k = 3 ^ x2;
+  AutoDiff y = AD::pow(x1, 3);
+  AutoDiff z = AD::pow(x1, x2);
 
   EXPECT_NEAR(y.val(), 1.0, 1E-6);
   EXPECT_NEAR(y.dval(), 5.7, 1E-6);
   EXPECT_NEAR(z.val(), 1.0, 1E-6);
   EXPECT_NEAR(z.dval(), 3.8, 1E-6);
-  EXPECT_NEAR(k.val(), 9.0, 1E-6);
-  EXPECT_NEAR(k.dval(), 43.505, 1E-3);
 }
 
 // test that sine operator computes correct value and derivative
