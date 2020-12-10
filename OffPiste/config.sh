@@ -8,48 +8,48 @@
 
 set -euo pipefail
 
-# ======================= 
+# =======================
 # project directory paths
-# ======================= 
+# =======================
 CURRENT_PATH="$(pwd)"
 
 cd ..
 PROJECT_ROOT="$(pwd)"
 cd ${CURRENT_PATH}
 
-# =============== 
+# ===============
 # library sources
-# =============== 
+# ===============
 MAL_DIRECTORY=${PROJECT_ROOT}/OffPiste
 MAL_SO_NAME=OffPiste
 
-# ====================== 
+# ======================
 # folder directory paths
-# ====================== 
+# ======================
 INSTALL_DIRECTORY=${MAL_DIRECTORY}/install
 INSTALL_MAL_DIRECTORY=${INSTALL_DIRECTORY}
 
 BUILD_DIRECTORY=${MAL_DIRECTORY}/build
 BUILD_MAL_DIRECTORY=${BUILD_DIRECTORY}
 
-# ========================= 
+# =========================
 # third party library paths
-# ========================= 
+# =========================
 INSTALL_3RD_PARTY_PATH=${PROJECT_ROOT}/install/3PL
 
 # google test path
 GTEST_DIRECTORY=${INSTALL_3RD_PARTY_PATH}/googletest
 
-# ================== 
+# ==================
 # compiling defaults
-# ================== 
+# ==================
 BUILD_MAL=1
 BUILD_CLEAN=0
 BUILD_TEST=1
 
-# ================= 
+# =================
 # compiler defaults
-# ================= 
+# =================
 FC=gfortran
 CC=gcc
 CXX=g++
@@ -64,24 +64,24 @@ FC_FLAGS=
 # =========================
 COVERAGE=OFF
 
-# ======================== 
+# ========================
 # compiler option defaults
-# ======================== 
+# ========================
 BUILD_TYPE="Release"
 
-# ======================== 
+# ========================
 # compile into .so
-# ======================== 
+# ========================
 PACKAGE_MODULE=OFF
 
-# ======================== 
+# ========================
 # make and install command
-# ======================== 
+# ========================
 MAKE_CMD="make install"
 
-# ============== 
+# ==============
 # print strings
-# ============== 
+# ==============
 opt_str="[OPTION] "
 
 eC="\x1B[0m"
@@ -121,9 +121,9 @@ help() {
 # ----------------------------- #
 cd $PROJECT_ROOT
 
-# ============ 
+# ============
 # parse inputs
-# ============ 
+# ============
 for var in "$@"
 do
   if [ "$var" == "--help" -o "$var" == "-help" -o "$var" == "-h" ]; then
@@ -196,7 +196,7 @@ do
 
   elif [ "$var" == "--build_so" -o "$var" == "-so" ]; then
     PACKAGE_MODULE=ON
-  
+
   elif [ "$var" == "-go" ]; then
     CC=gcc
     CXX=g++
@@ -210,9 +210,9 @@ do
   fi
 done
 
-# ========================= 
+# =========================
 # display command line args
-# ========================= 
+# =========================
 echo " "
 echo "$0 $@"
 
@@ -220,21 +220,21 @@ echo "$0 $@"
 # After reading in cmd arg options, set remaining paths #
 # ----------------------------------------------------- #
 
-# ====================================== 
+# ======================================
 # install/build location compiled source
-# ====================================== 
+# ======================================
 COMPILE_INSTALL_MAL_DIRECTORY="${INSTALL_MAL_DIRECTORY}"
 COMPILE_BUILD_MAL_DIRECTORY="${BUILD_MAL_DIRECTORY}"
 
-# ============== 
+# ==============
 # compiler paths
 # ==============
 CC_PATH="`which $CC`"
 CXX_PATH="`which $CXX`"
 
-# ====================== 
+# ======================
 # check source directory
-# ====================== 
+# ======================
 if [ ! -d "${MAL_DIRECTORY}" ]; then
   echo " "
   echo "Error:"
@@ -242,17 +242,17 @@ if [ ! -d "${MAL_DIRECTORY}" ]; then
   exit 1
 fi
 
-# ======================= 
-# check install directory 
-# ======================= 
+# =======================
+# check install directory
+# =======================
 if [ ! -d "${INSTALL_DIRECTORY}" ]; then
   echo  "${INSTALL_DIRECTORY} does not exist. Making it..."
   mkdir "${INSTALL_DIRECTORY}"
 fi
 
-# ====================== 
-# check builds directory 
-# ====================== 
+# ======================
+# check builds directory
+# ======================
 if [ ! -d "${BUILD_DIRECTORY}" ]; then
   echo  "${BUILD_DIRECTORY} does not exist. Making it..."
   mkdir "${BUILD_DIRECTORY}"
@@ -279,7 +279,7 @@ if [ ${BUILD_TEST} == 1 ]; then
   fi
 fi
 
-# =================================================================== 
+# ===================================================================
 if [ $BUILD_CLEAN == 1 ]; then
   echo " "
   echo "Clean: removing ${COMPILE_BUILD_MAL_DIRECTORY}"
@@ -291,7 +291,7 @@ if [ $BUILD_CLEAN == 1 ]; then
   rm -rf $CURRENT_PATH/coverage
 fi
 
-# =================================================================== 
+# ===================================================================
 COMPILE_FAIL=0
 if [ $BUILD_MAL == 1 ]; then
   echo " "
@@ -368,7 +368,7 @@ fi
 if [ ${COVERAGE} == "ON" ]; then
     cd $CURRENT_PATH
     echo "Building code coverage..."
-    ./coverage.sh || exit 1
+    source ./coverage.sh || exit 1
 fi
-# =================================================================== 
+# ===================================================================
 echo -e " ${gC}Build Script Completed Successfully!${eC}"

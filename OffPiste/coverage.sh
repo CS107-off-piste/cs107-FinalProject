@@ -26,7 +26,7 @@ COVERAGE_DIRECTORY=${CURRENT_PATH}/coverage
 TEST_SRC_PATH=${CURRENT_PATH}/core/tests
 
 # ======================
-# check builds directory 
+# check builds directory
 # ======================
 if [ ! -d "${COVERAGE_DIRECTORY}" ]; then
   echo  "${COVERAGE_DIRECTORY} does not exist. Making it..."
@@ -37,7 +37,7 @@ fi
 echo "Rebuilding library with coverage flags!"
 echo "(Note: rebuilding library with coverage flags uses GCC)"
 cd build
-cmake -D COVERAGE=ON -D CMAKE_C_COMPILER=g++ -D CMAKE_C_COMPILER=gcc .
+cmake -D COVERAGE=ON -D CMAKE_C_COMPILER=g++ -D CMAKE_C_COMPILER=gcc -D CMAKE_CXX_FLAGS=${CXX_FLAGS} -D gtest_dir=${GTEST_DIRECTORY} .
 make install
 cd ..
 
@@ -61,8 +61,8 @@ lcov --remove OffPiste.info "/usr/*" "${INSTALL_PATH}/*" "${TEST_SRC_PATH}/*" "/
 genhtml OffPiste.info -o CODE_COVERAGE
 cd ..
 
-echo 
+echo
 echo "==========================================================="
-echo "Code Coverage generated in ./coverage/CODE_COVERAGE;"
-echo " >>> Open ./coverage/CODE_COVERAGE/index.html with browser."
+echo "Code Coverage generated in OffPiste/coverage/CODE_COVERAGE;"
+echo " >>> Open OffPiste/coverage/CODE_COVERAGE/index.html with browser."
 echo "==========================================================="
