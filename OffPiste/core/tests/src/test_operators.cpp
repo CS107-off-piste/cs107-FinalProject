@@ -223,9 +223,15 @@ TEST(Operators, pow_double) {
   AutoDiff x1(1.0, seed1);
   AutoDiff x2(2.0, seed2);
 
+  AutoDiff u = AD::pow(2, 3);
+  AutoDiff w = AD::pow(3, x1);
   AutoDiff y = AD::pow(x1, 3);
   AutoDiff z = AD::pow(x1, x2);
 
+  EXPECT_NEAR(u.val(), 8.0, 1E-6);
+  EXPECT_NEAR(u.dval(), 0, 1E-6);
+  EXPECT_NEAR(w.val(), 3.0, 1E-6);
+  EXPECT_NEAR(w.dval(), 6.262090, 1E-6);
   EXPECT_NEAR(y.val(), 1.0, 1E-6);
   EXPECT_NEAR(y.dval(), 5.7, 1E-6);
   EXPECT_NEAR(z.val(), 1.0, 1E-6);
