@@ -24,7 +24,7 @@ script:
   # build 3PL, OffPiste lib
   - bash config.sh -3pl -lib -testsOFF CXX=g++-7 CC=gcc-7
   # run tests and generate coverage report
-  - bash config.sh -cov CXX=g++-7 CC=gcc-7
+  - bash config.sh -cov
 
 deploy:
   provider: releases
