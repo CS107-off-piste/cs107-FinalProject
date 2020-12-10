@@ -37,7 +37,7 @@ fi
 echo "Rebuilding library with coverage flags!"
 echo "(Note: rebuilding library with coverage flags uses GCC)"
 cd build
-cmake -D COVERAGE=ON -D CMAKE_C_COMPILER=g++ -D CMAKE_C_COMPILER=gcc .
+cmake -D COVERAGE=ON -D CMAKE_C_COMPILER=g++ -D CMAKE_C_COMPILER=gcc -D CMAKE_CXX_FLAGS="-std=c++14" .
 make install
 cd ..
 
@@ -63,6 +63,6 @@ cd ..
 
 echo 
 echo "==========================================================="
-echo "Code Coverage generated in ./coverage/CODE_COVERAGE;"
-echo " >>> Open ./coverage/CODE_COVERAGE/index.html with browser."
+echo "Code Coverage generated in OffPiste/coverage/CODE_COVERAGE;"
+echo " >>> Open OffPiste/coverage/CODE_COVERAGE/index.html with browser."
 echo "==========================================================="
