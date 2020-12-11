@@ -4,11 +4,23 @@
 /* source / header files */
 #include "ForwardFunctions.hpp"
 #include "Node.hpp"
-#include "Variable.hpp"
 #include "test_vars.h"
 
 // add an AD shortcut for brevity
 using namespace OP;
+
+TEST(ForwardFunctions, Identity) {
+  // Init
+  Node node(1.0, 2.0, 3.0);
+
+  // Identity
+  identity_forward(node);
+
+  // Validate
+  EXPECT_NEAR(node.val, 1.0, 1E-8);
+  EXPECT_NEAR(node.dval, 2.0, 1E-8);
+  EXPECT_NEAR(node.grad, 3.0, 1E-8);
+}
 
 //--------------------------- Binary Functions --------------------------------
 TEST(ForwardFunctions, Add) {
