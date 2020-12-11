@@ -109,7 +109,7 @@ static void cosh_forward(Node &node) {
 }
 
 static void tanh_forward(Node &node) {
-  node.val = std::tan(node._children[0]->val);
+  node.val = std::tanh(node._children[0]->val);
   node.dval = 1.f / std::pow(std::cosh(node._children[0]->val), 2) * node._children[0]->dval;
 }
 

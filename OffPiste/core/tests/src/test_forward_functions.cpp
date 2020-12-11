@@ -266,12 +266,12 @@ TEST(ForwardFunctions, Sinh) {
   Node child1(0.9, 0.2);
   node._children.push_back(&child1);
 
-  // Asin
-  asin_forward(node);
+  // Sinh
+  sinh_forward(node);
 
   // Validate
-  EXPECT_NEAR(node.val, 1.1198, 1E-4);
-  EXPECT_NEAR(node.dval, 0.46, 1E-2);
+  EXPECT_NEAR(node.val, 1.0265, 1E-4);
+  EXPECT_NEAR(node.dval, 0.2866, 1E-4);
 }
 
 TEST(ForwardFunctions, Cosh) {
@@ -280,24 +280,24 @@ TEST(ForwardFunctions, Cosh) {
   Node child1(0.9, 0.2);
   node._children.push_back(&child1);
 
-  // Acos
-  acos_forward(node);
+  // Cosh
+  cosh_forward(node);
 
   // Validate
-  EXPECT_NEAR(node.val, 0.4510, 1E-4);
-  EXPECT_NEAR(node.dval, -0.46, 1E-2);
+  EXPECT_NEAR(node.val, 1.4331, 1E-4);
+  EXPECT_NEAR(node.dval, 0.2053, 1E-4);
 }
 
 TEST(ForwardFunctions, Tanh) {
   // Init
   Node node;
-  Node child1(30.0, 20.0);
+  Node child1(3.0, 2.0);
   node._children.push_back(&child1);
 
-  // Atan
-  atan_forward(node);
+  // Tanh
+  tanh_forward(node);
 
   // Validate
-  EXPECT_NEAR(node.val, 1.5375, 1E-4);
-  EXPECT_NEAR(node.dval, 0.02, 1E-2);
+  EXPECT_NEAR(node.val, 0.9951, 1E-4);
+  EXPECT_NEAR(node.dval, 0.0197, 1E-4);
 }
