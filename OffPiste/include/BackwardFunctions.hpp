@@ -44,6 +44,11 @@ namespace OP {
         node._children[0]->grad += -node.grad;
     }
 
+    void sqrt_backward(Node &node) {
+        node._children[0]->grad = node.grad * 0.5f * std::pow(node._children[0]->val, -0.5f);
+    }
+
+
     void exp_backward(Node &node) {
         node._children[0]->grad += node.grad * std::exp(node._children[0]->val);
     }
@@ -74,6 +79,18 @@ namespace OP {
 
     void atan_backward(Node &node) {
         node._children[0]->grad += node.grad * 1.f/(1 + std::pow(node._children[0]->val, 2));
+    }
+
+    void sinh_backward(Node &node) {
+        node._children[0]->grad += node.grad * std::cosh(node._children[0]->val);
+    }
+
+    void cosh_backward(Node &node) {
+        node._children[0]->grad += node.grad * std::sinh(node._children[0]->val);
+    }
+
+    void tanh_backward(Node &node) {
+        node._children[0]->grad += node.grad * 1.f / std::pow(std::cosh(node._children[0]->val), 2);
     }
 
 }

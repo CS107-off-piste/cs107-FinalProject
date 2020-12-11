@@ -28,11 +28,11 @@
             BINARY_CONNECT(v1, v2, output); \
             return *output; \
         } \
-        inline Node& operator_symbol(const Node& v1, float constant){ \
+        inline Node& operator_symbol(const Node &v1, float constant){ \
             MAKE_CONSTANT_NODE(constant); \
             return operator_symbol(v1, *node); \
         } \
-        inline Node& operator_symbol(float constant, const Node& v1){  \
+        inline Node& operator_symbol(float constant, const Node &v1){  \
             MAKE_CONSTANT_NODE(constant); \
             return operator_symbol(v1, *node); \
         } \
@@ -46,6 +46,16 @@ namespace OP {
     OVERLOAD_BINARY_OPERATOR(operator*, mul_forward, mul_backward)
     OVERLOAD_BINARY_OPERATOR(operator/, div_forward, div_backward)
     OVERLOAD_BINARY_OPERATOR(pow, pow_forward, pow_backward)
+
+
+    /** overload comparison operators ==, !=, >, <, >=, <= **/
+
+    bool operator==(Node &v1, Node &v2) { return (v1.val == v2.val); }
+    bool operator!=(Node &v1, Node &v2) { return (v1.val != v2.val); }
+    bool operator>=(Node &v1, Node &v2) { return (v1.val >= v2.val); }
+    bool operator<=(Node &v1, Node &v2) { return (v1.val <= v2.val); }
+    bool operator>(Node &v1, Node &v2) { return (v1.val > v2.val); }
+    bool operator<(Node &v1, Node &v2) { return (v1.val < v2.val); }
 
 }
 
