@@ -26,6 +26,7 @@ namespace OP {
     OVERLOAD_UNARY_OPERATOR(operator-, neg_forward, neg_backward)
     OVERLOAD_UNARY_OPERATOR(sqrt, sqrt_forward, sqrt_backward)
     OVERLOAD_UNARY_OPERATOR(exp, exp_forward, exp_backward)
+    OVERLOAD_UNARY_OPERATOR(log, log_forward, log_backward)
 
     OVERLOAD_UNARY_OPERATOR(sin, sin_forward, sin_backward)
     OVERLOAD_UNARY_OPERATOR(cos, cos_forward, cos_backward)
