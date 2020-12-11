@@ -7,11 +7,6 @@
 
 namespace OP {
 
-static bool equal(double a, double b) {
-  if (std::abs(a - b) < 1e-15) return true;
-  return false;
-}
-
 static void identity_forward(Node &node) {}
 
 /** forward methods for binary operation **/

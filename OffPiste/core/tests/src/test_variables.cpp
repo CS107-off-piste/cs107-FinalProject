@@ -15,4 +15,6 @@ TEST(Init, float) {
   Variable a(value, 1.0);
 
   EXPECT_NEAR(a.val, 1.8, 1E-6);
+  EXPECT_NEAR(a.dval, 1.0, 1E-6);
+  EXPECT_NEAR(a.grad, 0.0, 1E-6);
 }
