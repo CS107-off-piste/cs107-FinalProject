@@ -43,6 +43,11 @@ static void pow_backward(Node &node) {
 /** backward methods for unary operation **/
 static void neg_backward(Node &node) { node._children[0]->grad += -node.grad; }
 
+static void sqrt_backward(Node &node) {
+  node._children[0]->grad =
+      node.grad * 0.5f * std::pow(node._children[0]->val, -0.5f);
+}
+
 static void exp_backward(Node &node) {
   node._children[0]->grad += node.grad * std::exp(node._children[0]->val);
 }
@@ -77,6 +82,19 @@ static void acos_backward(Node &node) {
 static void atan_backward(Node &node) {
   node._children[0]->grad +=
       node.grad * 1.f / (1 + std::pow(node._children[0]->val, 2));
+}
+
+static void sinh_backward(Node &node) {
+  node._children[0]->grad += node.grad * std::cosh(node._children[0]->val);
+}
+
+static void cosh_backward(Node &node) {
+  node._children[0]->grad += node.grad * std::sinh(node._children[0]->val);
+}
+
+static void tanh_backward(Node &node) {
+  node._children[0]->grad +=
+      node.grad * 1.f / std::pow(std::cosh(node._children[0]->val), 2);
 }
 
 }  // namespace OP

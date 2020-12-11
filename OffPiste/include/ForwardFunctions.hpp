@@ -55,6 +55,11 @@ static void neg_forward(Node &node) {
   node.dval = -node._children[0]->dval;
 }
 
+static void sqrt_forward(Node &node) {
+  node.val = std::sqrt(node._children[0]->val);
+  node.dval = 0.5f * std::pow(node.val, -0.5f) * node._children[0]->dval;
+}
+
 static void exp_forward(Node &node) {
   node.val = std::exp(node._children[0]->val);
   node.dval = node.val * node._children[0]->dval;
@@ -97,6 +102,21 @@ static void atan_forward(Node &node) {
   node.val = std::atan(node._children[0]->val);
   node.dval =
       1.f / (1 + std::pow(node._children[0]->val, 2)) * node._children[0]->dval;
+}
+
+static void sinh_forward(Node &node) {
+  node.val = std::sinh(node._children[0]->val);
+  node.dval = std::cosh(node.val) * node._children[0]->dval;
+}
+
+static void cosh_forward(Node &node) {
+  node.val = std::cosh(node._children[0]->val);
+  node.dval = std::sinh(node.val) * node._children[0]->dval;
+}
+
+static void tanh_forward(Node &node) {
+  node.val = std::tan(node._children[0]->val);
+  node.dval = 1.f / std::pow(std::cosh(node.val), 2) * node._children[0]->dval;
 }
 
 }  // namespace OP
