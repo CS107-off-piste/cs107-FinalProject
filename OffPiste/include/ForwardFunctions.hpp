@@ -51,22 +51,22 @@ namespace OP {
 
     static void log_forward(Node &node) {
         node.val = std::log(node._children[0]->val);
-        node.dval = 1/node.val * node._children[0]->dval;
+        node.dval = 1/node._children[0]->val * node._children[0]->dval;
     }
 
     static void sin_forward(Node &node) {
         node.val = std::sin(node._children[0]->val);
-        node.dval = std::cos(node.val) * node._children[0]->dval;
+        node.dval = std::cos(node._children[0]->val) * node._children[0]->dval;
     }
 
     static void cos_forward(Node &node) {
         node.val = std::cos(node._children[0]->val);
-        node.dval = -std::sin(node.val) * node._children[0]->dval;
+        node.dval = -std::sin(node._children[0]->val) * node._children[0]->dval;
     }
 
     static void tan_forward(Node &node) {
         node.val = std::tan(node._children[0]->val);
-        node.dval = 1.f/std::pow(std::cos(node.val), 2) * node._children[0]->dval;
+        node.dval = 1.f/std::pow(std::cos(node._children[0]->val), 2) * node._children[0]->dval;
     }
 
     static void asin_forward(Node &node) {
