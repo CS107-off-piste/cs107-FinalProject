@@ -26,6 +26,9 @@ static void mul_backward(Node &node) {
 }
 
 static void div_backward(Node &node) {
+  if (equal(node._children[1]->val, 0.0)) {
+    throw "Divide by zero";
+  }
   node._children[0]->grad += node.grad / node._children[1]->val;
   node._children[1]->grad += -node.grad * node._children[0]->val /
                              (node._children[1]->val * node._children[1]->val);

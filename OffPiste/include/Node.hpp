@@ -1,9 +1,15 @@
 #ifndef CS107_FINALPROJECT_NODE_HPP
 #define CS107_FINALPROJECT_NODE_HPP
 
+#include <cmath>
 #include <vector>
 
 namespace OP {
+
+static bool equal(double a, double b) {
+  if (std::abs(a - b) < 1e-15) return true;
+  return false;
+}
 
 class Function;
 
