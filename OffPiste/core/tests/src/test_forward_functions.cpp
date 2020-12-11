@@ -133,6 +133,20 @@ TEST(ForwardFunctions, Negate) {
   EXPECT_NEAR(node.dval, -1.5, 1E-6);
 }
 
+TEST(ForwardFunctions, Sqrt) {
+  // Init
+  Node node;
+  Node child1(4.0, 2.0);
+  node._children.push_back(&child1);
+
+  // Sqrt
+  sqrt_forward(node);
+
+  // Validate
+  EXPECT_NEAR(node.val, 2.0, 1E-6);
+  EXPECT_NEAR(node.dval, 0.5, 1E-6);
+}
+
 TEST(ForwardFunctions, Exponent) {
   // Init
   Node node;
@@ -233,6 +247,48 @@ TEST(ForwardFunctions, Acos) {
 }
 
 TEST(ForwardFunctions, Atan) {
+  // Init
+  Node node;
+  Node child1(30.0, 20.0);
+  node._children.push_back(&child1);
+
+  // Atan
+  atan_forward(node);
+
+  // Validate
+  EXPECT_NEAR(node.val, 1.5375, 1E-4);
+  EXPECT_NEAR(node.dval, 0.02, 1E-2);
+}
+
+TEST(ForwardFunctions, Sinh) {
+  // Init
+  Node node;
+  Node child1(0.9, 0.2);
+  node._children.push_back(&child1);
+
+  // Asin
+  asin_forward(node);
+
+  // Validate
+  EXPECT_NEAR(node.val, 1.1198, 1E-4);
+  EXPECT_NEAR(node.dval, 0.46, 1E-2);
+}
+
+TEST(ForwardFunctions, Cosh) {
+  // Init
+  Node node;
+  Node child1(0.9, 0.2);
+  node._children.push_back(&child1);
+
+  // Acos
+  acos_forward(node);
+
+  // Validate
+  EXPECT_NEAR(node.val, 0.4510, 1E-4);
+  EXPECT_NEAR(node.dval, -0.46, 1E-2);
+}
+
+TEST(ForwardFunctions, Tanh) {
   // Init
   Node node;
   Node child1(30.0, 20.0);
