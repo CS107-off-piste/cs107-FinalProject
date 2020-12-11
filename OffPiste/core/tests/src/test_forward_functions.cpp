@@ -61,18 +61,33 @@ TEST(ForwardFunctions, Multiply) {
 
 TEST(ForwardFunctions, Divide) {
   // Init
-  Node node;
+  Node node1;
+  Node node2;
   Node child1(1.0, 1.9);
   Node child2(2.0, 4.4);
-  node._children.push_back(&child1);
-  node._children.push_back(&child2);
+  Node child3(0.0, 0.0);
+
+  node1._children.push_back(&child1);
+  node1._children.push_back(&child2);
+
+  node2._children.push_back(&child1);
+  node2._children.push_back(&child3);
 
   // Divide
-  div_forward(node);
+  div_forward(node1);
 
   // Validate
-  EXPECT_NEAR(node.val, 0.5, 1E-4);
-  EXPECT_NEAR(node.dval, -0.15, 1E-2);
+  EXPECT_NEAR(node1.val, 0.5, 1E-4);
+  EXPECT_NEAR(node1.dval, -0.15, 1E-2);
+
+  // Validate Divide by 0
+  try {
+    div_forward(node2);
+  } catch (const char* msg) {
+    EXPECT_EQ(msg, "Divide by zero");
+  }
+  EXPECT_NEAR(node2.val, 0, 1E-8);
+  EXPECT_NEAR(node2.dval, 0, 1E-8);
 }
 
 TEST(ForwardFunctions, Power) {
