@@ -117,3 +117,174 @@ TEST(BackwardFunctions, Power) {
   EXPECT_NEAR(child1.grad, 22.0, 1E-6);
   EXPECT_NEAR(child2.grad, 25.5452, 1E-4);
 }
+
+//--------------------- Negate, Sqrt, Exponent, Log ---------------------------
+TEST(BackwardFunctions, Negate) {
+  // Init
+  Node node(0.0, 0.0, 1.0);
+  Node child1(2.0, 1.5, 3.0);
+  node._children.push_back(&child1);
+
+  // Negate
+  neg_backward(node);
+
+  // Validate
+  EXPECT_NEAR(child1.grad, 2.0, 1E-4);
+}
+
+TEST(BackwardFunctions, Sqrt) {
+  // Init
+  Node node(0.0, 0.0, 1.0);
+  Node child1(2.0, 1.5, 3.0);
+  node._children.push_back(&child1);
+
+  // Sqrt
+  sqrt_backward(node);
+
+  // Validate
+  EXPECT_NEAR(child1.grad, 0.3536, 1E-4);
+}
+
+TEST(BackwardFunctions, Exponent) {
+  // Init
+  Node node(0.0, 0.0, 1.0);
+  Node child1(2.0, 1.5, 3.0);
+  node._children.push_back(&child1);
+
+  // Exponent
+  exp_backward(node);
+
+  // Validate
+  EXPECT_NEAR(child1.grad, 10.3891, 1E-4);
+}
+
+TEST(BackwardFunctions, Logarithm) {
+  // Init
+  Node node(0.0, 0.0, 1.0);
+  Node child1(2.0, 1.5, 3.0);
+  node._children.push_back(&child1);
+
+  // Logarithm
+  log_backward(node);
+
+  // Validate
+  EXPECT_NEAR(child1.grad, 3.5, 1E-4);
+}
+
+//--------------------------- Trigonometric Functions -------------------------
+TEST(BackwardFunctions, Sine) {
+  // Init
+  Node node(0.0, 0.0, 1.0);
+  Node child1(2.0, 1.5, 3.0);
+  node._children.push_back(&child1);
+
+  // Sine
+  sin_backward(node);
+
+  // Validate
+  EXPECT_NEAR(child1.grad, 2.5839, 1E-4);
+}
+
+TEST(BackwardFunctions, Cosine) {
+  // Init
+  Node node(0.0, 0.0, 1.0);
+  Node child1(2.0, 1.5, 3.0);
+  node._children.push_back(&child1);
+
+  // Cosine
+  cos_backward(node);
+
+  // Validate
+  EXPECT_NEAR(child1.grad, 2.0907, 1E-4);
+}
+
+TEST(BackwardFunctions, Tangent) {
+  // Init
+  Node node(0.0, 0.0, 1.0);
+  Node child1(2.0, 1.5, 3.0);
+  node._children.push_back(&child1);
+
+  // Tangent
+  tan_backward(node);
+
+  // Validate
+  EXPECT_NEAR(child1.grad, 8.7744, 1E-4);
+}
+
+TEST(BackwardFunctions, Asin) {
+  // Init
+  Node node(0.1, 0.0, 0.9);
+  Node child1(-0.2, 1.5, 0.6);
+  node._children.push_back(&child1);
+
+  // Asin
+  asin_backward(node);
+
+  // Validate
+  EXPECT_NEAR(child1.grad, 1.5186, 1E-4);
+}
+
+TEST(BackwardFunctions, Acos) {
+  // Init
+  Node node(0.1, 0.0, 0.9);
+  Node child1(-0.2, 1.5, 0.6);
+  node._children.push_back(&child1);
+
+  // Acos
+  acos_backward(node);
+
+  // Validate
+  EXPECT_NEAR(child1.grad, -0.3186, 1E-4);
+}
+
+TEST(BackwardFunctions, Atan) {
+  // Init
+  Node node(0.0, 0.0, 1.0);
+  Node child1(2.0, 1.5, 3.0);
+  node._children.push_back(&child1);
+
+  // Atan
+  atan_backward(node);
+
+  // Validate
+  EXPECT_NEAR(child1.grad, 3.2, 1E-4);
+}
+
+TEST(BackwardFunctions, Sinh) {
+  // Init
+  Node node(0.0, 0.0, 1.0);
+  Node child1(2.0, 1.5, 3.0);
+  node._children.push_back(&child1);
+
+  // Sinh
+  sinh_backward(node);
+
+  // Validate
+  EXPECT_NEAR(child1.grad, 6.7622, 1E-4);
+}
+
+TEST(BackwardFunctions, Cosh) {
+  // Init
+  Node node(0.0, 0.0, 1.0);
+  Node child1(2.0, 1.5, 3.0);
+  node._children.push_back(&child1);
+
+  // Cosh
+  cosh_backward(node);
+
+  // Validate
+  EXPECT_NEAR(child1.grad, 6.6269, 1E-4);
+}
+
+TEST(BackwardFunctions, Tanh) {
+  // Init
+  Node node(0.0, 0.0, 1.0);
+  Node child1(2.0, 1.5, 3.0);
+  node._children.push_back(&child1);
+
+  // Tanh
+  tanh_backward(node);
+
+  // Validate
+  EXPECT_NEAR(child1.grad, 3.0707, 1E-4);
+}

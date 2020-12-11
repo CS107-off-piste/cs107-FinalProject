@@ -118,7 +118,7 @@ TEST(ForwardFunctions, Power) {
   EXPECT_NEAR(node.dval, 5.7, 1E-2);
 }
 
-//--------------------- Negate, Exponent, Log ---------------------------------
+//--------------------- Negate, Sqrt, Exponent, Log ---------------------------
 TEST(ForwardFunctions, Negate) {
   // Init
   Node node;
