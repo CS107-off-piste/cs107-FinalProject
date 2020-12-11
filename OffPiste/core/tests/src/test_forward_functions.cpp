@@ -176,3 +176,45 @@ TEST(ForwardFunctions, Tangent) {
   EXPECT_NEAR(node.val, -0.1425, 1E-4);
   EXPECT_NEAR(node.dval, 2.04, 1E-2);
 }
+
+TEST(ForwardFunctions, Asin) {
+  // Init
+  Node node;
+  Node child1(0.9, 0.2);
+  node._children.push_back(&child1);
+
+  // Asin
+  asin_forward(node);
+
+  // Validate
+  EXPECT_NEAR(node.val, 1.1198, 1E-4);
+  EXPECT_NEAR(node.dval, 0.46, 1E-2);
+}
+
+TEST(ForwardFunctions, Acos) {
+  // Init
+  Node node;
+  Node child1(0.9, 0.2);
+  node._children.push_back(&child1);
+
+  // Acos
+  acos_forward(node);
+
+  // Validate
+  EXPECT_NEAR(node.val, 0.4510, 1E-4);
+  EXPECT_NEAR(node.dval, -0.46, 1E-2);
+}
+
+TEST(ForwardFunctions, Atan) {
+  // Init
+  Node node;
+  Node child1(30.0, 20.0);
+  node._children.push_back(&child1);
+
+  // Atan
+  atan_forward(node);
+
+  // Validate
+  EXPECT_NEAR(node.val, 1.5375, 1E-4);
+  EXPECT_NEAR(node.dval, 0.02, 1E-2);
+}

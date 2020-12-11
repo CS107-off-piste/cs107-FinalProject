@@ -71,17 +71,17 @@ namespace OP {
 
     static void asin_forward(Node &node) {
         node.val = std::asin(node._children[0]->val);
-        node.dval = 1.f/(std::sqrt(1 - std::pow(node.val, 2))) * node._children[0]->dval;
+        node.dval = 1.f/(std::sqrt(1 - std::pow(node._children[0]->val, 2))) * node._children[0]->dval;
     }
 
     static void acos_forward(Node &node) {
         node.val = std::acos(node._children[0]->val);
-        node.dval = -1.f/(std::sqrt(1 - std::pow(node.val, 2))) * node._children[0]->dval;
+        node.dval = -1.f/(std::sqrt(1 - std::pow(node._children[0]->val, 2))) * node._children[0]->dval;
     }
 
     static void atan_forward(Node &node) {
         node.val = std::atan(node._children[0]->val);
-        node.dval = 1.f/(1 + std::pow(node.val, 2)) * node._children[0]->dval;
+        node.dval = 1.f/(1 + std::pow(node._children[0]->val, 2)) * node._children[0]->dval;
     }
 
 }
