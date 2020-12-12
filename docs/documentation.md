@@ -100,7 +100,7 @@ The project's main directories are:
     * `OffPiste/coverage` contains information relating to the code coverage of the unit and functional tests
     * `OffPiste/install` contains the compiled `.so` library. 
 * `docs/` which contains files such as this one, documenting the library and development process. 
-    * `docs/doxygen` contains html documentation for the `AutoDiff` library's functions.
+    * `docs/doxygen` contains html documentation for the `OffPiste` library's functions.
 * `example_usage` contains an example project showing how you can use the `OffPiste` library
 * `3PL` contains 3rd party components. At present, this is just Google test.
 
@@ -141,34 +141,44 @@ to compile the library. This will produce a `.so` (or `.dylib` on a Mac) and `.h
 ## Implementation
 
 - **What are the core data structures?**
-    The core data structure that will underly our AD tool is a Directed Acyclic Graph (DAG) with multiple inputs and single output.
-    e.g. `f(x, y, z) = x + y^2 + z^3`.  
-    By invoking a unary operation on a node, a parent node of the previous node is constructed whose value and derivative is set according to the unary operation.
-    By invoking a binary operation between two nodes, a parent node of two previous nodes is constructed whose value and derivative is set according to the binary operation.
-  
+    The core data structure for each component of vector functions is a Directed Acyclic Graph (DAG) with multiple inputs and multiple outputs.
+
+    In the DAG, each node represents one of the operations in the computational graph of our function. We store our operations in this DAG so that we can traverse the nodes of the DAG (in reverse) when computing the reverse mode.
+
+    e.g. f(x, y, z) = (x + y^2, x - z)
+
 - **What classes will you implement? What method and name attributes will your classes have?**  
-    The core class for milestone 2 is `AutoDiff`:
-    - `private` members:
-        - `T v`: The value of this node
-        - `T dv`: The derivative of this node
-        
-    - `public` members:
-        - `AutoDiff()`: Default constructor
-        - `AutoDiff(T val, T dval=1.0)`: Contructor with fixed initial `v` and `dv`
-        - `T val()`: Getter function of `v`
-        - `T dval()`: Getter function of `dv`
-        - `void setval(T val)`: Setter function of `v`
-        - `void setval(T dval)`: Setter function of `dv`
-        
-        - Operator overloading. Support unary and binary operations on `AutoDiff` objects:
-            - Unary operators: power(^), sin, cos, tan, exp.
-            - Binary operators: addition(+), subtraction(-), multiply(*), divide(/), +=, -=, *=, /=.  
-            *P.S. The binary operator are **only** between `AutoDiff` object for this milestone)*
+    There are three basic classes needed to be implemented: `Node`, `Variable`, `Function`:
+    - `Node`: A node of the DAG. It has the following attributes and methods:
+        - `.forward()`: represents the operation of this node, including binary and unary operation, e.g. +, -, exp, sin.
+        - `.backward()`: used in reverse mode when computing the derivative of each node.
+        - `.value`: the value of this node.
+        - `.derivative`: the derivative of this node.
+        - `.parents`: a `std::vector<Node*>` containing the pointers to all parents of this node.
+        - `.children`: `a std::vector<Node*>` containing the pointers to all children of this node.
 
-- The functions above are described in further detail via code comments in `OffPiste.cpp` and `.hpp`, as well as in the Doxygen documentation available at `docs/doxygen/html`. An example of using the autodiff operators is included in `../example_usage`.
+    - `Variable`: A derived class of `Node` that represents an input node.
 
-- As set out in a previous milestone document, we intend to implement reverse mode and so, going forward, we will need to store a graph of operations. Our intended class structure for this remains as set out in that previous milestone document. 
-    
+    - `Function`: A DAG that contains Nodes, with multiple inputs and multiple outputs.
+        - `Function(EXPRESSIONS)`: use `EXPRESSIONS` to initialize a DAG.
+        - `.evaluate(Node &output_node)`: compute the output of `Node &output_node`.
+        - `.evaluate()`: compute the output with respect to all output nodes, and return `std::vector<float>`.
+        - `.set_seed(std::vector<float> p)`: set the seed *p* when taking directional derivative.
+        - `.forward_derivative(Node &output_node, Node &wrt)`: compute the derivative of `Node &output_node` with respect to `Node &wrt`.
+        - `.jacobian()`: compute the jacobian of vector function of vector input represented by this graph, and return `std::vector<std::vector<float>>`.
+        - `.bfs()`: a private method that adds every node in the graph and its in degree into a `std::map<Node*, size_t> book_keeper`.
+        - `.generate_aov_sequence()`: a private method that generates a feasible AOV sequence of this DAG and store it in `std::vector<Node*> aov_sequence`
+        - `.output_node_ptrs`: a `std::vector<Node*>` that stores the pointers to output nodes (top level nodes).
+        - `.book_keeper`: a `std::map<Node*, size_t>` that stores pointers to each node and its number of children.
+        - `.aov_sequence`: a `std::vector<Node*>` that stores a feasible AOV sequence of this DAG. It is obtained by invoking `.generate_aov_sequence()`.
+
+    The classes `UnaryOperator` and `BinaryOperator` have been added to assist in operator overloading. And the classes `ForwardFunctions` and `BackwardFunctions` implement the core logic for the unary and binary functions.
+
+    Other than classes, there are also some definitions of macros that are helpful.
+    - `EXPRESSION`: A macro for `Node&`.
+
+    - `EXPRESSIONS`: A macro for `std::vector<std::reference_wrapper<Node>>`.
+
 - **What external dependencies you rely on?**
     - We do not use any external dependencies in our source code. However, we do use the c standard libraries such as `cmath` for computing the value of some functions, e.g. sin, cos, exp. 
     - We use some external tools outside of our `c++` source code, such as `doxygen` for documentation generation, and `clang-format` for code formatting. These external tools are not required to compile and run the project.
@@ -200,7 +210,7 @@ The team behind the OffPiste library is multi-cultural in itself, with members s
 
 Along the same lines, we hope that our source code and software are available and accessible to people from all backgrounds and walks of life. Although development and documentation, at this point, is only done in English, we encourage user forums and discussions in any language and will try our best to assist. Where this proves to be difficult, we seek your understanding in the fact that our time and and resources towards this project are limited and we are unable to cater to speakers of all languages.
 
-Many of the maintainers of this repository also study or work full-time and owing to this, corresponse and attention to code reviews may not be immediate. Please help us streamline our communication by incorporating the guidelines in the document on [Contributing to the Code](../README.md#contributing-to-this-project).
+Many of the maintainers of this repository also study or work full-time and owing to this, correspondence and attention to code reviews may not be immediate. Please help us streamline our communication by incorporating the guidelines in the document on [Contributing to the Code](../README.md#contributing-to-this-project).
 
 ## Future Features
 
