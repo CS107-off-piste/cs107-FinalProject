@@ -4,8 +4,8 @@
 
 namespace OP {
 void OP::Node::backward() {
-  float save_grad = grad; // keep gradient around
-  this->grad = 1.0f;  // dthis/dthis = 1.0f
+  float save_grad = grad;  // keep gradient around
+  this->grad = 1.0f;       // dthis/dthis = 1.0f
 
   // get this Node's position in the Function
   size_t idx_in_aov_seq = this->function_ptr->node2aov_idx[this];
