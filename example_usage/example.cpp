@@ -29,7 +29,7 @@ int main() {
     Function f({a,b,c}, {u, v});
 
     /** Forward Mode Example **/
-    std::cout<<"Forward Example:"<<std::endl;
+    std::cout<<"===Forward Example:==="<<std::endl;
 
     // evaluate the computational graph and get forward derivative for free!
     Vec vec_f = f.evaluate();
@@ -52,36 +52,25 @@ int main() {
 
 
     /** Reverse Mode Example **/
-    std::cout<<std::endl<<"Backward Example:"<<std::endl;
+    std::cout<<std::endl<<"===Backward Example:==="<<std::endl;
 
     // Combine input nodes and output nodes together respectively
     Input inputs = {a, b, c};
     Output outputs = {u, v};
 
-    // onstruct the computational graph called g by inputs and outputs
+    // Construct a computational graph called g with the provided inputs and outputs
     Function g(inputs, outputs);
 
-    Vec seeds = {0,0,1};
+    Vec seeds = {0,0,1}; 
     g.set_seed(seeds);
 
-    Vec vec_b = f.evaluate();
+    Vec vec_b = g.evaluate();
     std::cout<<"u = "<<u.val<<std::endl;    // get output value by output node
     std::cout<<"v = "<<v.val<<std::endl;    // get output value by output node
     std::cout<<"(u, v) = ("<<vec_b[0]<<", "<<vec_b[1]<<")"<<std::endl;      // get output values by vec
 
-    std::cout<<std::endl;
-
-    f.zero_grad();      // call f.zero_grad() to set grads of all nodes in the graph f to zero
-    u.backward();
-    std::cout<<"(du/da, du/db, du/dc) = ("<<a.grad<<", "<<b.grad<<", "<<c.grad<<")"<<std::endl;
-
-
-    f.zero_grad();      // call f.zero_grad() to set grads of all nodes in the graph f to zero
-    v.backward();
-    std::cout<<"(dv/da, dv/db, dv/dc) = ("<<a.grad<<", "<<b.grad<<", "<<c.grad<<")"<<std::endl;
-
     std::cout<<std::endl<<"Jacobian Matrix of (u, v) w.r.t (a, b, c): "<<std::endl;
-    Mat jacob_b = f.backward_jacobian();
+    Mat jacob_b = g.backward_jacobian();
     for (auto &i : jacob_b) {
         for (auto &j : i) {
             std::cout<<j<<" ";

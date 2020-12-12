@@ -221,6 +221,7 @@ Mat Function::backward_jacobian() {
   }
 
   // restore gradients to initial values
+  zero_grad(); // reset gradients to zero
   for (int i = 0; i < input_node_ptrs.size(); i++) {
     input_node_ptrs[i]->grad = input_grad_keeper.at(i);
   }
