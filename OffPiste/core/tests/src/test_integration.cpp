@@ -13,6 +13,9 @@
 // add an AD shortcut for brevity
 using namespace OP;
 
+//--------------------------- Test Operators ----------------------------------
+//-----------------------------------------------------------------------------
+
 //--------------------------- Binary Functions --------------------------------
 TEST(Operators, Add) {
   // Init
@@ -379,4 +382,20 @@ TEST(Operators, Tanh) {
 
   // Validate
   ASSERT_EQ(jacob_f, jacob_b);
+}
+
+//--------------------------- Test Functions ----------------------------------
+//-----------------------------------------------------------------------------
+TEST(Functions, ForwardDerivative) {
+  // Init
+  Variable a(0.9, 0.2);
+
+  // Sine
+  Expression u = sin(a);
+  Function f({a}, {u});
+  Vec seeds = {1};
+  f.set_seed(seeds);
+
+  float der = f.forward_derivative(u, a);
+  EXPECT_NEAR(der, 0.6216, 1E-4);
 }
