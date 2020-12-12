@@ -213,7 +213,9 @@ TBD
 
 ## Broader Impact and Inclusivity Statement
 
-TBD
+Differentiation forms the basis for many scientific and engineering computations, from the Newton's method for finding the roots of an equation, to the implementation of Neural Networks used in Deep Learning models. As with all software, the tools, with malicious intentions, may be used for unethical purposes. While we don't believe that the OffPiste library, on its own, could be used to create negative impact, we encourage users of the library to act responsibly.
+
+Through peer reviews and retrospecive examination of the code, we will also continue to evolve it for efficiency and resource consumption. 
 
 ### Diversity & Inclusion
 
