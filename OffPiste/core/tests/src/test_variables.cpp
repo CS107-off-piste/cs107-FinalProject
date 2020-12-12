@@ -16,5 +16,5 @@ TEST(Init, float) {
 
   EXPECT_NEAR(a.val, 1.8, 1E-6);
   EXPECT_NEAR(a.dval, 1.0, 1E-6);
-  EXPECT_NEAR(a.grad, 0.0, 1E-6);
+  EXPECT_NEAR(a.grad, 1.0, 1E-6);
 }
