@@ -215,6 +215,14 @@ TBD
 
 TBD
 
+### Diversity & Inclusion
+
+The team behind the OffPiste library is multi-cultural in itself, with members spanning across different geographies. Digital connectivity has surely brought the world closer together, but that's not to say that collaboration is easy. This kind of working has brought along its own set of challenges. We recognize this and undertake that we will remain unbiased in our work and dialogues, both within the OffPiste community of users and contributors, as well as outside. And we hope that, you will this stance with us and exercise thoughtfulness and respect towards each other.
+
+Along the same lines, we hope that our source code and software are available and accessible to people from all backgrounds and walks of life. Although development and documentation, at this point, is only done in English, we encourage user forums and discussions in any language and will try our best to assist. Where this proves to be difficult, we seek your understanding in the fact that our time and and resources towards this project are limited and we are unable to cater to speakers of all languages.
+
+Many of the maintainers of this repository also study or work full-time and owing to this, corresponse and attention to code reviews may not be immediate. Please help us streamline our communication by incorporating the guidelines in the document on [Contributing to the Code](../README.md#contributing-to-this-project).
+
 ## Future Features
 
 The work done so far supports the calculation of derivatives for basic __scalar functions__ of __scalar values__, using the __Forward Mode__ of Automatic Differentiation. As an extension to this, we would like to support the following features:
