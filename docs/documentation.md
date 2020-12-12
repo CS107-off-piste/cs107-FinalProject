@@ -146,50 +146,43 @@ to compile the library. This will produce a `.so` (or `.dylib` on a Mac) and `.h
 ## Implementation
 
 - **What are the core data structures?**
-    The core data structure that will underly our AD tool is a Directed Acyclic Graph (DAG) with multiple inputs and single output.
-    e.g. `f(x, y, z) = x + y^2 + z^3`.  
-    By invoking a unary operation on a node, a parent node of the previous node is constructed whose value and derivative is set according to the unary operation.
-    By invoking a binary operation between two nodes, a parent node of two previous nodes is constructed whose value and derivative is set according to the binary operation.
+    The core data structure for each component of vector functions is a Directed Acyclic Graph (DAG) with multiple inputs and multiple outputs.
+
+    In the DAG, each node represents one of the operations in the computational graph of our function. We store our operations in this DAG so that we can traverse the nodes of the DAG (in reverse) when computing the reverse mode.
+
+    e.g. f(x, y, z) = (x + y^2, x - z)
 
 - **What classes will you implement? What method and name attributes will your classes have?**  
-    There are three basic classes that comprise OffPiste: `Node`, `Variable`, `Function`:
-    - `Node`: A node of the computational DAG. It has the following attributes and methods:
-        - `.backward()`: compute the gradients of all descendents of this node. Until `zero_grad()` is called on the computational DAG, the gradients of the descendents
-        will accumulate from their previous gradients.
-        - `._forward_func_ptr()`: represents the operation of this node, including binary and unary operation, e.g. +, -, exp, sin.
-        - `._backward_func_ptr()`: represents how the gradient will pass this node in reverse mode.
-        - `.val`: the value of this node.
-        - `.dval`: the derivative of this node. Used ONLY in forward mode.
-        - `.grad`: the gradient of this node w.r.t the node that calls `.backward()`. Used ONLY in reverse mode.
-        - `._parents`: a `std::vector<Node*>` containing the pointers to all _parents of this node. A `Node` can have multiple parents.
-        - `._children`: a `std::vector<Node*>` containing the pointers to all _children of this node. A `Node` has at most TWO children.
+    There are three basic classes needed to be implemented: `Node`, `Variable`, `Function`:
+    - `Node`: A node of the DAG. It has the following attributes and methods:
+        - `.forward()`: represents the operation of this node, including binary and unary operation, e.g. +, -, exp, sin.
+        - `.backward()`: used in reverse mode when computing the derivative of each node.
+        - `.value`: the value of this node.
+        - `.derivative`: the derivative of this node.
+        - `.parents`: a `std::vector<Node*>` containing the pointers to all parents of this node.
+        - `.children`: `a std::vector<Node*>` containing the pointers to all children of this node.
 
-    - `Variable`: A derived class of `Node` that represents each input node. The only difference from a `Node` is that a `Variable` has a `_forward_func_ptr` and `_backward_func_ptr` that don't change any nodes' attributes.
+    - `Variable`: A derived class of `Node` that represents an input node.
 
     - `Function`: A DAG that contains Nodes, with multiple inputs and multiple outputs.
-        - `Function(Input, Output)`: uses `Input`, which is a `std::vector` of `Nodes`, and `Output`, which is another `std::vector` of `Nodes` to initialize a computational DAG.
-        - `.evaluate()`: evaluate computational DAG, and return values of output nodes as a `std::vector<float>`.
-        - `.set_seed(Vec seeds)`: set the seed for each input node.
-        - `.forward_derivative(Node &output_node, Node &wrt)`: compute the dval of `Node &output_node` wrt `Node &wrt` using forward mode.
-        - `.forward_jacobian()`: compute the jacobian using forward mode and return `std::vector<std::vector<float>>`.
-        - `.zero_grad()`: set `.grad` of all `Node`s in the computational DAG to 0.
-        - `.backward_jabobian()`: compute the jabobian using reverse mode and return `std::vector<std::vector<float>>`.
-        - `.bfs()`: a private method that add every node in the graph and its in-degree into `std::map<Node*, size_t> in_deg_book_keeper`.
-        - `.generate_aov_sequence`: a private method that generate an feasible AOV sequence of this DAG and store it in `std::vector<Node*> aov_sequence`.
-        - `.input_node_ptrs`: a `std::vector<Node*>` that stores the pointers to all input nodes.
-        - `.output_node_ptrs`: a `std::vector<Node*>` that stores the pointers to all output nodes.
-        - `.in_deg_book_keeper`: a `std::map<Node*, size_t>` with key `Node*` and value the number of the node's children.
+        - `Function(INPUTS, OUTPUTS)`: use `EXPRESSIONS` to initialize a DAG.
+        - `.evaluate(Node &output_node)`: compute the output of `Node &output_node`.
+        - `.evaluate()`: compute the output with respect to all output nodes, and return `std::vector<float>`.
+        - `.set_seed(std::vector<float> p)`: set the seed *p* when taking directional derivative.
+        - `.forward_derivative(Node &output_node, Node &wrt)`: compute the derivative of `Node &output_node` with respect to `Node &wrt`.
+        - `.forward_jacobian()` and `.backward_jacobian()`: compute the jacobian of vector function of vector input represented by this graph, and return `std::vector<std::vector<float>>` using forward-mode and reverse-mode respectively.
+        - `.bfs()`: a private method that adds every node in the graph and its in degree into a `std::map<Node*, size_t> book_keeper`.
+        - `.generate_aov_sequence()`: a private method that generates a feasible AOV sequence of this DAG and store it in `std::vector<Node*> aov_sequence`
+        - `.output_node_ptrs`: a `std::vector<Node*>` that stores the pointers to output nodes (top level nodes).
+        - `.book_keeper`: a `std::map<Node*, size_t>` that stores pointers to each node and its number of children.
         - `.aov_sequence`: a `std::vector<Node*>` that stores a feasible AOV sequence of this DAG. It is obtained by invoking `.generate_aov_sequence()`.
-        - `.node2aov_idx`: a `std::map<Node*, size_t>` with key `Node*` and value the index of the `Node` in `.aov_sequence`.
 
-    Other than classes, there are also some type definitions with namespace OP that are helpful.
-    - `Expression`: An alias for `Node&`. Each `Expression` is a scalar function of vector input.
-    - `Input`: An alias for `std::vector<std::reference_wrapper<Node>>`, which is a vector of input `Variable`s.
-    - `output`: An alias for `std::vector<std::reference_wrapper<Node>>`, which is a vector of output `Variable`s.
-    - `Vec`: An alias for `std::vector<float>`.
-    - `Mat`: An alias for `std::vector<std::vector<float>>`.
+    The header files `UnaryOperator` and `BinaryOperator` have been added to assist in operator overloading. The classes `ForwardFunctions` and `BackwardFunctions` implement the core logic for the unary and binary functions.
 
-- The functions above are described in further detail via code comments in `OffPiste/core/src/*.cpp` and `OffPiste/core/include/*.hpp`, as well as in the Doxygen documentation available at `docs/doxygen/html`.
+    Other than classes, there are also some definitions of macros that are helpful.
+    - `EXPRESSION`: A macro for `Node&`.
+
+    - `EXPRESSIONS`: A macro for `std::vector<std::reference_wrapper<Node>>`.
 
 - **What external dependencies you rely on?**
     - We do not use any external dependencies in our source code. However, we do use the c standard libraries such as `cmath` for computing the value of some functions, e.g. sin, cos, exp.
