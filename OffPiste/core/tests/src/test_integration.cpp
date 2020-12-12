@@ -14,6 +14,10 @@
 // add an AD shortcut for brevity
 using namespace OP;
 
+/**
+This file tests that the backwards and forwards mode generate the same results.
+*/
+
 //--------------------------- Test Operators ----------------------------------
 //-----------------------------------------------------------------------------
 
