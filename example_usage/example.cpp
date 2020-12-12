@@ -61,27 +61,33 @@ int main() {
     // onstruct the computational graph called g by inputs and outputs
     Function g(inputs, outputs);
 
-    Vec seeds = {0,0,1};
-    g.set_seed(seeds);
 
-    Vec vec_b = f.evaluate();
+
+    Vec vec_b = g.evaluate();
     std::cout<<"u = "<<u.val<<std::endl;    // get output value by output node
     std::cout<<"v = "<<v.val<<std::endl;    // get output value by output node
     std::cout<<"(u, v) = ("<<vec_b[0]<<", "<<vec_b[1]<<")"<<std::endl;      // get output values by vec
 
     std::cout<<std::endl;
 
-    f.zero_grad();      // call f.zero_grad() to set grads of all nodes in the graph f to zero
+    g.zero_grad();      // call f.zero_grad() to reset grads of all nodes in the graph to zero
     u.backward();
     std::cout<<"(du/da, du/db, du/dc) = ("<<a.grad<<", "<<b.grad<<", "<<c.grad<<")"<<std::endl;
 
 
-    f.zero_grad();      // call f.zero_grad() to set grads of all nodes in the graph f to zero
+    g.zero_grad();      // call f.zero_grad() to reset grads of all nodes in the graph to zero
     v.backward();
     std::cout<<"(dv/da, dv/db, dv/dc) = ("<<a.grad<<", "<<b.grad<<", "<<c.grad<<")"<<std::endl;
 
-    std::cout<<std::endl<<"Jacobian Matrix of (u, v) w.r.t (a, b, c): "<<std::endl;
-    Mat jacob_b = f.backward_jacobian();
+    // reset seeds to initial values, after calling backward() 
+    // since u.backward() alters the input-nodes' gradients
+    Vec seeds = {0,0,1};
+    g.set_seed(seeds); 
+
+    std::cout<<std::endl<<"Jacobian Matrix of (u, v) w.r.t (a, b, c) "<<std::endl;
+    std::cout<<std::endl<<"Note that the Jacobian output applies the seed vector, but backwards() does not"<<std::endl;
+
+    Mat jacob_b = g.backward_jacobian();
     for (auto &i : jacob_b) {
         for (auto &j : i) {
             std::cout<<j<<" ";

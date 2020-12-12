@@ -4,6 +4,7 @@
 
 namespace OP {
 void OP::Node::backward() {
+  float save_grad = grad; // keep gradient around
   this->grad = 1.0f;  // dthis/dthis = 1.0f
 
   // get this Node's position in the Function
@@ -15,5 +16,6 @@ void OP::Node::backward() {
     Node* node = this->function_ptr->aov_sequence[i];
     node->_backward_func_ptr(*node);
   }
+  this->grad = save_grad;
 }
 }  // namespace OP
