@@ -73,6 +73,9 @@ class Function {
   * Note: strictly speaking, automatic differentiation does not compute the Jacobian matrix.
   * Instead, it computes the Jacobian matrix multiplied by the seed vector.
   * If you want the plain Jacobian matrix, set your seed values to 1.
+  * 
+  * Further, the reverse mode of automatic differentiation sometimes returns the transpose of the Jacobian.
+  * OffPiste does not return a transposed Jacobian. 
   * @returns Mat The Jacobian matrix for this function.
   * @see set_seed(Vec seeds)
   */
