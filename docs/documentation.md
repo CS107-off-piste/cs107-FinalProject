@@ -209,7 +209,18 @@ to compile the library. This will produce a `.so` (or `.dylib` on a Mac) and `.h
 
 ## Our Extension - Automatic Differentiation in the Reverse Mode
 
-TBD
+In the previous milestone, the forward mode of Automatic Differentiation was implementated by the use of the concept of Dual Numbers and by overloading operators. Since the previous milestone, the implementation of the Automatic Differentiation classes has been refactored to inherently use a DAG, as described in the _Implementation_ section above. With this, the library is able to support the calculation of Jacobian Matrices for the input vectors and functions, in the forward as well as reverse mode. We are also now able to support the differentiation of vector functions of vector values.
+
+### Reverse Mode of Automatic Differentiation
+
+#### Motivation
+Forward mode of Automatic Differentiation has one main disadvantage - if we intend to calculate the derivate of the function against each variable, we must seed the function with appropriate values and run it as many times as the number of variables. Thus, forward mode of AD scales linearly as O(n), where _n_ is the number of input variables. In the reverse mode, on the other hand, there are 2 passes of the graph for each function (one forward and one reverse), no matter the number of input variables and the operations scale linearly as O(m), where _m_ is the number of output nodes.
+
+Thus, we can see that both modes of AD are suited to different use cases and we decided to support the Reverse mode of AD as the extention to the required Forward mode.
+
+### Implementation of Reverse Mode
+
+This is discussed in detail in the [Implementation](#implementation) section above.
 
 ## Broader Impact and Inclusivity Statement
 
@@ -227,6 +238,4 @@ Many of the maintainers of this repository also study or work full-time and owin
 
 ## Future Features
 
-The work done so far supports the calculation of derivatives for basic __scalar functions__ of __scalar values__, using the __Forward Mode__ of Automatic Differentiation. As an extension to this, we would like to support the following features:
-* Implement support for derivatives of __vector functions__ of __vector values__
-* Implement Reverse Mode of AD. Consumers of our library can then choose to use either the forward mode or the reverse mode for their operations.
+TBD
