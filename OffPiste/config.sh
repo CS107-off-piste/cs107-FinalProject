@@ -50,12 +50,11 @@ BUILD_TEST=1
 # =================
 # compiler defaults
 # =================
-FC=gfortran
 CC=gcc
 CXX=g++
 
 C_FLAGS=
-CXX_FLAGS=-std=c++14
+CXX_FLAGS=-std=c++14 # require modern c++
 FC_FLAGS=
 
 # =========================
@@ -105,11 +104,9 @@ help() {
     echo "  [COMPILER OPTIONS]:"
     echo "     CC=<arg>     cc=<arg>    sets the C compiler"
     echo "    CXX=<arg>    cxx=<arg>    sets the C++ compiler"
-    echo "     FC=<arg>     fc=<arg>    sets the Fortran compiler"
     echo " "
     echo "      C_FLAGS=<arg>    c_flags=<arg>    sets the C compiler flags"
     echo "    CXX_FLAGS=<arg>  cxx_flags=<arg>    sets the C++ compiler flags"
-    echo "     FC_FLAGS=<arg>   fc_flags=<arg>    sets the Fortran compiler flags"
     echo " "
     echo "  [Intel Flags]:"
     echo "     --avx     -avx         sets Intel AVX Instructions"
@@ -157,11 +154,6 @@ do
     CXX=${var:4}
     echo -e "[OPTION]     CXX Compiler: $yC$CXX$eC"
 
-  elif [ "${var:0:3}" == "FC=" -o "${var:0:3}" == "fc=" ]; then
-    FC=${var:3}
-    F77=${FC}
-    echo -e "[OPTION] Fortran Compiler: $yC$FC$eC"
-
   elif [ "${var:0:8}" == "C_FLAGS=" -o "${var:0:8}" == "c_flags=" ]; then
     C_FLAGS=${var:8}
     echo -e "[OPTION]       C Compiler Flags: $yC$C_FLAGS$eC"
@@ -169,10 +161,6 @@ do
   elif [ "${var:0:10}" == "CXX_FLAGS=" -o "${var:0:10}" == "cxx_flags=" ]; then
     CXX_FLAGS=${var:10}
     echo -e "[OPTION]     CXX Compiler Flags: $yC$CXX_FLAGS$eC"
-
-  elif [ "${var:0:9}" == "FC_FLAGS=" -o "${var:0:9}" == "fc_flags=" ]; then
-    FC_FLAGS=${var:9}
-    echo -e "[OPTION] Fortran Compiler Flags: $yC$F_FLAGS$eC"
 
   elif [ "$var" == "--AVX" -o "$var" == "-avx" ]; then
     C_FLAGS="${C_FLAGS} -xCore-AVX"
@@ -191,6 +179,7 @@ do
 
   elif [ "$var" == "--coverage" -o "$var" == "-coverage" -o "$var" == "-cov" ]; then
     COVERAGE=ON
+    # must use gcc to generate gcov-compatible coverage data
     CC=gcc
     CXX=g++
 
@@ -200,12 +189,10 @@ do
   elif [ "$var" == "-go" ]; then
     CC=gcc
     CXX=g++
-    FC=gfortran
 
   elif [ "$var" == "-intel" ]; then
     CC=icc
     CXX=icpc
-    FC=ifort
 
   fi
 done
