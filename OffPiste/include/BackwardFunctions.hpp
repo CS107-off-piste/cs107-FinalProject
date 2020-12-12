@@ -1,7 +1,6 @@
-/**
-* @file BackwardFunctions.hpp
-* Contains function pointers for reverse-mode automatic differentiation
-* @see Node::*_backward_func_ptr
+/** @file BackwardFunctions.hpp
+* This file contains function pointers for reverse-mode automatic differentiation
+* @see OP::Node::_backward_func_ptr
 */
 
 #ifndef CS107_FINALPROJECT_BACKWARDFUNCTIONS_HPP

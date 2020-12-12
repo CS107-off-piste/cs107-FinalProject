@@ -1,7 +1,7 @@
 /**
  * @file ForwardFunctions.hpp
  * Contains function pointers for forward-mode automatic differentiation
- * @see Node::*_forward_func_ptr
+ * @see OP::Node::_forward_func_ptr
  */
 
 #ifndef CS107_FINALPROJECT_FORWARDFUNCTIONS_HPP
