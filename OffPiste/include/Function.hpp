@@ -9,10 +9,25 @@
 
 namespace OP {
 
+/**
+* An Expression is a reference to a Node.
+*/
 typedef Node &Expression;
+/**
+* An Input is a vector of Nodes representing the input Nodes of a function
+*/ 
 typedef std::vector<std::reference_wrapper<Node>> Input;
+/**
+* An Output is a vector of Nodes representing the output Nodes of a function
+*/ 
 typedef std::vector<std::reference_wrapper<Node>> Output;
+/**
+* A Vec is a shortcut for a vector of values
+*/
 typedef std::vector<float> Vec;
+/**
+* A Mat is a shortcut for a vector of vectors (i.e. a Matrix)
+*/
 typedef std::vector<std::vector<float>> Mat;
 
 /**
@@ -20,8 +35,15 @@ typedef std::vector<std::vector<float>> Mat;
 */
 class Function {
  public:
-  // constructor
+  /**
+  * Construct a Function (and associated computation graph) connecting the Input to the Output
+  * @param Input the input Nodes (i.e. Variables) for this Function 
+  * @param Output the terminal Nodes (i.e. outputs) of this Function
+  */
   explicit Function(Input &input_nodes, Output &output_nodes);
+  /**
+  * @see Function(Input&, Output&)
+  */
   explicit Function(Input &&input_nodes, Output &&output_nodes)
       : Function(input_nodes, output_nodes) {}
 
