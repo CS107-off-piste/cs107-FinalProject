@@ -444,9 +444,15 @@ TEST(Operators, ComplexFunction) {
   // Sine
   Expression u = sin(a) + b * exp(c) + pow(b, 2);
   Function f({a, b, c}, {u});
-  Vec seeds = {1, 2, 3};
-  f.set_seed(seeds);
+  Vec seeds = {1, 2, 3, 4};
 
+  // should throw an error because there are 4 seeds but only 3 inputs
+  EXPECT_THROW(f.set_seed(seeds), std::runtime_error);
+
+  // try again with correct seed length
+  seeds = {1, 2, 3};
+  f.set_seed(seeds);
+  
   // Evaluate Forward Jacobian
   Vec result_f_mode = f.evaluate();
   Mat jacob_f = f.forward_jacobian();
