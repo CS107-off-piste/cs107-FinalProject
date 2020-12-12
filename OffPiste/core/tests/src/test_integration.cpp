@@ -5,6 +5,7 @@
 #include "BinaryOperator.hpp"
 #include "Function.cpp"
 #include "Function.hpp"
+#include "Node.hpp"
 #include "Node.cpp"
 #include "UnaryOperator.hpp"
 #include "Variable.hpp"
@@ -121,6 +122,24 @@ TEST(Operators, Power) {
   // Validate
   ASSERT_EQ(jacob_f, jacob_b);
 }
+
+TEST(Operators, Comparison) {
+  // Init
+  Node a(2.0);
+  Node b(3.0);
+  Node c(3.0);
+
+  // Validate
+  ASSERT_EQ(a>b, false);
+  ASSERT_EQ(a<b, true);
+  ASSERT_EQ(a==b, false);
+  ASSERT_EQ(c==b, true);
+  ASSERT_EQ(a!=b, true);
+  ASSERT_EQ(a>=b, false);
+  ASSERT_EQ(a<=b, true);
+  ASSERT_EQ(b<=c, true);
+}
+
 
 //--------------------- Negate, Sqrt, Exponent, Log ---------------------------
 TEST(Operators, Negate) {
