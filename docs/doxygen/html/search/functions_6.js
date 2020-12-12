@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['tan_32',['tan',['../class_auto_diff.html#aa0461c5252f3c96fbe04ea5b0d78a9d5',1,'AutoDiff']]]
+  ['identity_5fbackward_101',['identity_backward',['../namespace_o_p.html#a0c55480b36e1143ee0447bc5ce42d874',1,'OP']]],
+  ['identity_5fforward_102',['identity_forward',['../namespace_o_p.html#a4b0eacd1c0b5734612abbac6d0dae162',1,'OP']]]
 ];

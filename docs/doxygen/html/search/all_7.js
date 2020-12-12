@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['val_16',['val',['../class_auto_diff.html#ae31ebe3148ddc007b576bf553271680c',1,'AutoDiff']]]
+  ['grad_32',['grad',['../class_o_p_1_1_node.html#a9078be1725b161d4045626c7c1cfda1f',1,'OP::Node']]]
 ];
