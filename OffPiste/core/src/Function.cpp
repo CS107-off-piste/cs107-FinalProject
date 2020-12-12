@@ -97,11 +97,12 @@ void Function::set_seed(Vec seeds) {
 void Function::set_seed(Vec &&seeds) { set_seed(seeds); }
 
 Vec Function::evaluate() {
-  Vec vec(output_node_ptrs.size(), 0); // create Vector to store output
+  Vec vec(output_node_ptrs.size(), 0);  // create Vector to store output
 
   // for each Node in the aov_sequence...
   for (auto &it : aov_sequence) {
-    it->_forward_func_ptr(*it); // compute that Node's properties using its forward function
+    it->_forward_func_ptr(
+        *it);  // compute that Node's properties using its forward function
   }
 
   // fetch the values of the output Nodes and return them
@@ -122,7 +123,6 @@ Mat Function::forward_jacobian() {
     it.resize(input_node_ptrs.size());
   }
 
-
   std::vector<float> dval_keeper;
   for (auto &it : input_node_ptrs) {
     // keep a copy of the seed for each Variable
@@ -135,7 +135,8 @@ Mat Function::forward_jacobian() {
 
   // for all the input Variables...
   for (int j = 0; j < input_node_ptrs.size(); j++) {
-    input_node_ptrs[j]->dval = dval_keeper.at(j);  // set the seed of corresponding node to its seed
+    input_node_ptrs[j]->dval =
+        dval_keeper.at(j);  // set the seed of corresponding node to its seed
     evaluate();
 
     for (int i = 0; i < output_node_ptrs.size(); i++) {
@@ -210,12 +211,13 @@ Mat Function::backward_jacobian() {
   // for each input-output pair...
   for (int inp = 0; inp < input_node_ptrs.size(); inp++) {
     for (int out = 0; out < output_node_ptrs.size(); out++) {
-      zero_grad(); // reset gradients to zero
+      zero_grad();  // reset gradients to zero
 
       // take reverse pass on the current output node
       output_node_ptrs[out]->backward();
       // save the result
-      // which is the computed gradient for that input node times the input node's seed (i.e. initial gradient)
+      // which is the computed gradient for that input node times the input
+      // node's seed (i.e. initial gradient)
       jacob[out][inp] = input_node_ptrs[inp]->grad * input_grad_keeper.at(inp);
     }
   }

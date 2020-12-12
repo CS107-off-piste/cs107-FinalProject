@@ -5,8 +5,8 @@
 #include "BinaryOperator.hpp"
 #include "Function.cpp"
 #include "Function.hpp"
-#include "Node.hpp"
 #include "Node.cpp"
+#include "Node.hpp"
 #include "UnaryOperator.hpp"
 #include "Variable.hpp"
 #include "test_vars.h"
@@ -22,15 +22,12 @@ This file tests that the backwards and forwards mode generate the same results.
 //-----------------------------------------------------------------------------
 
 void check_jacobians_equal(Mat a, Mat b) {
-  ASSERT_EQ(a.size(), b.size()); // check same number of rows
+  ASSERT_EQ(a.size(), b.size());  // check same number of rows
   for (int i = 0; i < a.size(); i++) {
-    ASSERT_EQ(a.at(i).size(), b.at(i).size()); // check same number of columns
+    ASSERT_EQ(a.at(i).size(), b.at(i).size());  // check same number of columns
     for (int j = 0; j < a.at(i).size(); j++) {
       // check element i,j is same for each matrix
-      EXPECT_NEAR(
-        a.at(i).at(j),
-        b.at(i).at(j),
-        1E-2);
+      EXPECT_NEAR(a.at(i).at(j), b.at(i).at(j), 1E-2);
     }
   }
 }
@@ -150,16 +147,15 @@ TEST(Operators, Comparison) {
   Node c(3.0);
 
   // Validate
-  ASSERT_EQ(a>b, false);
-  ASSERT_EQ(a<b, true);
-  ASSERT_EQ(a==b, false);
-  ASSERT_EQ(c==b, true);
-  ASSERT_EQ(a!=b, true);
-  ASSERT_EQ(a>=b, false);
-  ASSERT_EQ(a<=b, true);
-  ASSERT_EQ(b<=c, true);
+  ASSERT_EQ(a > b, false);
+  ASSERT_EQ(a < b, true);
+  ASSERT_EQ(a == b, false);
+  ASSERT_EQ(c == b, true);
+  ASSERT_EQ(a != b, true);
+  ASSERT_EQ(a >= b, false);
+  ASSERT_EQ(a <= b, true);
+  ASSERT_EQ(b <= c, true);
 }
-
 
 //--------------------- Negate, Sqrt, Exponent, Log ---------------------------
 TEST(Operators, Negate) {
