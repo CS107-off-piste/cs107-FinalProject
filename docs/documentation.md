@@ -83,41 +83,7 @@ $ g++ --std=c++14 -Wall ${SRC_FILES} -o example.o -L${LIBRARY_PATH} -lOffPiste
 
 ### **How can users instantiate AD objects?**  
 
-#### For scalar function
-```c++
-#include<iostream>
-#include "OffPiste.hpp"
-
-typedef AutoDiff AD;
-using namespace AutoDiff;
-
-int main(){
-   
-    // some test values
-    double value1 = 1.2; 
-    double value2 = 3.4;
-    double seed1 = 1.0;
-    double seed2 = 1.0;
-
-    // construct an AD object 
-    // AD is just a shortcut for AutoDiff
-    AD x(value1,seed1);
-    AD y(value2,seed2);
-
-    // print initial value and seed
-    std::cout << "Initial x, y value: " << x.val() << ", "<< y.val() << "\n"; 
-    std::cout << "Initial x, y deriv: " << x.dval() << ", "<< y.dval() << "\n";
-
-    // perform the operation z = e^(sin(x + y))
-    AD z = exp(sin(x+y));
-    std::cout << "Z value, derivative: " << z.val() << ", "<< z.dval() << "\n"; 
-    
-}
-```
-
-#### For Vector functions (TBD)
-
-This feature is a work in progress and will be documented once complete.
+The OffPiste library has an intuitive interface that is achieved by mimicking `cmath` functions and overloading operators. Sample code may be found in [example.cpp](../example_usage/example.cpp).
 
 <hr/>
 
@@ -238,4 +204,7 @@ Many of the maintainers of this repository also study or work full-time and owin
 
 ## Future Features
 
-TBD
+In the future we plan to add support for the following:
+* Sparse Matrix Input - This is commonly used in Ordinary Differential Equations (ODE) and Partial Differential Equations (PDE).
+* Back Propagation - This is a centrl component in Neural networks. Since we have implemented the Reverse Mode of AD, it would be easy to wrap it with the Back Propagation algorithm.
+* Sampling function plug-in for differentials of an integral
