@@ -418,3 +418,29 @@ TEST(Functions, ForwardDerivative) {
   float der = f.forward_derivative(u, a);
   EXPECT_NEAR(der, 0.6216, 1E-4);
 }
+
+//--------------------------- Test Complex Function ---------------------------
+//-----------------------------------------------------------------------------
+TEST(Operators, ComplexFunction) {
+  // Init
+  Variable a(0.9, 0.2);
+  Variable b(1.2, 0.02);
+  Variable c(10.0, 2.3);
+
+  // Sine
+  Expression u = sin(a) + b * exp(c) + pow(b, 2);
+  Function f({a, b, c}, {u});
+  Vec seeds = {1, 2, 3};
+  f.set_seed(seeds);
+
+  // Evaluate Forward Jacobian
+  Vec result_f_mode = f.evaluate();
+  Mat jacob_f = f.forward_jacobian();
+  // Evaluate Backward Jacobian
+  f.zero_grad();
+  u.backward();
+  Mat jacob_b = f.backward_jacobian();
+
+  // Validate
+  ASSERT_EQ(jacob_f, jacob_b);
+}
