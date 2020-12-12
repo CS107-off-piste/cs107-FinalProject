@@ -1,13 +1,6 @@
 var searchData=
 [
-  ['off_20piste_4',['Off Piste',['../index.html',1,'']]],
-  ['operator_2a_5',['operator*',['../class_auto_diff.html#a40e59bfc3a694d1dd0b348035ebaf57c',1,'AutoDiff::operator*(const AutoDiff &amp;node) const'],['../class_auto_diff.html#a84584d0d263deab664a194a5b5b55b7f',1,'AutoDiff::operator*()'],['../class_auto_diff.html#a0ea64a52a4c9aecca18050d0757f3f3a',1,'AutoDiff::operator*()']]],
-  ['operator_2a_3d_6',['operator*=',['../class_auto_diff.html#a7956ca408be474f95b20a38bcf369645',1,'AutoDiff::operator*=(const AutoDiff &amp;node)'],['../class_auto_diff.html#acdc06ca96d02166eb0db4c68d6c4cf0e',1,'AutoDiff::operator*=()']]],
-  ['operator_2b_7',['operator+',['../class_auto_diff.html#a0be7f1edd1e4cf7bf66b1458c7c28e9a',1,'AutoDiff::operator+(const AutoDiff &amp;node) const'],['../class_auto_diff.html#ac9cce302e90d2b3c18c9ec358787ebd7',1,'AutoDiff::operator+()'],['../class_auto_diff.html#a2d088d578614a1b4f900eb2fe0229e99',1,'AutoDiff::operator+()']]],
-  ['operator_2b_3d_8',['operator+=',['../class_auto_diff.html#a478aefdb22027c7bff37dbde034e15fb',1,'AutoDiff::operator+=(const AutoDiff &amp;node)'],['../class_auto_diff.html#aaf418fdd97f8a0981f3b1917ee811cba',1,'AutoDiff::operator+=()']]],
-  ['operator_2d_9',['operator-',['../class_auto_diff.html#aaf5d4466861bc9eaa8a700f1e1fda391',1,'AutoDiff::operator-() const'],['../class_auto_diff.html#a52127fbdbd87107e4390c5a07d13efb3',1,'AutoDiff::operator-(const AutoDiff &amp;node) const'],['../class_auto_diff.html#ad31b085f31d32e3196ad7b4781300ccb',1,'AutoDiff::operator-()'],['../class_auto_diff.html#a22a9a05ca9c88afaca44e2d458a2bcc8',1,'AutoDiff::operator-()']]],
-  ['operator_2d_3d_10',['operator-=',['../class_auto_diff.html#af466b8d44fdbbe7a5d7c5ae6f4d91161',1,'AutoDiff::operator-=(const AutoDiff &amp;node)'],['../class_auto_diff.html#a2d7cd1845a1e0a27c9a31c8701013a21',1,'AutoDiff::operator-=()']]],
-  ['operator_2f_11',['operator/',['../class_auto_diff.html#af6d310307a51b74209e490bcf0bd8864',1,'AutoDiff::operator/(const AutoDiff &amp;node) const'],['../class_auto_diff.html#ac6079505c4428ab818f8273995fedf90',1,'AutoDiff::operator/()'],['../class_auto_diff.html#a2fdab34145786a5dab8c28176cb05428',1,'AutoDiff::operator/()']]],
-  ['operator_2f_3d_12',['operator/=',['../class_auto_diff.html#a5241ac827df9674bc7be5e05dd840dd7',1,'AutoDiff::operator/=(const AutoDiff &amp;node)'],['../class_auto_diff.html#a31dce03a8013e89db3574fa0e0f93adf',1,'AutoDiff::operator/=()']]],
-  ['operator_5e_13',['operator^',['../class_auto_diff.html#ab43a915d77f0653f0aa693575a4d6f82',1,'AutoDiff::operator^(const float alpha)'],['../class_auto_diff.html#abc89a155e6dd46c7645b9b8caa534241',1,'AutoDiff::operator^(const AutoDiff &amp;node)'],['../class_auto_diff.html#abaf750947592bb717033bf8ea943be95',1,'AutoDiff::operator^()']]]
+  ['div_5fbackward_19',['div_backward',['../namespace_o_p.html#aede197cbc521d18529761d08982d1bb7',1,'OP']]],
+  ['div_5fforward_20',['div_forward',['../namespace_o_p.html#a7e2061dcedd46c7de0f531f8c0dc9faf',1,'OP']]],
+  ['dval_21',['dval',['../class_o_p_1_1_node.html#a43c79a67f6a6880eeb85069d2b57a6f0',1,'OP::Node']]]
 ];

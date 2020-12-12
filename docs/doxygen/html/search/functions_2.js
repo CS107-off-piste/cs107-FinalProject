@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['dval_20',['dval',['../class_auto_diff.html#a7b50c0d32520a21965f3d2dbe271fe09',1,'AutoDiff']]]
+  ['cos_5fbackward_88',['cos_backward',['../namespace_o_p.html#aca12bfd7d3799e8567ca1c988b09cbb0',1,'OP']]],
+  ['cos_5fforward_89',['cos_forward',['../namespace_o_p.html#aacec2414feca4a5283866d98e7edf909',1,'OP']]],
+  ['cosh_5fbackward_90',['cosh_backward',['../namespace_o_p.html#ad9cb1480461da5a9b2742dd7ebdd1a86',1,'OP']]],
+  ['cosh_5fforward_91',['cosh_forward',['../namespace_o_p.html#a6e8fb7edd18a2e99e7fdb37585af3d7d',1,'OP']]]
 ];

@@ -45,7 +45,7 @@ help() {
     echo " "
     echo -e " ${aC}Recommended Options:${eC}"
     echo -e "    Default: ${gC}./config.sh${eC}"
-    echo "      ./config.sh CC=mpicc CXX=mpicxx FC=mpif90"
+    echo -e "    Is equivalent to: ${gC}./config.sh -lib -3pl CC=gcc CXX=g++${eC}"
     echo " "
     echo -e " ${aC}Options List:${eC}"
     echo "  [OPTION]:"
@@ -57,22 +57,20 @@ help() {
     echo "    --distclean -dc     removes builds and install directories"
     echo "    --release   -opt    compile the project in optimized mode"
     echo "    --debug     -deb    compile the project in debug mode"
-    echo "    --testsON   -ton    turn on unit tests (google tests)"
-    echo "    --gen-docs   -docs  generate documentation using Doxygen"
-    echo "    --format     -form  format source files in OffPiste/ using clang-format"
-    echo "    --coverage  -cov    generate code coverage report for unit tests"
-    echo "    --build_so  -so     compile the library into .so"
+    echo "    --testsOFF  -toff   disable running tests after compilation (google tests)"
+    echo "    --gen-docs  -docs   generate documentation using Doxygen"
+    echo "    --format    -form   format source files in OffPiste/ using clang-format"
+    echo "    --coverage  -cov    generate code coverage report for unit tests using lcov"
+    echo "    --build_so  -so     compile the library into .so (rather than .dylib) on Mac"
     echo " "
     echo "  [COMPILER OPTIONS]:"
     echo "     CC=<arg>   cc=<arg>    sets the C compiler"
     echo "    CXX=<arg>  cxx=<arg>    sets the C++ compiler"
-    echo "     FC=<arg>   fc=<arg>    sets the Fortran compiler"
     echo " "
     echo "      C_FLAGS=<arg>    c_flags=<arg>    sets the C compiler flags"
     echo "    CXX_FLAGS=<arg>  cxx_flags=<arg>    sets the C++ compiler flags"
-    echo "     FC_FLAGS=<arg>   fc_flags=<arg>    sets the Fortran compiler flags"
     echo " "
-    echo "  [Intel Flags]:"
+    echo "  [Intel Compiler Flags]:"
     echo "     --avx     -avx         sets Intel AVX Instructions"
     echo "     --avx2    -avx2        sets Intel AVX-2 Instructions"
     echo "     --avx512  -avx512      sets Intel AVX-512 Instructions"
@@ -142,10 +140,8 @@ do
          "$var" == "--testsOFF" -o "$var" == "-testsOFF" -o "$var" == "-toff" -o \
          "${var:0:3}" == "CC=" -o "${var:0:3}" == "cc=" -o \
          "${var:0:4}" == "CXX=" -o "${var:0:4}" == "cxx=" -o \
-         "${var:0:3}" == "FC=" -o "${var:0:3}" == "fc=" -o \
          "${var:0:8}" == "C_FLAGS=" -o "${var:0:8}" == "c_flags=" -o \
          "${var:0:10}" == "CXX_FLAGS=" -o "${var:0:10}" == "cxx_flags=" -o \
-         "${var:0:9}" == "FC_FLAGS=" -o "${var:0:9}" == "fc_falgs=" -o \
          "${var}" == "--avx" -o  "${var}" == "-avx" -o \
          "${var}" == "--avx2" -o  "${var}" == "-avx2" -o \
          "${var}" == "--avx512" -o  "${var}" == "-avx512" -o \
@@ -157,7 +153,7 @@ do
 
   else
     echo -e "${oC}Unknown option:${eC}  ${rC}$var${eC}"
-    echo "See available options: ./build.sh -help"
+    echo "See available options: ./config.sh --help"
 
   fi
 done
@@ -227,7 +223,7 @@ if [ $DOCUMENTATION_GEN == 1 ]; then
   echo "============================"
   echo "Building Docs using Doxygen"
   echo "============================"
-
+  # run doxygen
   doxygen Doxyfile
 fi
 

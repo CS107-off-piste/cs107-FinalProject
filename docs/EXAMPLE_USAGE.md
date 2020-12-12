@@ -32,38 +32,4 @@ $ g++ -Wall ${SRC_FILES} -o example.o -L${LIBRARY_PATH} -lOffPiste
 
 ### **How can users instantiate AD objects?**  
 
-#### For scalar function
-```
-#include<iostream>
-#include "OffPiste.hpp"
-
-typedef AutoDiff AD;
-using namespace AutoDiff;
-
-int main(){
-   
-    // some test values
-    double value1 = 1.2; 
-    double value2 = 3.4;
-    double seed1 = 1.0;
-    double seed2 = 1.0;
-
-    // construct an AD object 
-    // AD is just a shortcut for AutoDiff<double>
-    AD x(value1,seed1);
-    AD y(value2,seed2);
-
-    // print initial value and seed
-    std::cout << "Initial x, y value: " << x.val() << ", "<< y.val() << "\n"; 
-    std::cout << "Initial x, y deriv: " << x.dval() << ", "<< y.dval() << "\n";
-
-    // perform the operation z = e^(sin(x + y))
-    AD z = exp(sin(x+y));
-    std::cout << "Z value, derivative: " << z.val() << ", "<< z.dval() << "\n"; 
-    
-}
-```
-
-#### For Vector functions (TBD)
-
-This feature is a work in progress and will be documented once complete.
+Please refer to the `example.cpp` file in the `example_usage` directory for an illustration of the usage.

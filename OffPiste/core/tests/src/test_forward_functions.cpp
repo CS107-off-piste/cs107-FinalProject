@@ -4,11 +4,23 @@
 /* source / header files */
 #include "ForwardFunctions.hpp"
 #include "Node.hpp"
-#include "Variable.hpp"
 #include "test_vars.h"
 
 // add an AD shortcut for brevity
 using namespace OP;
+
+TEST(ForwardFunctions, Identity) {
+  // Init
+  Node node(1.0, 2.0, 3.0);
+
+  // Identity
+  identity_forward(node);
+
+  // Validate
+  EXPECT_NEAR(node.val, 1.0, 1E-8);
+  EXPECT_NEAR(node.dval, 2.0, 1E-8);
+  EXPECT_NEAR(node.grad, 3.0, 1E-8);
+}
 
 //--------------------------- Binary Functions --------------------------------
 TEST(ForwardFunctions, Add) {
@@ -106,7 +118,7 @@ TEST(ForwardFunctions, Power) {
   EXPECT_NEAR(node.dval, 5.7, 1E-2);
 }
 
-//--------------------- Negate, Exponent, Log ---------------------------------
+//--------------------- Negate, Sqrt, Exponent, Log ---------------------------
 TEST(ForwardFunctions, Negate) {
   // Init
   Node node;
@@ -119,6 +131,20 @@ TEST(ForwardFunctions, Negate) {
   // Validate
   EXPECT_NEAR(node.val, -2.0, 1E-6);
   EXPECT_NEAR(node.dval, -1.5, 1E-6);
+}
+
+TEST(ForwardFunctions, Sqrt) {
+  // Init
+  Node node;
+  Node child1(4.0, 2.0);
+  node._children.push_back(&child1);
+
+  // Sqrt
+  sqrt_forward(node);
+
+  // Validate
+  EXPECT_NEAR(node.val, 2.0, 1E-6);
+  EXPECT_NEAR(node.dval, 0.5, 1E-6);
 }
 
 TEST(ForwardFunctions, Exponent) {
@@ -232,4 +258,46 @@ TEST(ForwardFunctions, Atan) {
   // Validate
   EXPECT_NEAR(node.val, 1.5375, 1E-4);
   EXPECT_NEAR(node.dval, 0.02, 1E-2);
+}
+
+TEST(ForwardFunctions, Sinh) {
+  // Init
+  Node node;
+  Node child1(0.9, 0.2);
+  node._children.push_back(&child1);
+
+  // Sinh
+  sinh_forward(node);
+
+  // Validate
+  EXPECT_NEAR(node.val, 1.0265, 1E-4);
+  EXPECT_NEAR(node.dval, 0.2866, 1E-4);
+}
+
+TEST(ForwardFunctions, Cosh) {
+  // Init
+  Node node;
+  Node child1(0.9, 0.2);
+  node._children.push_back(&child1);
+
+  // Cosh
+  cosh_forward(node);
+
+  // Validate
+  EXPECT_NEAR(node.val, 1.4331, 1E-4);
+  EXPECT_NEAR(node.dval, 0.2053, 1E-4);
+}
+
+TEST(ForwardFunctions, Tanh) {
+  // Init
+  Node node;
+  Node child1(3.0, 2.0);
+  node._children.push_back(&child1);
+
+  // Tanh
+  tanh_forward(node);
+
+  // Validate
+  EXPECT_NEAR(node.val, 0.9951, 1E-4);
+  EXPECT_NEAR(node.dval, 0.0197, 1E-4);
 }
