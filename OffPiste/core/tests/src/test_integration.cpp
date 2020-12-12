@@ -21,6 +21,20 @@ This file tests that the backwards and forwards mode generate the same results.
 //--------------------------- Test Operators ----------------------------------
 //-----------------------------------------------------------------------------
 
+void check_jacobians_equal(Mat a, Mat b) {
+  ASSERT_EQ(a.size(), b.size()); // check same number of rows
+  for (int i = 0; i < a.size(); i++) {
+    ASSERT_EQ(a.at(i).size(), b.at(i).size()); // check same number of columns
+    for (int j = 0; j < a.at(i).size(); j++) {
+      // check element i,j is same for each matrix
+      EXPECT_NEAR(
+        a.at(i).at(j),
+        b.at(i).at(j),
+        1E-2);
+    }
+  }
+}
+
 //--------------------------- Binary Functions --------------------------------
 TEST(Operators, Add) {
   // Init
@@ -35,8 +49,8 @@ TEST(Operators, Add) {
   Vec result_f_mode = f.evaluate();
   Mat jacob_f = f.forward_jacobian();
   // Evaluate Backward Jacobian
-  f.zero_grad();
-  u.backward();
+  // f.zero_grad();
+  // u.backward();
   Mat jacob_b = f.backward_jacobian();
 
   // Validate
@@ -56,11 +70,13 @@ TEST(Operators, Subtract) {
   Vec result_f_mode = f.evaluate();
   Mat jacob_f = f.forward_jacobian();
   // Evaluate Backward Jacobian
-  f.zero_grad();
-  u.backward();
+  // f.zero_grad();
+  // u.backward();
   Mat jacob_b = f.backward_jacobian();
 
   // Validate
+  Mat correct_answer = {{1.5, -2.0}};
+  ASSERT_EQ(jacob_f, correct_answer);
   ASSERT_EQ(jacob_f, jacob_b);
 }
 
@@ -77,8 +93,8 @@ TEST(Operators, Multiply) {
   Vec result_f_mode = f.evaluate();
   Mat jacob_f = f.forward_jacobian();
   // Evaluate Backward Jacobian
-  f.zero_grad();
-  u.backward();
+  // f.zero_grad();
+  // u.backward();
   Mat jacob_b = f.backward_jacobian();
 
   // Validate
@@ -98,8 +114,8 @@ TEST(Operators, Divide) {
   Vec result_f_mode = f.evaluate();
   Mat jacob_f = f.forward_jacobian();
   // Evaluate Backward Jacobian
-  f.zero_grad();
-  u.backward();
+  // f.zero_grad();
+  // u.backward();
   Mat jacob_b = f.backward_jacobian();
 
   // Validate
@@ -119,8 +135,8 @@ TEST(Operators, Power) {
   Vec result_f_mode = f.evaluate();
   Mat jacob_f = f.forward_jacobian();
   // Evaluate Backward Jacobian
-  f.zero_grad();
-  u.backward();
+  // f.zero_grad();
+  // u.backward();
   Mat jacob_b = f.backward_jacobian();
 
   // Validate
@@ -158,8 +174,8 @@ TEST(Operators, Negate) {
   Vec result_f_mode = f.evaluate();
   Mat jacob_f = f.forward_jacobian();
   // Evaluate Backward Jacobian
-  f.zero_grad();
-  u.backward();
+  // f.zero_grad();
+  // u.backward();
   Mat jacob_b = f.backward_jacobian();
 
   // Validate
@@ -178,8 +194,8 @@ TEST(Operators, Sqrt) {
   Vec result_f_mode = f.evaluate();
   Mat jacob_f = f.forward_jacobian();
   // Evaluate Backward Jacobian
-  f.zero_grad();
-  u.backward();
+  // f.zero_grad();
+  // u.backward();
   Mat jacob_b = f.backward_jacobian();
 
   // Validate
@@ -198,8 +214,8 @@ TEST(Operators, Exponent) {
   Vec result_f_mode = f.evaluate();
   Mat jacob_f = f.forward_jacobian();
   // Evaluate Backward Jacobian
-  f.zero_grad();
-  u.backward();
+  // f.zero_grad();
+  // u.backward();
   Mat jacob_b = f.backward_jacobian();
 
   // Validate
@@ -218,8 +234,6 @@ TEST(Operators, Logarithm) {
   Vec result_f_mode = f.evaluate();
   Mat jacob_f = f.forward_jacobian();
   // Evaluate Backward Jacobian
-  f.zero_grad();
-  u.backward();
   Mat jacob_b = f.backward_jacobian();
 
   // Validate
@@ -239,8 +253,8 @@ TEST(Operators, Sine) {
   Vec result_f_mode = f.evaluate();
   Mat jacob_f = f.forward_jacobian();
   // Evaluate Backward Jacobian
-  f.zero_grad();
-  u.backward();
+  // f.zero_grad();
+  // u.backward();
   Mat jacob_b = f.backward_jacobian();
 
   // Validate
@@ -259,12 +273,12 @@ TEST(Operators, Cosine) {
   Vec result_f_mode = f.evaluate();
   Mat jacob_f = f.forward_jacobian();
   // Evaluate Backward Jacobian
-  f.zero_grad();
-  u.backward();
+  // f.zero_grad();
+  // u.backward();
   Mat jacob_b = f.backward_jacobian();
 
   // Validate
-  ASSERT_EQ(jacob_f, jacob_b);
+  check_jacobians_equal(jacob_f, jacob_b);
 }
 
 TEST(Operators, Tangent) {
@@ -279,12 +293,12 @@ TEST(Operators, Tangent) {
   Vec result_f_mode = f.evaluate();
   Mat jacob_f = f.forward_jacobian();
   // Evaluate Backward Jacobian
-  f.zero_grad();
-  u.backward();
+  // f.zero_grad();
+  // u.backward();
   Mat jacob_b = f.backward_jacobian();
 
   // Validate
-  ASSERT_EQ(jacob_f, jacob_b);
+  check_jacobians_equal(jacob_f, jacob_b);
 }
 
 TEST(Operators, Asin) {
@@ -299,12 +313,12 @@ TEST(Operators, Asin) {
   Vec result_f_mode = f.evaluate();
   Mat jacob_f = f.forward_jacobian();
   // Evaluate Backward Jacobian
-  f.zero_grad();
-  u.backward();
+  // f.zero_grad();
+  // u.backward();
   Mat jacob_b = f.backward_jacobian();
 
   // Validate
-  ASSERT_EQ(jacob_f, jacob_b);
+  check_jacobians_equal(jacob_f, jacob_b);
 }
 
 TEST(Operators, Acos) {
@@ -319,12 +333,12 @@ TEST(Operators, Acos) {
   Vec result_f_mode = f.evaluate();
   Mat jacob_f = f.forward_jacobian();
   // Evaluate Backward Jacobian
-  f.zero_grad();
-  u.backward();
+  // f.zero_grad();
+  // u.backward();
   Mat jacob_b = f.backward_jacobian();
 
   // Validate
-  ASSERT_EQ(jacob_f, jacob_b);
+  check_jacobians_equal(jacob_f, jacob_b);
 }
 
 TEST(Operators, Atan) {
@@ -339,12 +353,12 @@ TEST(Operators, Atan) {
   Vec result_f_mode = f.evaluate();
   Mat jacob_f = f.forward_jacobian();
   // Evaluate Backward Jacobian
-  f.zero_grad();
-  u.backward();
+  // f.zero_grad();
+  // u.backward();
   Mat jacob_b = f.backward_jacobian();
 
   // Validate
-  ASSERT_EQ(jacob_f, jacob_b);
+  check_jacobians_equal(jacob_f, jacob_b);
 }
 
 TEST(Operators, Sinh) {
@@ -359,12 +373,12 @@ TEST(Operators, Sinh) {
   Vec result_f_mode = f.evaluate();
   Mat jacob_f = f.forward_jacobian();
   // Evaluate Backward Jacobian
-  f.zero_grad();
-  u.backward();
+  // f.zero_grad();
+  // u.backward();
   Mat jacob_b = f.backward_jacobian();
 
   // Validate
-  ASSERT_EQ(jacob_f, jacob_b);
+  check_jacobians_equal(jacob_f, jacob_b);
 }
 
 TEST(Operators, Cosh) {
@@ -379,12 +393,12 @@ TEST(Operators, Cosh) {
   Vec result_f_mode = f.evaluate();
   Mat jacob_f = f.forward_jacobian();
   // Evaluate Backward Jacobian
-  f.zero_grad();
-  u.backward();
+  // f.zero_grad();
+  // u.backward();
   Mat jacob_b = f.backward_jacobian();
 
   // Validate
-  ASSERT_EQ(jacob_f, jacob_b);
+  check_jacobians_equal(jacob_f, jacob_b);
 }
 
 TEST(Operators, Tanh) {
@@ -399,12 +413,12 @@ TEST(Operators, Tanh) {
   Vec result_f_mode = f.evaluate();
   Mat jacob_f = f.forward_jacobian();
   // Evaluate Backward Jacobian
-  f.zero_grad();
-  u.backward();
+  // f.zero_grad();
+  // u.backward();
   Mat jacob_b = f.backward_jacobian();
 
   // Validate
-  ASSERT_EQ(jacob_f, jacob_b);
+  check_jacobians_equal(jacob_f, jacob_b);
 }
 
 //--------------------------- Test Functions ----------------------------------
@@ -441,10 +455,12 @@ TEST(Operators, ComplexFunction) {
   Vec result_f_mode = f.evaluate();
   Mat jacob_f = f.forward_jacobian();
   // Evaluate Backward Jacobian
-  f.zero_grad();
-  u.backward();
+  // f.zero_grad();
+  // u.backward();
   Mat jacob_b = f.backward_jacobian();
 
   // Validate
-  ASSERT_EQ(jacob_f, jacob_b);
+  Mat correct_answer = {{0.62160998582839966, 44057.73046875, 79295.2734375}};
+  check_jacobians_equal(jacob_f, jacob_b);
+  check_jacobians_equal(jacob_f, correct_answer);
 }

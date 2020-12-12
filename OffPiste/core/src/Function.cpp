@@ -90,6 +90,7 @@ void Function::set_seed(Vec seeds) {
   // update the dval for each input node using the provided seed
   for (int i = 0; i < seeds.size(); i++) {
     input_node_ptrs[i]->dval = seeds.at(i);
+    input_node_ptrs[i]->grad = seeds.at(i);
   }
 }
 
@@ -114,17 +115,17 @@ Mat Function::forward_jacobian() {
   // initialize jacobian matrix and reserve space
   Mat jacob;
   // resize Jacobian to have number of rows equal to the number of outputs
-  jacob.resize(output_node_ptrs.size());  
+  jacob.resize(output_node_ptrs.size());
 
   // resize Jacobian so that each row has a columns for each inputs
   for (auto &it : jacob) {
     it.resize(input_node_ptrs.size());
   }
 
-  
+
   std::vector<float> dval_keeper;
   for (auto &it : input_node_ptrs) {
-    // keep a copy of the seed for each Variable 
+    // keep a copy of the seed for each Variable
     // so that the seeds can be restored at the end of this method
     dval_keeper.push_back(it->dval);
 
@@ -134,14 +135,9 @@ Mat Function::forward_jacobian() {
 
   // for all the input Variables...
   for (int j = 0; j < input_node_ptrs.size(); j++) {
-    // set the seed for this Variable to 1
-    // all other Variables have seed of 0, so a forward pass will compute the derivative
-    // with respect to this Variable
-    input_node_ptrs[j]->dval = 1.0f;
-    evaluate(); // compute forward pass
+    input_node_ptrs[j]->dval = dval_keeper.at(j);  // set the seed of corresponding node to its seed
+    evaluate();
 
-    // after forward pass has completed, update the current input Variable's column in the Jacobian
-    // with that output node's derivative
     for (int i = 0; i < output_node_ptrs.size(); i++) {
       jacob[i][j] = output_node_ptrs[i]->dval;
     }
@@ -159,7 +155,7 @@ Mat Function::forward_jacobian() {
 }
 
 float Function::forward_derivative(Node &output_node, Node &wrt) {
-  // keep a copy of the seed for each Variable 
+  // keep a copy of the seed for each Variable
   // so that the seeds can be restored at the end of this method
   std::vector<float> dval_keeper;
   for (auto &it : input_node_ptrs) {
@@ -204,16 +200,29 @@ Mat Function::backward_jacobian() {
     it.resize(input_node_ptrs.size());
   }
 
-  // for each output node...
-  for (int i = 0; i < output_node_ptrs.size(); i++) {
-    // reset the gradients
-    zero_grad();
+  // book keeping all grads for each Variable for restoration at the end of this
+  // method
+  std::vector<float> input_grad_keeper;
+  for (auto &it : input_node_ptrs) {
+    input_grad_keeper.push_back(it->grad);
+  }
 
-    // then compute derivative backwards from the output node
-    output_node_ptrs[i]->backward();
-    for (int j = 0; j < input_node_ptrs.size(); j++) {
-      jacob[i][j] = input_node_ptrs[j]->grad;
+  // for each input-output pair...
+  for (int inp = 0; inp < input_node_ptrs.size(); inp++) {
+    for (int out = 0; out < output_node_ptrs.size(); out++) {
+      zero_grad(); // reset gradients to zero
+
+      // take reverse pass on the current output node
+      output_node_ptrs[out]->backward();
+      // save the result
+      // which is the computed gradient for that input node times the input node's seed (i.e. initial gradient)
+      jacob[out][inp] = input_node_ptrs[inp]->grad * input_grad_keeper.at(inp);
     }
+  }
+
+  // restore gradients to initial values
+  for (int i = 0; i < input_node_ptrs.size(); i++) {
+    input_node_ptrs[i]->grad = input_grad_keeper.at(i);
   }
 
   return jacob;

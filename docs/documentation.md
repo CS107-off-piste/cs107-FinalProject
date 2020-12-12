@@ -88,65 +88,7 @@ $ g++ --std=c++14 -Wall ${SRC_FILES} -o example.o -L${LIBRARY_PATH} -lOffPiste
 
 ### **How can users instantiate AD objects?**  
 
-```c++
-#include<iostream>
-
-// OffPiste header files
-#include "Variable.hpp"
-#include "Function.hpp"
-#include "BinaryOperator.hpp" // provides binary operator overloading e.g. +, -, %
-#include "UnaryOperator.hpp" // provides unary operator overloading
-
-using namespace OP;
-
-int main(){
-   
-    // some test values
-    double value1 = 1.2; 
-    double value2 = 3.4;
-    double seed1 = 1.0;
-    double seed2 = 1.0;
-
-    // create input-variables
-    Variable x(value1,seed1);
-    Variable y(value2,seed2);
-
-    // compose input-variables and operators into Expressions (i.e. output values)
-    Expression u = a - b + 1;
-    Expression v = a + exp(1 + c);
-
-    // create a Function connecting our input-variables and output-variables
-    Function f({x,y}, {u,v});
-
-    // evaluate the computational graph and calculate forward-mode derivative
-    Vec vec_f = f.evaluate();
-    // The Expression values and derivatives are automatically updated
-    std::cout<<"u = "<<u.val<<std::endl; // u.val is same as vec_f[0]
-    std::cout<<"v = "<<v.val<<std::endl; // v.val is same as vec_f[1]
-    std::cout<<"du/dseed = "<<u.dval<<std::endl;
-    std::cout<<"dv/dseed = "<<v.dval<<std::endl; 
-
-    // Calculate Jacobian using forward-mode
-    std::cout<<std::endl<<"Jacobian Matrix of (u, v) w.r.t (a, b):"<<std::endl;
-    Mat jacob_f = f.forward_jacobian();
-
-    // print Jacobian
-    for (auto &i : jacob_f) {
-        for (auto &j : i) {
-            std::cout<<j<<" ";
-        }
-        std::cout<<std::endl;
-    }
-
-    // Reverse-mode provides a similar interface for computing the Jacobian:
-    Mat jacob_b = f.backward_jacobian();
-    // Or computing a single Expression's derivative
-    u.backward(); // calculate 
-
-}
-```
-
-Note that the Function is constructed by passing `Function()` a Vector of input-nodes and produces outputs through a Vector of output-nodes; you aren't limited to a scalar output.
+The OffPiste library has an intuitive interface that is achieved by mimicking `cmath` functions and overloading operators. Sample code may be found in [example.cpp](../example_usage/example.cpp). For brevity, we do not repeat that code here.
 
 <hr/>
 
@@ -158,11 +100,11 @@ The project's main directories are:
 
 * `OffPiste/` which contains the C++ source files, header files, and tests for the core automatic differentiation library.
     * `OffPiste/core/src` contains the source code for OffPiste library core components (described below in the Implementation Details section)
-    * `OffPiste/core/tests` contains unit and functional tests for the OffPiste library 
+    * `OffPiste/core/tests` contains unit and functional tests for the OffPiste library
     * `OffPiste/include` contains the header files for the OffPiste library
     * `OffPiste/coverage` contains information relating to the code coverage of the unit and functional tests
-    * `OffPiste/install` contains the compiled `.so` library and header files, ready for distribution. 
-* `docs/` which contains files such as this one, documenting the library and development process. 
+    * `OffPiste/install` contains the compiled `.so` library and header files, ready for distribution.
+* `docs/` which contains files such as this one, documenting the library and development process.
     * `docs/doxygen` contains html documentation for the `AutoDiff` library's functions.
 * `example_usage` contains an example project showing how you can use the `OffPiste` library
 * `3PL` contains 3rd party components. At present, this is just Google test.
@@ -173,13 +115,13 @@ The core module is implemented in `OffPiste/core/src`. This is where the source 
 
 The root directory has a `./config.sh` file. This is a shell script that reads in a user's command and executes actions (such as compiling the library, generating documentation, or generating coverage information). Depending on the arguments passed to it, `./config.sh` calls `OffPiste/config.sh`, `OffPiste/coverage.sh`, and / or `CMake`.
 
-`C++` compilation is handled through `CMake`, using the `CMakeLists.txt` files in `OffPiste/` and its subdirectories. 
+`C++` compilation is handled through `CMake`, using the `CMakeLists.txt` files in `OffPiste/` and its subdirectories.
 
 ### Where do tests live?
 
 As described above, tests for each operation supported by the library are located in `OffPiste/core/tests`.
 
-As described in the `README.md`, tests are run with the command 
+As described in the `README.md`, tests are run with the command
 
 ```bash
 $ ./config.sh --clean # clean up, if needed
@@ -187,7 +129,7 @@ $ ./config.sh --clean # clean up, if needed
 $ ./config.sh --library
 ```
 
-which will re-compile the source code and run the test suite. 
+which will re-compile the source code and run the test suite.
 
 ### How can a person install your library?
 
@@ -208,12 +150,12 @@ to compile the library. This will produce a `.so` (or `.dylib` on a Mac) and `.h
     e.g. `f(x, y, z) = x + y^2 + z^3`.  
     By invoking a unary operation on a node, a parent node of the previous node is constructed whose value and derivative is set according to the unary operation.
     By invoking a binary operation between two nodes, a parent node of two previous nodes is constructed whose value and derivative is set according to the binary operation.
-  
+
 - **What classes will you implement? What method and name attributes will your classes have?**  
     There are three basic classes that comprise OffPiste: `Node`, `Variable`, `Function`:
     - `Node`: A node of the computational DAG. It has the following attributes and methods:
-        - `.backward()`: compute the gradients of all descendents of this node. Until `zero_grad()` is called on the computational DAG, the gradients of the descendents 
-        will accumulate from their previous gradients. 
+        - `.backward()`: compute the gradients of all descendents of this node. Until `zero_grad()` is called on the computational DAG, the gradients of the descendents
+        will accumulate from their previous gradients.
         - `._forward_func_ptr()`: represents the operation of this node, including binary and unary operation, e.g. +, -, exp, sin.
         - `._backward_func_ptr()`: represents how the gradient will pass this node in reverse mode.
         - `.val`: the value of this node.
@@ -221,9 +163,9 @@ to compile the library. This will produce a `.so` (or `.dylib` on a Mac) and `.h
         - `.grad`: the gradient of this node w.r.t the node that calls `.backward()`. Used ONLY in reverse mode.
         - `._parents`: a `std::vector<Node*>` containing the pointers to all _parents of this node. A `Node` can have multiple parents.
         - `._children`: a `std::vector<Node*>` containing the pointers to all _children of this node. A `Node` has at most TWO children.
-    
+
     - `Variable`: A derived class of `Node` that represents each input node. The only difference from a `Node` is that a `Variable` has a `_forward_func_ptr` and `_backward_func_ptr` that don't change any nodes' attributes.
-    
+
     - `Function`: A DAG that contains Nodes, with multiple inputs and multiple outputs.
         - `Function(Input, Output)`: uses `Input`, which is a `std::vector` of `Nodes`, and `Output`, which is another `std::vector` of `Nodes` to initialize a computational DAG.
         - `.evaluate()`: evaluate computational DAG, and return values of output nodes as a `std::vector<float>`.
@@ -239,7 +181,7 @@ to compile the library. This will produce a `.so` (or `.dylib` on a Mac) and `.h
         - `.in_deg_book_keeper`: a `std::map<Node*, size_t>` with key `Node*` and value the number of the node's children.
         - `.aov_sequence`: a `std::vector<Node*>` that stores a feasible AOV sequence of this DAG. It is obtained by invoking `.generate_aov_sequence()`.
         - `.node2aov_idx`: a `std::map<Node*, size_t>` with key `Node*` and value the index of the `Node` in `.aov_sequence`.
-  
+
     Other than classes, there are also some type definitions with namespace OP that are helpful.
     - `Expression`: An alias for `Node&`. Each `Expression` is a scalar function of vector input.
     - `Input`: An alias for `std::vector<std::reference_wrapper<Node>>`, which is a vector of input `Variable`s.
@@ -247,17 +189,32 @@ to compile the library. This will produce a `.so` (or `.dylib` on a Mac) and `.h
     - `Vec`: An alias for `std::vector<float>`.
     - `Mat`: An alias for `std::vector<std::vector<float>>`.
 
-- The functions above are described in further detail via code comments in `OffPiste/core/src/*.cpp` and `OffPiste/core/include/*.hpp`, as well as in the Doxygen documentation available at `docs/doxygen/html`. 
-    
+- The functions above are described in further detail via code comments in `OffPiste/core/src/*.cpp` and `OffPiste/core/include/*.hpp`, as well as in the Doxygen documentation available at `docs/doxygen/html`.
+
 - **What external dependencies you rely on?**
-    - We do not use any external dependencies in our source code. However, we do use the c standard libraries such as `cmath` for computing the value of some functions, e.g. sin, cos, exp. 
+    - We do not use any external dependencies in our source code. However, we do use the c standard libraries such as `cmath` for computing the value of some functions, e.g. sin, cos, exp.
     - We use some external tools outside of our `c++` source code, such as `doxygen` for documentation generation, and `clang-format` for code formatting. These external tools are not required to compile and run the project.
+
+## Our Extension - Automatic Differentiation in the Reverse Mode
+
+In the previous milestone, the forward mode of Automatic Differentiation was implementated by the use of the concept of Dual Numbers and by overloading operators. Since the previous milestone, the implementation of the Automatic Differentiation classes has been refactored to inherently use a DAG, as described in the _Implementation_ section above. With this, the library is able to support the calculation of Jacobian Matrices for the input vectors and functions, in the forward as well as reverse mode. We are also now able to support the differentiation of vector functions of vector values.
+
+### Reverse Mode of Automatic Differentiation
+
+#### Motivation
+Forward mode of Automatic Differentiation has one main disadvantage - if we intend to calculate the derivate of the function against each variable, we must seed the function with appropriate values and run it as many times as the number of variables. Thus, forward mode of AD scales linearly as O(n), where _n_ is the number of input variables. In the reverse mode, on the other hand, there are 2 passes of the graph for each function (one forward and one reverse), no matter the number of input variables and the operations scale linearly as O(m), where _m_ is the number of output nodes.
+
+Thus, we can see that both modes of AD are suited to different use cases and we decided to support the Reverse mode of AD as the extention to the required Forward mode.
+
+### Implementation of Reverse Mode
+
+This is discussed in detail in the [Implementation](#implementation) section above.
 
 ## Broader Impact and Inclusivity Statement
 
 Differentiation forms the basis for many scientific and engineering computations, from the Newton's method for finding the roots of an equation, to the implementation of Neural Networks used in Deep Learning models. As with all software, the tools, with malicious intentions, may be used for unethical purposes. While we don't believe that the OffPiste library, on its own, is likely to be used to create a negative impact, we encourage users of the library to act responsibly.
 
-Through peer reviews and retrospecive examination of the code, we will also continue to evolve it for efficiency and resource consumption. 
+Through peer reviews and retrospecive examination of the code, we will also continue to evolve it for efficiency and resource consumption.
 
 ### Diversity & Inclusion
 
@@ -265,4 +222,11 @@ The team behind the OffPiste library is multi-cultural in itself, with members s
 
 Along the same lines, we hope that our source code and software are available and accessible to people from all backgrounds and walks of life. Although development and documentation, at this point, is only done in English, we encourage user forums and discussions in any language and will try our best to assist. Where this proves to be difficult, we seek your understanding in the fact that our time and and resources towards this project are limited and we are unable to cater to speakers of all languages.
 
-Many of the maintainers of this repository also study or work full-time and owing to this, corresponse and attention to code reviews may not be immediate. Please help us streamline our communication by incorporating the guidelines in the document on [Contributing to the Code](../README.md#contributing-to-this-project).
+Many of the maintainers of this repository also study or work full-time and owing to this, correspondence and attention to code reviews may not be immediate. Please help us streamline our communication by incorporating the guidelines in the document on [Contributing to the Code](../README.md#contributing-to-this-project).
+
+## Future Features
+
+In the future we plan to add support for the following:
+* Sparse Matrix Input - This is commonly used in Ordinary Differential Equations (ODE) and Partial Differential Equations (PDE).
+* Back Propagation - This is a centrl component in Neural networks. Since we have implemented the Reverse Mode of AD, it would be easy to wrap it with the Back Propagation algorithm.
+* Sampling function plug-in for differentials of an integral

@@ -46,12 +46,35 @@ OVERLOAD_BINARY_OPERATOR(operator*, mul_forward, mul_backward)
 OVERLOAD_BINARY_OPERATOR(operator/, div_forward, div_backward)
 OVERLOAD_BINARY_OPERATOR(pow, pow_forward, pow_backward)
 
-/** overload comparison operators ==, !=, >, <, >=, <= **/
+/**
+* Check if two Nodes have the same value
+* @return true if the Nodes have the same value
+*/
 bool operator==(Node &v1, Node &v2) { return (v1.val == v2.val); }
+/**
+* Check if two Nodes have different values
+* @return true if the Nodes have different values
+*/
 bool operator!=(Node &v1, Node &v2) { return (v1.val != v2.val); }
+/**
+* Check if one Node's value is larger than or equal to the other's
+* @return true if the first Node's value is larger than the second one
+*/
 bool operator>=(Node &v1, Node &v2) { return (v1.val >= v2.val); }
+/**
+* Check if one Node's value is smaller than or equal to the other's
+* @return true if the first Node's value is smaller or equal to than the second one
+*/
 bool operator<=(Node &v1, Node &v2) { return (v1.val <= v2.val); }
+/**
+* Check if one Node's value is larger than the other's
+* @return true if the first Node's value is larger than the second one
+*/
 bool operator>(Node &v1, Node &v2) { return (v1.val > v2.val); }
+/**
+* Check if one Node's value is smaller than the other's
+* @return true if the first Node's value is smaller than the second one
+*/
 bool operator<(Node &v1, Node &v2) { return (v1.val < v2.val); }
 
 }  // namespace OP
