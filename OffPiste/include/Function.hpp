@@ -68,7 +68,11 @@ class Function {
 
   /**
   * Compute Jacobian matrix using forward mode
+  * Note: strictly speaking, automatic differentiation does not compute the Jacobian matrix
+  * Instead, it computes the Jacobian matrix multiplied by the seed vector
+  * If you want the plain Jacobian matrix, set your seed values to 1.
   * @returns Mat The Jacobian matrix for this function.
+  * @see set_seed(Vec seeds)
   */
   Mat forward_jacobian();
 
@@ -85,9 +89,17 @@ class Function {
   * Set gradient of all Nodes in this Function to 0
   */
   void zero_grad();
+  
   /**
   * Compute Jacobian matrix using reverse mode
+  * Note: strictly speaking, automatic differentiation does not compute the Jacobian matrix.
+  * Instead, it computes the Jacobian matrix multiplied by the seed vector.
+  * If you want the plain Jacobian matrix, set your seed values to 1.
+  * 
+  * Further, the reverse mode of automatic differentiation sometimes returns the transpose of the Jacobian.
+  * OffPiste does not return a transposed Jacobian. 
   * @returns Mat The Jacobian matrix for this function.
+  * @see set_seed(Vec seeds)
   */
   Mat backward_jacobian();  // using reverse mode to compute jabobian matrix
 
