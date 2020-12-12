@@ -37,8 +37,8 @@ class Function {
  public:
   /**
   * Construct a Function (and associated computation graph) connecting the Input to the Output
-  * @param Input the input Nodes (i.e. Variables) for this Function 
-  * @param Output the terminal Nodes (i.e. outputs) of this Function
+  * @param &input_nodes the input Nodes (i.e. Variables) for this Function 
+  * @param &output_nodes the terminal Nodes (i.e. outputs) of this Function
   */
   explicit Function(Input &input_nodes, Output &output_nodes);
   /**
