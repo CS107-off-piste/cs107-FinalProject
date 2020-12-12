@@ -22,7 +22,7 @@ This file tests that the backwards and forwards mode generate the same results.
 //-----------------------------------------------------------------------------
 
 void check_jacobians_equal(Mat a, Mat b) {
-  ASSERT_EQ(a.size(), b.size()); // check same number of rows 
+  ASSERT_EQ(a.size(), b.size()); // check same number of rows
   for (int i = 0; i < a.size(); i++) {
     ASSERT_EQ(a.at(i).size(), b.at(i).size()); // check same number of columns
     for (int j = 0; j < a.at(i).size(); j++) {
