@@ -34,8 +34,12 @@ class Node {
       : val(val), dval(dval), grad(grad){}; 
 
   /**
-  * Compute gradient using reverse-mode, starting from this Node.
-  * This traverses the graph all the way back to the input Nodes.
+  * Compute gradient of this output-node using reverse-mode
+  * This traverses the graph all the way back to the Input Node, 
+  * updating gradients along the way.
+  * NOTE: because backward() computes the simple gradient for each input node
+  * i.e. it does not apply the seed vector. If you want to apply a seed vector,
+  * see Function::backward_jacobian()
   */
   void backward();
 

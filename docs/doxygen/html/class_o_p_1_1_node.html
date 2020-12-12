@@ -180,7 +180,7 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Compute gradient using reverse-mode, starting from this <a class="el" href="class_o_p_1_1_node.html">Node</a>. This traverses the graph all the way back to the input Nodes. </p>
+<p>Compute gradient of this output-node using reverse-mode This traverses the graph all the way back to the Input <a class="el" href="class_o_p_1_1_node.html">Node</a>, updating gradients along the way. NOTE: because <a class="el" href="class_o_p_1_1_node.html#ab92088ef709bd87f3d6215e34dee7e01">backward()</a> computes the simple gradient for each input node i.e. it does not apply the seed vector. If you want to apply a seed vector, see <a class="el" href="class_o_p_1_1_function.html#a6794b3f0111b48233d868d3405e73cde">Function::backward_jacobian()</a> </p>
 
 </div>
 </div>
