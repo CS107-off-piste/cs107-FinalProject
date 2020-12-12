@@ -21,7 +21,7 @@ Function::Function(Input &input_nodes, Output &output_nodes) {
     bfs(*ptr);
   }
 
-  // building AOV network of DAG graph
+  // build AOV network of DAG graph
   generate_aov_sequence();
 }
 
@@ -87,6 +87,7 @@ void Function::set_seed(Vec seeds) {
         "Number of seeds not equal number of input nodes!");
   }
 
+  // update the dval for each input node using the provided seed
   for (int i = 0; i < seeds.size(); i++) {
     input_node_ptrs[i]->dval = seeds.at(i);
   }
@@ -95,10 +96,14 @@ void Function::set_seed(Vec seeds) {
 void Function::set_seed(Vec &&seeds) { set_seed(seeds); }
 
 Vec Function::evaluate() {
-  Vec vec(output_node_ptrs.size(), 0);
+  Vec vec(output_node_ptrs.size(), 0); // create Vector to store output
+
+  // for each Node in the aov_sequence...
   for (auto &it : aov_sequence) {
-    it->_forward_func_ptr(*it);
+    it->_forward_func_ptr(*it); // compute that Node's properties using its forward function
   }
+
+  // fetch the values of the output Nodes and return them
   for (int i = 0; i < output_node_ptrs.size(); i++) {
     vec[i] = output_node_ptrs[i]->val;
   }
@@ -108,36 +113,44 @@ Vec Function::evaluate() {
 Mat Function::forward_jacobian() {
   // initialize jacobian matrix and reserve space
   Mat jacob;
-  jacob.resize(output_node_ptrs.size());
+  // resize Jacobian to have number of rows equal to the number of outputs
+  jacob.resize(output_node_ptrs.size());  
+
+  // resize Jacobian so that each row has a columns for each inputs
   for (auto &it : jacob) {
     it.resize(input_node_ptrs.size());
   }
 
-  // book keeping all dval of each Variable for restoration at the end of this
-  // method
+  
   std::vector<float> dval_keeper;
   for (auto &it : input_node_ptrs) {
+    // keep a copy of the seed for each Variable 
+    // so that the seeds can be restored at the end of this method
     dval_keeper.push_back(it->dval);
-  }
 
-  // set all dval of input nodes to zero
-  for (auto &it : input_node_ptrs) {
+    // then set each seed to 0
     it->dval = 0.f;
   }
 
+  // for all the input Variables...
   for (int j = 0; j < input_node_ptrs.size(); j++) {
-    input_node_ptrs[j]->dval = 1.0f;  // set the seed of corresponding node to 1
-    evaluate();
+    // set the seed for this Variable to 1
+    // all other Variables have seed of 0, so a forward pass will compute the derivative
+    // with respect to this Variable
+    input_node_ptrs[j]->dval = 1.0f;
+    evaluate(); // compute forward pass
 
+    // after forward pass has completed, update the current input Variable's column in the Jacobian
+    // with that output node's derivative
     for (int i = 0; i < output_node_ptrs.size(); i++) {
       jacob[i][j] = output_node_ptrs[i]->dval;
     }
 
-    input_node_ptrs[j]->dval =
-        0.f;  // set the seed of corresponding node back to 0
+    // reset the seed of this Variable to 0
+    input_node_ptrs[j]->dval = 0.f;
   }
 
-  // restore dval from dval_keeper
+  // restore seeds for Variables
   for (int i = 0; i < dval_keeper.size(); i++) {
     input_node_ptrs[i]->dval = dval_keeper[i];
   }
@@ -146,24 +159,28 @@ Mat Function::forward_jacobian() {
 }
 
 float Function::forward_derivative(Node &output_node, Node &wrt) {
-  // book keep all dval of each Variable for restoration at the end of this
-  // method
+  // keep a copy of the seed for each Variable 
+  // so that the seeds can be restored at the end of this method
   std::vector<float> dval_keeper;
   for (auto &it : input_node_ptrs) {
     dval_keeper.push_back(it->dval);
   }
 
-  // set all dval of input nodes to zero
+  // set the seed of all input Variables to zero
   for (auto &it : input_node_ptrs) {
     it->dval = 0.f;
   }
 
+  // set the seed of the Node we're taking the derivative w.r.t to 1
   wrt.dval = 1.f;
+
+  // take a forward pass through the computation graph
+  // to compute derivative w.r.t the wrt Node
   for (auto &it : aov_sequence) {
     it->_forward_func_ptr(*it);
   }
 
-  // restore from dval_keeper
+  // restore seeds for each Variable
   for (int i = 0; i < dval_keeper.size(); i++) {
     input_node_ptrs[i]->dval = dval_keeper[i];
   }
@@ -178,14 +195,21 @@ void Function::zero_grad() {
 }
 
 Mat Function::backward_jacobian() {
+  // initialize jacobian matrix and reserve space
   Mat jacob;
+  // resize Jacobian to have number of rows equal to number of output nodes
+  // and columns equal to number of input nodes (i.e. Variables)
   jacob.resize(output_node_ptrs.size());
   for (auto &it : jacob) {
     it.resize(input_node_ptrs.size());
   }
 
+  // for each output node...
   for (int i = 0; i < output_node_ptrs.size(); i++) {
+    // reset the gradients
     zero_grad();
+
+    // then compute derivative backwards from the output node
     output_node_ptrs[i]->backward();
     for (int j = 0; j < input_node_ptrs.size(); j++) {
       jacob[i][j] = input_node_ptrs[j]->grad;
