@@ -23,6 +23,6 @@ $ make run
 * `#include`ing the downloaded `OffPiste.hpp` in the source code
 * Linking to the compiled `OffPiste` library using:
 ```
-$ g++ -Wall ${SRC_FILES} -o example.o -L${LIBRARY_PATH} -lOffPiste
+$ g++ --std=c++14 -Wall ${SRC_FILES} -o example.o -L${LIBRARY_PATH} -lOffPiste
 ```
 (with `${LIBRARY_PATH}` as the folder containing the downloaded library file, and `${SRC_FILES}` as the paths of the source files).
