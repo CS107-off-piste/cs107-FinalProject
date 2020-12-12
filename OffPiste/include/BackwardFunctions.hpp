@@ -1,6 +1,7 @@
 /**
 * @file BackwardFunctions.hpp
 * Contains function pointers for reverse-mode automatic differentiation
+* @see Node::*_backward_func_ptr
 */
 
 #ifndef CS107_FINALPROJECT_BACKWARDFUNCTIONS_HPP
@@ -163,14 +164,19 @@ static void asin_backward(Node &node) {
       node.grad * 1.f / (std::sqrt(1 - std::pow(node._children[0]->val, 2)));
 }
 
+/**
+* Arccos operation for reverse-mode.
+* This operation applies the arccos function to the child node.
+* @param &node The parent node to apply the operation to.
+*/
 static void acos_backward(Node &node) {
   node._children[0]->grad +=
       node.grad * -1.f / (std::sqrt(1 - std::pow(node._children[0]->val, 2)));
 }
 
 /**
-* Arccos operation for reverse-mode.
-* This operation applies the arccos function to the child node.
+* Arctangent operation for reverse-mode.
+* This operation applies the arctangent function to the child node.
 * @param &node The parent node to apply the operation to.
 */
 static void atan_backward(Node &node) {
