@@ -25,11 +25,10 @@ $ make run
 * `#include`ing the downloaded `OffPiste.hpp` in the source code
 * Linking to the compiled `OffPiste` library using:
 ```
-$ g++ -Wall ${SRC_FILES} -o example.o -L${LIBRARY_PATH} -lOffPiste
+$ g++ --std=c++14 -Wall ${SRC_FILES} -o example.o -L${LIBRARY_PATH} -lOffPiste
 ```
 (with `${LIBRARY_PATH}` as the folder containing the downloaded library file, and `${SRC_FILES}` as the paths of the source files).
 
-
 ### **How can users instantiate AD objects?**  
 
-Please refer to the `example.cpp` file in the `example_usage` directory for an illustration of the usage.
+The OffPiste library has an intuitive interface that is achieved by mimicking `cmath` functions and overloading operators. Sample code may be found in [example.cpp](../example_usage/example.cpp).
